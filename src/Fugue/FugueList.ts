@@ -11,16 +11,40 @@ export class FugueList<P> {
     totalOrder: UniquelyDenseTotalOrder<P>;
     positionCounter = 0;
     ws: WebSocket | null;
+    readonly batchSize = 100;
 
     constructor(totalOrder: UniquelyDenseTotalOrder<P>, ws: WebSocket | null) {
         this.totalOrder = totalOrder;
         this.ws = ws;
     }
 
-    private propagate(msg: FugueMessage<P>) {
+    /**
+     * Propagates message or messages to replicas
+     * @param msg - Message or messages to propagate to replicas
+     */
+    private propagate(msg: FugueMessage<P> | FugueMessage<P>[]) {
         if (!this.ws) return;
 
         this.ws.send(JSON.stringify(msg));
+    }
+
+    private binarySearchPosition(position: P): number {
+        let low = 0;
+        let high = this.state.length - 1;
+        while (low <= high) {
+            const mid = Math.floor((low + high) / 2);
+            const midPos = this.state[mid][0].position;
+            const cmp = this.totalOrder.compare(midPos, position);
+            if (cmp === 0) {
+                return mid;
+            } else if (cmp < 0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        // If not found, return the position where it can be inserted
+        return low;
     }
 
     /**
@@ -29,36 +53,24 @@ export class FugueList<P> {
      * @param value - Value to insert
      */
     private insertAtPosition(position: P, value: string) {
-        let index = this.state.length;
+        let index = this.binarySearchPosition(position);
 
-        for (let i = 0; i < this.state.length; ++i) {
-            const n = this.state[i][0];
+        // Check if the position already exists at this index, i.e. there is a collision
+        if (index < this.state.length && this.totalOrder.compare(this.state[index][0].position, position) === 0) {
+            const cell = this.state[index];
+            const existing = cell.find((n) => this.totalOrder.compare(n.position, position) === 0);
 
-            // Compare positions, if the value should be
-            // ordered before this one, we found our index
-            // this should fix the issue with inserting in the
-            // middle messing up order
-            if (this.totalOrder.compare(position, n.position) < 0) {
-                index = i;
-                break;
+            // Don't insert if it already exists,
+            // TODO: ideally this should trigger a collision resolution
+            if (!existing) {
+                cell.push(new FNode<P>(position, value));
+                cell.sort((a, b) => this.totalOrder.compare(a.position, b.position));
             }
         }
-
-        console.log({ insertIndex: index });
-        if (index >= this.state.length) {
-            this.state.push([]);
-        } else {
-            this.state.splice(index, 0, []);
+        // Insert new cell at index
+        else {
+            this.state.splice(index, 0, [new FNode<P>(position, value)]);
         }
-
-        // Check if this position already exists at this index
-        // If it does, we don't insert again
-        const cell = this.state[index];
-        const existing = cell.find((n) => this.totalOrder.compare(n.position, position) === 0);
-
-        if (existing) return;
-
-        cell.push(new FNode<P>(position, value));
     }
 
     /**
@@ -92,6 +104,59 @@ export class FugueList<P> {
             position: pos,
             data: value,
         });
+    }
+
+    /**
+     * Inserts multiple characters at given index, this
+     * handles large insertions by batching messages
+     * @param index - Index to insert at
+     * @param value - Value to insert
+     */
+    insertMultiple(index: number, value: string) {
+        if (value.length == 0) return;
+        if (value.length == 1) {
+            this.insert(index, value);
+            return;
+        }
+
+        // Find left and right anchors
+        const lA = index > 0 ? this.findVisiblePosition(index - 1) : undefined;
+        const rA = this.findVisiblePosition(index);
+        const newCells: FNode<P>[][] = [];
+
+        let cL = lA;
+        let msgs: FugueMessage<P>[] = [];
+        for (const c of value) {
+            const pos = this.totalOrder.createBetween(cL, rA);
+
+            // Collect new cells
+            newCells.push([new FNode<P>(pos, c)]);
+
+            // Batch propagate
+            msgs.push({
+                replicaId: this.totalOrder.getReplicaId(),
+                operation: Operation.INSERT,
+                position: pos,
+                data: c,
+            });
+
+            cL = pos;
+
+            if (msgs.length >= this.batchSize) {
+                this.propagate(msgs);
+                msgs = [];
+            }
+        }
+
+        // Single splice to insert all new cells
+        const firstPos = newCells[0][0].position;
+        const insertIndex = this.binarySearchPosition(firstPos);
+        this.state.splice(insertIndex, 0, ...newCells);
+
+        // Propagate remaining
+        if (msgs.length > 0) {
+            this.propagate(msgs);
+        }
     }
 
     /**
@@ -176,6 +241,63 @@ export class FugueList<P> {
     }
 
     /**
+     * Deletes multiple values starting from index, this
+     * handles large deletions by batching messages
+     * @param index - Starting index to delete from
+     * @param count -  Number of values to delete
+     */
+    deleteMultiple(index: number, count: number) {
+        if (count <= 0) return;
+        if (count == 1) {
+            this.delete(index);
+            return;
+        }
+
+        let currentVisibleIndex = 0;
+        let deletedCount = 0;
+        let msgs: FugueMessage<P>[] = [];
+
+        outer: for (const c of this.state) {
+            for (const n of c) {
+                // Only consider visible nodes
+                if (n.value !== undefined) {
+                    if (currentVisibleIndex >= index) {
+                        const pos = n.position;
+
+                        // Tombstone the node
+                        n.value = undefined;
+                        deletedCount++;
+
+                        // Batch
+                        msgs.push({
+                            replicaId: this.totalOrder.getReplicaId(),
+                            operation: Operation.DELETE,
+                            position: pos,
+                            data: null,
+                        });
+
+                        if (msgs.length >= this.batchSize) {
+                            this.propagate(msgs);
+                            msgs = [];
+                        }
+                    }
+                    // Processed a visible node
+                    currentVisibleIndex++;
+
+                    // Check if we've deleted enough
+                    if (deletedCount >= count) {
+                        break outer;
+                    }
+                }
+            }
+        }
+
+        if (msgs.length > 0) {
+            this.propagate(msgs);
+        }
+    }
+
+    /**
      * Observes the current visible state of the list
      * @returns The current visible state of the list as a string
      */
@@ -198,7 +320,11 @@ export class FugueList<P> {
         return res.toString();
     }
 
-    effect(msg: FugueMessage<P>) {
+    /**
+     * Applies a single effect message to the list
+     * @param msg - Message to apply effect for
+     */
+    private singleEffect(msg: FugueMessage<P>) {
         const { replicaId, operation, data, position } = msg;
         if (replicaId == this.totalOrder.getReplicaId()) return;
 
@@ -212,7 +338,138 @@ export class FugueList<P> {
         throw Error("Invalid operation");
     }
 
+    /**
+     * Applies batched effect messages to the list
+     * @param msgs - Messages to apply effect for in batch
+     */
+    private batchEffect(msgs: FugueMessage<P>[]) {
+        const inserts: FugueMessage<P>[] = [];
+        const deletes = new Set<string>();
+
+        // Separate operations
+        for (const msg of msgs) {
+            const { replicaId, operation, position, data } = msg;
+            if (replicaId == this.totalOrder.getReplicaId()) continue;
+
+            switch (operation) {
+                case Operation.INSERT:
+                    if (!data) continue;
+                    inserts.push(msg);
+                    break;
+                case Operation.DELETE:
+                    deletes.add(JSON.stringify(position));
+                    break;
+            }
+        }
+
+        // Apply deletes first
+        if (deletes.size > 0) {
+            for (const posStr of deletes) {
+                // Parse the position back from the set
+                const pos = JSON.parse(posStr) as P;
+
+                const idx = this.binarySearchPosition(pos);
+
+                // Check if we found the right cell
+                if (idx < this.state.length) {
+                    const cell = this.state[idx];
+                    // Find the specific node in the collision cell
+                    const node = cell.find((n) => this.totalOrder.compare(n.position, pos) === 0);
+
+                    if (node && node.value !== undefined) {
+                        node.value = undefined; // Tombstone
+                    }
+                }
+            }
+        }
+
+        // Then apply inserts
+        if (inserts.length > 0) {
+            inserts.sort((a, b) => this.totalOrder.compare(a.position, b.position));
+
+            // Group into chunks, of contiguous inserts
+            let batchCells: FNode<P>[][] = [];
+            let startIdx = -1;
+
+            for (const msg of inserts) {
+                const { position, data } = msg;
+
+                // Find the index to insert at
+                const idx = this.binarySearchPosition(position);
+
+                // Check for collision
+                //TODO: should trigger collision resolution
+                if (idx < this.state.length && this.totalOrder.compare(this.state[idx][0].position, position) === 0) {
+                    const cell = this.state[idx];
+                    const existing = cell.find((n) => this.totalOrder.compare(n.position, position) === 0);
+
+                    // Don't insert if it already exists
+                    if (!existing) {
+                        cell.push(new FNode<P>(position, data ? data : undefined));
+                        cell.sort((a, b) => this.totalOrder.compare(a.position, b.position));
+                    }
+                } else {
+                    // Start a new batch if:
+                    // - It's the first item
+                    // - This index is not contiguous with the previous group
+                    if (startIdx === -1) {
+                        startIdx = idx;
+                        batchCells = [[new FNode<P>(position, data ? data : undefined)]];
+                    }
+                    // If the index is the same as startIdx, continue the batch
+                    else if (idx === startIdx) {
+                        batchCells.push([new FNode<P>(position, data ? data : undefined)]);
+                    }
+                    // The index is different, i.e. not contiguous, so flush the current batch,
+                    // commit it and start a new one
+                    else {
+                        // Commit batch
+                        this.state.splice(startIdx, 0, ...batchCells);
+
+                        // Start new batch
+                        // Calculate the shift caused by the splice
+                        // If the new idx (calculated on old state) is after the splice point,
+                        // we must add the length of the batch we just inserted.
+                        const shift = idx >= startIdx ? batchCells.length : 0;
+
+                        startIdx = idx + shift;
+                        batchCells = [[new FNode<P>(position, data ? data : undefined)]];
+                    }
+                }
+            }
+
+            // Commit any remaining batch
+            if (batchCells.length > 0) this.state.splice(startIdx, 0, ...batchCells);
+        }
+    }
+
+    /**
+     * Applies effect messages to the list
+     * @param msg - Message or messages to apply effect for, can be batched
+     */
+    effect(msg: FugueMessage<P> | FugueMessage<P>[]) {
+        if (Array.isArray(msg)) {
+            this.batchEffect(msg);
+            // for (const m of msg) {
+            //     this.singleEffect(m);
+            // }
+        } else {
+            this.singleEffect(msg);
+        }
+    }
+
     replicaId(): string {
         return this.totalOrder.getReplicaId();
+    }
+
+    /**
+     * Performs garbage collection by removing tombstoned nodes from the state
+     */
+    garbageCollect() {
+        this.state = this.state.filter((cell) => {
+            // Check if cell has any visible nodes
+            const hasVisible = cell.some((n) => n.value !== undefined);
+            return hasVisible;
+        });
     }
 }
