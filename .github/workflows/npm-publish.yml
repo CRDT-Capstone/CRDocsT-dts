@@ -1,0 +1,34 @@
+name: Release and Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to push tags and updates to package.json
+      id-token: write # Needed for npm Trusted Publishing
+      issues: write   # Needed for semantic-release to comment on issues
+      pull-requests: write # Needed for semantic-release to comment on PRs
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Semantic-release needs full history to analyze commits
+          
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - run: npm ci
+      
+      # run: npx semantic-release
+      # This replaces 'npm publish'. It handles versioning, tagging, AND publishing.
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Provided automatically by GitHub
+        run: npx semantic-release
