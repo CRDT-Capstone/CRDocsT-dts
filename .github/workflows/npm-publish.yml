@@ -24,7 +24,7 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
 
-      - run: npm ci
+      - run: npm run ci
       
       # run: npx semantic-release
       # This replaces 'npm publish'. It handles versioning, tagging, AND publishing.
