@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.2.0...v0.2.1) (2026-01-08)
+
+
+### Bug Fixes
+
+* update repository URL in package.json ([37cbe35](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/37cbe352f8af4fd236edfff73b96ec3b215fb2be))
+
 # [0.2.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.1.0...v0.2.0) (2026-01-08)
 
 

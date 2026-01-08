@@ -1,6 +1,6 @@
 {
   "name": "@cr_docs_t/dts",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,9 +21,9 @@
     "access": "public"
   },
   "repository": {
-      "type": "git",
-      "url": "https://github.com/CRDT-Capstone/CRDocsT-dts.git"
-    },
+    "type": "git",
+    "url": "https://github.com/CRDT-Capstone/CRDocsT-dts.git"
+  },
   "release": {
     "branches": [
       "master"
