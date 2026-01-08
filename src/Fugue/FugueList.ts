@@ -11,11 +11,13 @@ export class FugueList<P> {
     totalOrder: UniquelyDenseTotalOrder<P>;
     positionCounter = 0;
     ws: WebSocket | null;
+    documentID: string; //documentID consistent with the database documentID
     readonly batchSize = 100;
 
-    constructor(totalOrder: UniquelyDenseTotalOrder<P>, ws: WebSocket | null) {
+    constructor(totalOrder: UniquelyDenseTotalOrder<P>, ws: WebSocket | null, documentID: string) {
         this.totalOrder = totalOrder;
         this.ws = ws;
+        this.documentID = documentID;
     }
 
     /**
@@ -99,6 +101,7 @@ export class FugueList<P> {
         this.insertAtPosition(pos, value);
 
         this.propagate({
+            documentID: this.documentID,
             replicaId: this.totalOrder.getReplicaId(),
             operation: Operation.INSERT,
             position: pos,
@@ -134,6 +137,7 @@ export class FugueList<P> {
 
             // Batch propagate
             msgs.push({
+                documentID: this.documentID,
                 replicaId: this.totalOrder.getReplicaId(),
                 operation: Operation.INSERT,
                 position: pos,
@@ -233,6 +237,7 @@ export class FugueList<P> {
 
         // Send to replicas
         this.propagate({
+            documentID: this.documentID,
             replicaId: this.totalOrder.getReplicaId(),
             operation: Operation.DELETE,
             position: position,
@@ -270,6 +275,7 @@ export class FugueList<P> {
 
                         // Batch
                         msgs.push({
+                            documentID: this.documentID,
                             replicaId: this.totalOrder.getReplicaId(),
                             operation: Operation.DELETE,
                             position: pos,
