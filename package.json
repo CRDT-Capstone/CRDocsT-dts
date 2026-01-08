@@ -20,6 +20,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/CRDT-Capstone/CRDocsT-dts.git"
+    },
   "release": {
     "branches": [
       "master"
