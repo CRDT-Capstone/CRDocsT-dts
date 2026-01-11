@@ -4,6 +4,7 @@
     "module": "esnext",
     "target": "es2020",
     "rootDir": "./src",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

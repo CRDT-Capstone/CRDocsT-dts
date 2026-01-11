@@ -316,10 +316,10 @@ export class FugueList<P> {
                 .filter((n) => n.value !== undefined)
                 .sort((a, b) => this.totalOrder.compare(a.position, b.position));
 
-            // Then append to resultdkjand if somehow
-            //a value is undefined append the placeholder thorn
+            // Then append to result jand if somehow
+            // a value is undefined append empty string
             for (const n of nodes) {
-                res += n.value || "Þ";
+                res += n.value || "";
             }
         }
 

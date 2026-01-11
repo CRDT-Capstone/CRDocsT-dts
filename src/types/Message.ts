@@ -9,13 +9,17 @@ export enum Operation {
 export type Data = string;
 
 export interface FugueMessage<P> {
+    operation: Operation.INSERT | Operation.DELETE;
     documentID: string;
     replicaId: string;
-    operation: Operation;
     position: P;
     data: Data | null;
 }
 
 export interface FugueJoinMessage<P> {
-    state: FugueState<P>;
+    operation: Operation.JOIN;
+    documentID: string;
+    state: FugueState<P> | null;
 }
+
+export type FugueMessageType<P> = FugueMessage<P> | FugueJoinMessage<P>;
