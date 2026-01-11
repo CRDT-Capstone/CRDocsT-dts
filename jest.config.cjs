@@ -4,9 +4,14 @@ const tsJestTransformCfg = createDefaultPreset().transform;
 
 /** @type {import("jest").Config} **/
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "node",
-  transform: {
-    ...tsJestTransformCfg,
-  },
+    preset: "ts-jest",
+    testEnvironment: "node",
+    transform: {
+        ...tsJestTransformCfg,
+    },
+    moduleNameMapper: {
+        // This regex looks for any local import ending in .js and removes the extension
+        "^(\\.\\.?\\/.+)\\.js$": "$1",
+    },
 };
+
