@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.2.1...v0.3.0) (2026-01-11)
+
+
+### Features
+
+* add serialization for Fugue messages and states ([a022a35](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/a022a359dcf292457848aad20095c34a3df5eb67))
+
 ## [0.2.1](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.2.0...v0.2.1) (2026-01-08)
 
 
