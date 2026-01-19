@@ -2,6 +2,7 @@ import { FNode } from "./FNode.js";
 import { FugueState } from "../types/Fugue.js";
 import { UniquelyDenseTotalOrder } from "../TotalOrder/UniquelyDenseTotalOrder.js";
 import { FugueMessage, Operation } from "../types/Message.js";
+import { FugueMessageSerialzier } from "../Serailizers/index.js";
 
 /**
  * A Fugue List CRDT, with insert and delete operations
@@ -26,8 +27,9 @@ export class FugueList<P> {
      */
     private propagate(msg: FugueMessage<P> | FugueMessage<P>[]) {
         if (!this.ws) return;
-
-        this.ws.send(JSON.stringify(msg));
+        
+        const serializedFugueMsg = FugueMessageSerialzier.serialize(Array.isArray(msg) ? msg : [msg]);
+        this.ws.send(serializedFugueMsg);
     }
 
     private binarySearchPosition(position: P): number {
