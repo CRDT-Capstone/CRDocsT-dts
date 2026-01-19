@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.3.0...v0.4.0) (2026-01-19)
+
+
+### Features
+
+* serializing the websocket payload ([173963b](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/173963b899f2e8d38420bdda77c947bb533ae1de))
+
 # [0.3.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.2.1...v0.3.0) (2026-01-11)
 
 
