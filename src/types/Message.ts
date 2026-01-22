@@ -29,4 +29,4 @@ export interface FugueRejectMessage {
     operation: Operation.REJECT
 }
 
-export type FugueMessageType<P> = FugueMessage<P> | FugueJoinMessage<P>;
+export type FugueMessageType<P> = FugueMessage<P> | FugueJoinMessage<P> | FugueRejectMessage;
