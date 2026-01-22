@@ -14,12 +14,14 @@ export interface FugueMessage<P> {
     replicaId: string;
     position: P;
     data: Data | null;
+    userId?: string;
 }
 
 export interface FugueJoinMessage<P> {
     operation: Operation.JOIN;
     documentID: string;
     state: FugueState<P> | null;
+    userId?: string
 }
 
 export type FugueMessageType<P> = FugueMessage<P> | FugueJoinMessage<P>;
