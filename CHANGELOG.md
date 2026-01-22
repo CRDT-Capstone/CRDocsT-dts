@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.6.0...v0.7.0) (2026-01-22)
+
+
+### Features
+
+* adding serialising and deserialising for the reject message ([86b5ea5](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/86b5ea5bf3d97d2d4eea5c5477b5cd7b2fcc20b0))
+
 # [0.6.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.5.0...v0.6.0) (2026-01-22)
 
 
