@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.4.0...v0.5.0) (2026-01-22)
+
+
+### Features
+
+* adding userIds to the Fugue Message ([c6cf471](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/c6cf4718a9377bb47c746962962be85683351933))
+
 # [0.4.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.3.0...v0.4.0) (2026-01-19)
 
 
