@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.5.0...v0.6.0) (2026-01-22)
+
+
+### Features
+
+* added a reject operation for when a user doesn't have access to a doc ([7f90b6a](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/7f90b6a9a48edaa3e2afa33157c7544dc4193b05))
+
 # [0.5.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.4.0...v0.5.0) (2026-01-22)
 
 
