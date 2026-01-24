@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.7.0...v0.8.0) (2026-01-24)
+
+
+### Features
+
+* adding contributorType enums to reduce redundancy ([b6f40e5](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/b6f40e5bd0da8893cba4814ef9f5f00122307941))
+
 # [0.7.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.6.0...v0.7.0) (2026-01-22)
 
 
