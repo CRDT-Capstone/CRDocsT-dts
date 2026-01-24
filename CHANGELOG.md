@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.8.0...v0.9.0) (2026-01-24)
+
+
+### Features
+
+* forgot to export it ([df74e30](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/df74e3005cd384301ce97a5e724feae6ccd46c73))
+
 # [0.8.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.7.0...v0.8.0) (2026-01-24)
 
 
