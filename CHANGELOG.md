@@ -1,3 +1,10 @@
+# [0.13.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.12.0...v0.13.0) (2026-01-25)
+
+
+### Features
+
+* updating the serialisers again ([ba1cca7](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/ba1cca7646da19b34dd7f4d82a38adfc27e159e8))
+
 # [0.12.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.11.0...v0.12.0) (2026-01-25)
 
 
