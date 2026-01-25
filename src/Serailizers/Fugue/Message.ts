@@ -34,6 +34,7 @@ function fromTuple<P>(tuple: any[]): FugueMessageType<P> {
                 operation: tuple[0],
                 documentID: tuple[1],
                 state: tuple[2],
+                email: tuple[3]
             } as FugueJoinMessage<P>;
         case Operation.INSERT:
         case Operation.DELETE:
@@ -43,6 +44,7 @@ function fromTuple<P>(tuple: any[]): FugueMessageType<P> {
                 replicaId: tuple[2],
                 position: tuple[3],
                 data: tuple[4],
+                email: tuple[5]
             } as FugueMessage<P>;
         case Operation.REJECT:
             return {
