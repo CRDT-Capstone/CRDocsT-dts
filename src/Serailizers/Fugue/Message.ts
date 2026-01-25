@@ -17,10 +17,10 @@ function toTuple<P>(msg: FugueMessage<P> | FugueJoinMessage<P> | FugueRejectMess
     // Check if msg is of FugueJoinMessage type
     switch (msg.operation) {
         case Operation.JOIN:
-            return [msg.operation, msg.documentID, msg.state];
+            return [msg.operation, msg.documentID, msg.state, msg.email];
         case Operation.INSERT:
         case Operation.DELETE:
-            return [msg.operation, msg.documentID, msg.replicaId, msg.position, msg.data];
+            return [msg.operation, msg.documentID, msg.replicaId, msg.position, msg.data, msg.email];
         case Operation.REJECT:
             return [msg.operation]
     }
