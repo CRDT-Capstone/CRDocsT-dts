@@ -1,3 +1,10 @@
+# [0.11.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.10.0...v0.11.0) (2026-01-25)
+
+
+### Features
+
+* changed userId in messages to email ([53d3012](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/53d30123a900361cd42f13804798d937bf83071d))
+
 # [0.10.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.9.0...v0.10.0) (2026-01-24)
 
 
