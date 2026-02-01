@@ -1,5 +1,11 @@
 import { encode, decode } from "@msgpack/msgpack";
-import { FugueMessage, FugueJoinMessage, FugueMessageType, Operation, FugueRejectMessage } from "../../types/Message.js";
+import {
+    FugueMessage,
+    FugueJoinMessage,
+    FugueMessageType,
+    Operation,
+    FugueRejectMessage,
+} from "../../../types/index.js";
 
 function serialize<P>(msgs: FugueMessageType<P>[]) {
     return encode(msgs.map((m) => toTuple(m)));
@@ -22,7 +28,7 @@ function toTuple<P>(msg: FugueMessage<P> | FugueJoinMessage<P> | FugueRejectMess
         case Operation.DELETE:
             return [msg.operation, msg.documentID, msg.replicaId, msg.position, msg.data, msg.email];
         case Operation.REJECT:
-            return [msg.operation]
+            return [msg.operation];
     }
     throw new Error("Unknown message type");
 }
@@ -34,7 +40,7 @@ function fromTuple<P>(tuple: any[]): FugueMessageType<P> {
                 operation: tuple[0],
                 documentID: tuple[1],
                 state: tuple[2],
-                email: tuple[3]
+                email: tuple[3],
             } as FugueJoinMessage<P>;
         case Operation.INSERT:
         case Operation.DELETE:
@@ -44,11 +50,11 @@ function fromTuple<P>(tuple: any[]): FugueMessageType<P> {
                 replicaId: tuple[2],
                 position: tuple[3],
                 data: tuple[4],
-                email: tuple[5]
+                email: tuple[5],
             } as FugueMessage<P>;
         case Operation.REJECT:
             return {
-                operation: tuple[0]
+                operation: tuple[0],
             } as FugueRejectMessage;
     }
     throw new Error("Unknown tuple format");

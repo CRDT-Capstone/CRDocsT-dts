@@ -1,5 +1,9 @@
-import { FugueList } from "../Fugue/FugueList";
+import { FugueList, StringTotalOrder } from "../dts/index.js";
 import crypto from "crypto";
-import { StringTotalOrder } from "../TotalOrder/StringTotalOrder";
 
-export const emptyFugueList = new FugueList<string>(new StringTotalOrder(crypto.randomBytes(3).toString('hex')), null, crypto.randomBytes(24).toString('hex'));
+export const emptyFugueList = new FugueList<string>(
+    new StringTotalOrder(crypto.randomBytes(3).toString("hex")),
+    null,
+    crypto.randomBytes(24).toString("hex"),
+);
+
