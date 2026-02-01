@@ -3,7 +3,7 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es2020",
-    "rootDir": ".",
+    "rootDir": "./src",
     "moduleResolution": "bundler",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -13,12 +13,5 @@
     "declaration": true,
     "declarationMap": true,
   },
-  "include": [
-      "src/**/*",
-      "tests/**/*" // Tell TS to include the tests directory
-    ],
-  "exclude": [
-      "node_modules",
-      "dist"
-    ]
+  "include": ["src"],
 }
