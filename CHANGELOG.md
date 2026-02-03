@@ -1,3 +1,12 @@
+# [0.15.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.14.0...v0.15.0) (2026-02-03)
+
+
+### Features
+
+* added cursor paginated type ([d12e2aa](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/d12e2aacace3146d11f39cc60bb53931eb26b8a1))
+* normal commit ([6d7ec0c](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/6d7ec0ce5a8d42979dedcfbcc41783da6974547d))
+* testing ([821b455](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/821b4559e7e9b1612aaa52dcf779c6c11346d170))
+
 # [0.14.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.13.0...v0.14.0) (2026-02-03)
 
 
