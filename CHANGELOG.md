@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.15.0...v0.16.0) (2026-02-03)
+
+
+### Features
+
+* allowing nextCursor to be undefined ([341014c](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/341014c4cdb3fe7265186affbaca7c942c23cfd6))
+
 # [0.15.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.14.0...v0.15.0) (2026-02-03)
 
 
