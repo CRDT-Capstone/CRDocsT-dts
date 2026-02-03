@@ -1,3 +1,10 @@
+# [0.14.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.13.0...v0.14.0) (2026-02-03)
+
+
+### Features
+
+* add zod for schema validation ([b77f446](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/b77f44649be406474f7132ac392e0e7758aa2b44))
+
 # [0.13.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.12.0...v0.13.0) (2026-01-25)
 
 
