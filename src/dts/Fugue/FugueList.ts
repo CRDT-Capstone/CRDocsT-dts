@@ -1,7 +1,6 @@
 import { FNode } from "./FNode.js";
-import { FugueState } from "../types/Fugue.js";
+import { FugueState, FugueMessage, Operation } from "../../types/index.js";
 import { UniquelyDenseTotalOrder } from "../TotalOrder/UniquelyDenseTotalOrder.js";
-import { FugueMessage, Operation } from "../types/Message.js";
 import { FugueMessageSerialzier } from "../Serailizers/index.js";
 
 /**
@@ -27,7 +26,7 @@ export class FugueList<P> {
      */
     private propagate(msg: FugueMessage<P> | FugueMessage<P>[]) {
         if (!this.ws) return;
-        
+
         const serializedFugueMsg = FugueMessageSerialzier.serialize(Array.isArray(msg) ? msg : [msg]);
         this.ws.send(serializedFugueMsg);
     }

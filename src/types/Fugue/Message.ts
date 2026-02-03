@@ -4,7 +4,7 @@ export enum Operation {
     INSERT,
     DELETE,
     JOIN,
-    REJECT
+    REJECT,
 }
 
 export type Data = string;
@@ -22,11 +22,11 @@ export interface FugueJoinMessage<P> {
     operation: Operation.JOIN;
     documentID: string;
     state: FugueState<P> | null;
-    email?: string
+    email?: string;
 }
 
-export interface FugueRejectMessage { 
-    operation: Operation.REJECT
+export interface FugueRejectMessage {
+    operation: Operation.REJECT;
 }
 
 export type FugueMessageType<P> = FugueMessage<P> | FugueJoinMessage<P> | FugueRejectMessage;
