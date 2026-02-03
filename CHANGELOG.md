@@ -1,3 +1,10 @@
+# [0.17.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.16.0...v0.17.0) (2026-02-03)
+
+
+### Features
+
+* forgot to make data an array ([6d1eac8](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/6d1eac80ea1dd94d36289d079e647d262f9de17f))
+
 # [0.16.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.15.0...v0.16.0) (2026-02-03)
 
 
