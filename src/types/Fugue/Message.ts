@@ -24,6 +24,7 @@ export interface FugueJoinMessage<P> {
     documentID: string;
     state: FugueState<P> | null;
     email?: string;
+    collaborators?: string[];
 }
 
 export interface FugueRejectMessage {
