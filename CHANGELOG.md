@@ -1,3 +1,10 @@
+# [0.19.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.18.0...v0.19.0) (2026-02-04)
+
+
+### Features
+
+* added collaborators to the join message ([6209a9d](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/6209a9ddfdcfba7458bad3058716ad2674bf2488))
+
 # [0.18.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.17.0...v0.18.0) (2026-02-04)
 
 
