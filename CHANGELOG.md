@@ -1,3 +1,10 @@
+# [0.18.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.17.0...v0.18.0) (2026-02-04)
+
+
+### Features
+
+* added the fugue leave message ([123d071](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/123d07171742cd34b7bc8cc6581ac2a0216e546f))
+
 # [0.17.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.16.0...v0.17.0) (2026-02-03)
 
 
