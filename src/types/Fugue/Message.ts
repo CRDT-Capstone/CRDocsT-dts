@@ -5,6 +5,7 @@ export enum Operation {
     DELETE,
     JOIN,
     REJECT,
+    LEAVE
 }
 
 export type Data = string;
@@ -29,4 +30,9 @@ export interface FugueRejectMessage {
     operation: Operation.REJECT;
 }
 
-export type FugueMessageType<P> = FugueMessage<P> | FugueJoinMessage<P> | FugueRejectMessage;
+export interface FugueLeaveMessage {
+    operation: Operation.LEAVE;
+    email: string
+}
+
+export type FugueMessageType<P> = FugueMessage<P> | FugueJoinMessage<P> | FugueRejectMessage | FugueLeaveMessage;

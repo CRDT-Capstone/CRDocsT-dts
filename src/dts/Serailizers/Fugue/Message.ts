@@ -5,6 +5,7 @@ import {
     FugueMessageType,
     Operation,
     FugueRejectMessage,
+    FugueLeaveMessage,
 } from "../../../types/index.js";
 
 function serialize<P>(msgs: FugueMessageType<P>[]) {
@@ -19,7 +20,7 @@ function deserialize<P>(data: Uint8Array): FugueMessageType<P>[] {
     return [fromTuple(dec as any[])];
 }
 
-function toTuple<P>(msg: FugueMessage<P> | FugueJoinMessage<P> | FugueRejectMessage) {
+function toTuple<P>(msg: FugueMessageType<P>) {
     // Check if msg is of FugueJoinMessage type
     switch (msg.operation) {
         case Operation.JOIN:
@@ -29,6 +30,8 @@ function toTuple<P>(msg: FugueMessage<P> | FugueJoinMessage<P> | FugueRejectMess
             return [msg.operation, msg.documentID, msg.replicaId, msg.position, msg.data, msg.email];
         case Operation.REJECT:
             return [msg.operation];
+        case Operation.LEAVE:
+            return [msg.operation, msg.email];
     }
     throw new Error("Unknown message type");
 }
@@ -56,6 +59,11 @@ function fromTuple<P>(tuple: any[]): FugueMessageType<P> {
             return {
                 operation: tuple[0],
             } as FugueRejectMessage;
+        case Operation.LEAVE:
+            return {
+                operation: tuple[0],
+                email: tuple[1]
+            } as FugueLeaveMessage;
     }
     throw new Error("Unknown tuple format");
 }
