@@ -1,3 +1,11 @@
+# [0.20.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.19.0...v0.20.0) (2026-02-05)
+
+
+### Features
+
+* add email property to FugueList ([2b7f878](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/2b7f878d2f7ffee4e3662dfc462bf544b99230b3))
+* implement fetch utility with error handling ([aa76d6a](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/aa76d6a679ac59f8b9fc91a3f74ff205e22330a5))
+
 # [0.19.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.18.0...v0.19.0) (2026-02-04)
 
 
