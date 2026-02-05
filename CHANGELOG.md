@@ -1,3 +1,10 @@
+## [0.20.1](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.20.0...v0.20.1) (2026-02-05)
+
+
+### Bug Fixes
+
+* remove public access from publish script ([d7b02df](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/d7b02dfde1b4ce6feeb8a54a5e9e1d0e4fadc8ae))
+
 # [0.20.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.19.0...v0.20.0) (2026-02-05)
 
 
