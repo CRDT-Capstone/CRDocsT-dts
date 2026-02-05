@@ -24,7 +24,7 @@ function toTuple<P>(msg: FugueMessageType<P>) {
     // Check if msg is of FugueJoinMessage type
     switch (msg.operation) {
         case Operation.JOIN:
-            return [msg.operation, msg.documentID, msg.state, msg.email];
+            return [msg.operation, msg.documentID, msg.state, msg.email, msg.collaborators];
         case Operation.INSERT:
         case Operation.DELETE:
             return [msg.operation, msg.documentID, msg.replicaId, msg.position, msg.data, msg.email];
@@ -44,6 +44,7 @@ function fromTuple<P>(tuple: any[]): FugueMessageType<P> {
                 documentID: tuple[1],
                 state: tuple[2],
                 email: tuple[3],
+                collaborators: tuple[4]
             } as FugueJoinMessage<P>;
         case Operation.INSERT:
         case Operation.DELETE:
