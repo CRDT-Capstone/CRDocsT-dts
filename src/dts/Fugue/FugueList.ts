@@ -12,14 +12,14 @@ export class FugueList<P> {
     positionCounter = 0;
     ws: WebSocket | null;
     documentID: string; //documentID consistent with the database documentID
-    email: string | undefined;
+    userIdentity: string | undefined;
     readonly batchSize = 100;
 
-    constructor(totalOrder: UniquelyDenseTotalOrder<P>, ws: WebSocket | null, documentID: string, email?: string) {
+    constructor(totalOrder: UniquelyDenseTotalOrder<P>, ws: WebSocket | null, documentID: string, userIdentity?: string) {
         this.totalOrder = totalOrder;
         this.ws = ws;
         this.documentID = documentID;
-        this.email = email;
+        this.userIdentity = userIdentity;
     }
 
     /**
@@ -109,7 +109,7 @@ export class FugueList<P> {
             replicaId: this.totalOrder.getReplicaId(),
             operation: Operation.INSERT,
             position: pos,
-            email: this.email,
+            userIdentity: this.userIdentity,
             data: value,
         });
     }
@@ -146,7 +146,7 @@ export class FugueList<P> {
                 replicaId: this.totalOrder.getReplicaId(),
                 operation: Operation.INSERT,
                 position: pos,
-                email: this.email,
+                userIdentity: this.userIdentity,
                 data: c,
             });
 
@@ -247,7 +247,7 @@ export class FugueList<P> {
             replicaId: this.totalOrder.getReplicaId(),
             operation: Operation.DELETE,
             position: position,
-            email: this.email,
+            userIdentity: this.userIdentity,
             data: null,
         });
     }
@@ -286,7 +286,7 @@ export class FugueList<P> {
                             replicaId: this.totalOrder.getReplicaId(),
                             operation: Operation.DELETE,
                             position: pos,
-                            email: this.email,
+                            userIdentity: this.userIdentity,
                             data: null,
                         });
 
