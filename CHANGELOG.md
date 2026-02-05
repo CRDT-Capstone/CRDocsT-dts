@@ -1,3 +1,10 @@
+# [0.21.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.20.1...v0.21.0) (2026-02-05)
+
+
+### Features
+
+* changed email to user identity ([c6c4c8c](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/c6c4c8ce59c4d79173cda3aeef9c9fa68d6a30ee))
+
 ## [0.20.1](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.20.0...v0.20.1) (2026-02-05)
 
 
