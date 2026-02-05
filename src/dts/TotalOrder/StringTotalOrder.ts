@@ -10,7 +10,7 @@ export class StringTotalOrder implements UniquelyDenseTotalOrder<StringPosition>
         return this.replicaID;
     }
 
-    compare(a: string, b: string): number {
+    compare(a: StringPosition, b: StringPosition): number {
         return a.localeCompare(b);
     }
 
@@ -18,7 +18,7 @@ export class StringTotalOrder implements UniquelyDenseTotalOrder<StringPosition>
         this.replicaID = replicaID;
     }
 
-    createBetween(a?: string, b?: string): string {
+    createBetween(a?: StringPosition, b?: StringPosition): string {
         // Create a wholly unique string using a causal dot, i.e. (replicaID, counter)
         const uniqueStr = `${this.replicaID}${this.counter++}`;
 
