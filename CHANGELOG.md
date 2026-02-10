@@ -1,3 +1,10 @@
+# [0.22.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.21.0...v0.22.0) (2026-02-10)
+
+
+### Features
+
+* using proper equals to and adding offline changes to the join message ([52eca42](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/52eca42119f222637045b1da6c023016102433e2))
+
 # [0.21.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.20.1...v0.21.0) (2026-02-05)
 
 
