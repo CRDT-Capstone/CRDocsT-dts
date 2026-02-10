@@ -69,13 +69,13 @@ export class FugueList<P> {
             // Don't insert if it already exists,
             // TODO: ideally this should trigger a collision resolution
             if (!existing) {
-                cell.push(new FNode<P>(position, value));
+                cell.push(new FNode<P>(position, value, Operation.INSERT));
                 cell.sort((a, b) => this.totalOrder.compare(a.position, b.position));
             }
         }
         // Insert new cell at index
         else {
-            this.state.splice(index, 0, [new FNode<P>(position, value)]);
+            this.state.splice(index, 0, [new FNode<P>(position, value, Operation.INSERT)]);
         }
     }
 
@@ -138,7 +138,7 @@ export class FugueList<P> {
             const pos = this.totalOrder.createBetween(cL, rA);
 
             // Collect new cells
-            newCells.push([new FNode<P>(pos, c)]);
+            newCells.push([new FNode<P>(pos, c, Operation.INSERT)]);
 
             // Batch propagate
             msgs.push({
@@ -182,6 +182,7 @@ export class FugueList<P> {
             if (node) {
                 // Tombstone the node, TODO: Implement garbage collection
                 node.value = undefined;
+                node.operation = Operation.DELETE;
                 return;
             }
         }
@@ -278,6 +279,7 @@ export class FugueList<P> {
 
                         // Tombstone the node
                         n.value = undefined;
+                        n.operation = Operation.DELETE;
                         deletedCount++;
 
                         // Batch
@@ -392,6 +394,7 @@ export class FugueList<P> {
 
                     if (node && node.value !== undefined) {
                         node.value = undefined; // Tombstone
+                        node.operation = Operation.DELETE;
                     }
                 }
             }
@@ -419,7 +422,7 @@ export class FugueList<P> {
 
                     // Don't insert if it already exists
                     if (!existing) {
-                        cell.push(new FNode<P>(position, data ? data : undefined));
+                        cell.push(new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE));
                         cell.sort((a, b) => this.totalOrder.compare(a.position, b.position));
                     }
                 } else {
@@ -428,11 +431,11 @@ export class FugueList<P> {
                     // - This index is not contiguous with the previous group
                     if (startIdx === -1) {
                         startIdx = idx;
-                        batchCells = [[new FNode<P>(position, data ? data : undefined)]];
+                        batchCells = [[new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE)]];
                     }
                     // If the index is the same as startIdx, continue the batch
                     else if (idx === startIdx) {
-                        batchCells.push([new FNode<P>(position, data ? data : undefined)]);
+                        batchCells.push([new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE)]);
                     }
                     // The index is different, i.e. not contiguous, so flush the current batch,
                     // commit it and start a new one
@@ -447,7 +450,7 @@ export class FugueList<P> {
                         const shift = idx >= startIdx ? batchCells.length : 0;
 
                         startIdx = idx + shift;
-                        batchCells = [[new FNode<P>(position, data ? data : undefined)]];
+                        batchCells = [[new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE)]];
                     }
                 }
             }
