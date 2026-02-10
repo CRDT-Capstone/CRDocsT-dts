@@ -25,6 +25,7 @@ export interface FugueJoinMessage<P> {
     state: FugueState<P> | null;
     userIdentity?: string;
     collaborators?: string[];
+    offlineChanges?: FugueState<P> | null;
 }
 
 export interface FugueRejectMessage {

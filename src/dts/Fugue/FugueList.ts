@@ -121,8 +121,8 @@ export class FugueList<P> {
      * @param value - Value to insert
      */
     insertMultiple(index: number, value: string) {
-        if (value.length == 0) return;
-        if (value.length == 1) {
+        if (value.length === 0) return;
+        if (value.length === 1) {
             this.insert(index, value);
             return;
         }
@@ -260,7 +260,7 @@ export class FugueList<P> {
      */
     deleteMultiple(index: number, count: number) {
         if (count <= 0) return;
-        if (count == 1) {
+        if (count === 1) {
             this.delete(index);
             return;
         }
@@ -340,7 +340,7 @@ export class FugueList<P> {
      */
     private singleEffect(msg: FugueMessage<P>) {
         const { replicaId, operation, data, position } = msg;
-        if (replicaId == this.totalOrder.getReplicaId()) return;
+        if (replicaId === this.totalOrder.getReplicaId()) return;
 
         switch (operation) {
             case Operation.INSERT:
@@ -363,7 +363,7 @@ export class FugueList<P> {
         // Separate operations
         for (const msg of msgs) {
             const { replicaId, operation, position, data } = msg;
-            if (replicaId == this.totalOrder.getReplicaId()) continue;
+            if (replicaId === this.totalOrder.getReplicaId()) continue;
 
             switch (operation) {
                 case Operation.INSERT:
