@@ -1,3 +1,10 @@
+# [0.23.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.22.0...v0.23.0) (2026-02-10)
+
+
+### Features
+
+* added operations to the node to allow for easier local sync ([b7fd544](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/b7fd5441968d36490cca978cc829bc1358228ba1))
+
 # [0.22.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.21.0...v0.22.0) (2026-02-10)
 
 
