@@ -1,3 +1,10 @@
+# [0.24.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.23.0...v0.24.0) (2026-02-11)
+
+
+### Features
+
+* added replica id to the the join message ([0b174e1](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/0b174e1aaa3910d0ac21848920a6fad21d6b9ba6))
+
 # [0.23.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.22.0...v0.23.0) (2026-02-10)
 
 
