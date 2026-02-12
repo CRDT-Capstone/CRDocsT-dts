@@ -1,6 +1,6 @@
 import { encode, decode } from "@msgpack/msgpack";
 import { compress, decompress } from "lz4js";
-import { FugueState } from "../../../types/index.js";
+import { FugueState } from "../../../types/Fugue/index.js";
 
 function serialize(state: FugueState<string>): Uint8Array<ArrayBufferLike> {
     // const flat = state.flatMap((c) => c.map((n) => [n.position, n.value]));
