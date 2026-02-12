@@ -1,3 +1,38 @@
+# [0.24.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.23.0...v0.24.0) (2026-02-11)
+
+
+### Features
+
+* added replica id to the the join message ([0b174e1](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/0b174e1aaa3910d0ac21848920a6fad21d6b9ba6))
+
+# [0.23.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.22.0...v0.23.0) (2026-02-10)
+
+
+### Features
+
+* added operations to the node to allow for easier local sync ([b7fd544](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/b7fd5441968d36490cca978cc829bc1358228ba1))
+
+# [0.22.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.21.0...v0.22.0) (2026-02-10)
+
+
+### Features
+
+* using proper equals to and adding offline changes to the join message ([52eca42](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/52eca42119f222637045b1da6c023016102433e2))
+
+# [0.21.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.20.1...v0.21.0) (2026-02-05)
+
+
+### Features
+
+* changed email to user identity ([c6c4c8c](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/c6c4c8ce59c4d79173cda3aeef9c9fa68d6a30ee))
+
+## [0.20.1](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.20.0...v0.20.1) (2026-02-05)
+
+
+### Bug Fixes
+
+* remove public access from publish script ([d7b02df](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/d7b02dfde1b4ce6feeb8a54a5e9e1d0e4fadc8ae))
+
 # [0.20.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.19.0...v0.20.0) (2026-02-05)
 
 

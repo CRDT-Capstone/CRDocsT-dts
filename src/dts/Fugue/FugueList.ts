@@ -12,14 +12,14 @@ export class FugueList<P> {
     positionCounter = 0;
     ws: WebSocket | null;
     documentID: string; //documentID consistent with the database documentID
-    email: string | undefined;
+    userIdentity: string | undefined;
     readonly batchSize = 100;
 
-    constructor(totalOrder: UniquelyDenseTotalOrder<P>, ws: WebSocket | null, documentID: string, email?: string) {
+    constructor(totalOrder: UniquelyDenseTotalOrder<P>, ws: WebSocket | null, documentID: string, userIdentity?: string) {
         this.totalOrder = totalOrder;
         this.ws = ws;
         this.documentID = documentID;
-        this.email = email;
+        this.userIdentity = userIdentity;
     }
 
     /**
@@ -69,13 +69,13 @@ export class FugueList<P> {
             // Don't insert if it already exists,
             // TODO: ideally this should trigger a collision resolution
             if (!existing) {
-                cell.push(new FNode<P>(position, value));
+                cell.push(new FNode<P>(position, value, Operation.INSERT));
                 cell.sort((a, b) => this.totalOrder.compare(a.position, b.position));
             }
         }
         // Insert new cell at index
         else {
-            this.state.splice(index, 0, [new FNode<P>(position, value)]);
+            this.state.splice(index, 0, [new FNode<P>(position, value, Operation.INSERT)]);
         }
     }
 
@@ -109,7 +109,7 @@ export class FugueList<P> {
             replicaId: this.totalOrder.getReplicaId(),
             operation: Operation.INSERT,
             position: pos,
-            email: this.email,
+            userIdentity: this.userIdentity,
             data: value,
         });
     }
@@ -121,8 +121,8 @@ export class FugueList<P> {
      * @param value - Value to insert
      */
     insertMultiple(index: number, value: string) {
-        if (value.length == 0) return;
-        if (value.length == 1) {
+        if (value.length === 0) return;
+        if (value.length === 1) {
             this.insert(index, value);
             return;
         }
@@ -138,7 +138,7 @@ export class FugueList<P> {
             const pos = this.totalOrder.createBetween(cL, rA);
 
             // Collect new cells
-            newCells.push([new FNode<P>(pos, c)]);
+            newCells.push([new FNode<P>(pos, c, Operation.INSERT)]);
 
             // Batch propagate
             msgs.push({
@@ -146,7 +146,7 @@ export class FugueList<P> {
                 replicaId: this.totalOrder.getReplicaId(),
                 operation: Operation.INSERT,
                 position: pos,
-                email: this.email,
+                userIdentity: this.userIdentity,
                 data: c,
             });
 
@@ -182,6 +182,7 @@ export class FugueList<P> {
             if (node) {
                 // Tombstone the node, TODO: Implement garbage collection
                 node.value = undefined;
+                node.operation = Operation.DELETE;
                 return;
             }
         }
@@ -247,7 +248,7 @@ export class FugueList<P> {
             replicaId: this.totalOrder.getReplicaId(),
             operation: Operation.DELETE,
             position: position,
-            email: this.email,
+            userIdentity: this.userIdentity,
             data: null,
         });
     }
@@ -260,7 +261,7 @@ export class FugueList<P> {
      */
     deleteMultiple(index: number, count: number) {
         if (count <= 0) return;
-        if (count == 1) {
+        if (count === 1) {
             this.delete(index);
             return;
         }
@@ -278,6 +279,7 @@ export class FugueList<P> {
 
                         // Tombstone the node
                         n.value = undefined;
+                        n.operation = Operation.DELETE;
                         deletedCount++;
 
                         // Batch
@@ -286,7 +288,7 @@ export class FugueList<P> {
                             replicaId: this.totalOrder.getReplicaId(),
                             operation: Operation.DELETE,
                             position: pos,
-                            email: this.email,
+                            userIdentity: this.userIdentity,
                             data: null,
                         });
 
@@ -340,7 +342,7 @@ export class FugueList<P> {
      */
     private singleEffect(msg: FugueMessage<P>) {
         const { replicaId, operation, data, position } = msg;
-        if (replicaId == this.totalOrder.getReplicaId()) return;
+        if (replicaId === this.totalOrder.getReplicaId()) return;
 
         switch (operation) {
             case Operation.INSERT:
@@ -363,7 +365,7 @@ export class FugueList<P> {
         // Separate operations
         for (const msg of msgs) {
             const { replicaId, operation, position, data } = msg;
-            if (replicaId == this.totalOrder.getReplicaId()) continue;
+            if (replicaId === this.totalOrder.getReplicaId()) continue;
 
             switch (operation) {
                 case Operation.INSERT:
@@ -392,6 +394,7 @@ export class FugueList<P> {
 
                     if (node && node.value !== undefined) {
                         node.value = undefined; // Tombstone
+                        node.operation = Operation.DELETE;
                     }
                 }
             }
@@ -419,7 +422,7 @@ export class FugueList<P> {
 
                     // Don't insert if it already exists
                     if (!existing) {
-                        cell.push(new FNode<P>(position, data ? data : undefined));
+                        cell.push(new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE));
                         cell.sort((a, b) => this.totalOrder.compare(a.position, b.position));
                     }
                 } else {
@@ -428,11 +431,11 @@ export class FugueList<P> {
                     // - This index is not contiguous with the previous group
                     if (startIdx === -1) {
                         startIdx = idx;
-                        batchCells = [[new FNode<P>(position, data ? data : undefined)]];
+                        batchCells = [[new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE)]];
                     }
                     // If the index is the same as startIdx, continue the batch
                     else if (idx === startIdx) {
-                        batchCells.push([new FNode<P>(position, data ? data : undefined)]);
+                        batchCells.push([new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE)]);
                     }
                     // The index is different, i.e. not contiguous, so flush the current batch,
                     // commit it and start a new one
@@ -447,7 +450,7 @@ export class FugueList<P> {
                         const shift = idx >= startIdx ? batchCells.length : 0;
 
                         startIdx = idx + shift;
-                        batchCells = [[new FNode<P>(position, data ? data : undefined)]];
+                        batchCells = [[new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE)]];
                     }
                 }
             }

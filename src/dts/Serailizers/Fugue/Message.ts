@@ -24,14 +24,14 @@ function toTuple<P>(msg: FugueMessageType<P>) {
     // Check if msg is of FugueJoinMessage type
     switch (msg.operation) {
         case Operation.JOIN:
-            return [msg.operation, msg.documentID, msg.state, msg.email, msg.collaborators];
+            return [msg.operation, msg.documentID, msg.state, msg.userIdentity, msg.collaborators, msg.offlineChanges, msg.replicaId];
         case Operation.INSERT:
         case Operation.DELETE:
-            return [msg.operation, msg.documentID, msg.replicaId, msg.position, msg.data, msg.email];
+            return [msg.operation, msg.documentID, msg.replicaId, msg.position, msg.data, msg.userIdentity];
         case Operation.REJECT:
             return [msg.operation];
         case Operation.LEAVE:
-            return [msg.operation, msg.email];
+            return [msg.operation, msg.userIdentity];
     }
     throw new Error("Unknown message type");
 }
@@ -43,8 +43,10 @@ function fromTuple<P>(tuple: any[]): FugueMessageType<P> {
                 operation: tuple[0],
                 documentID: tuple[1],
                 state: tuple[2],
-                email: tuple[3],
-                collaborators: tuple[4]
+                userIdentity: tuple[3],
+                collaborators: tuple[4],
+                offlineChanges: tuple[5],
+                replicaId: tuple[6]
             } as FugueJoinMessage<P>;
         case Operation.INSERT:
         case Operation.DELETE:
@@ -54,7 +56,7 @@ function fromTuple<P>(tuple: any[]): FugueMessageType<P> {
                 replicaId: tuple[2],
                 position: tuple[3],
                 data: tuple[4],
-                email: tuple[5],
+                userIdentity: tuple[5],
             } as FugueMessage<P>;
         case Operation.REJECT:
             return {
@@ -63,7 +65,7 @@ function fromTuple<P>(tuple: any[]): FugueMessageType<P> {
         case Operation.LEAVE:
             return {
                 operation: tuple[0],
-                email: tuple[1]
+                userIdentity: tuple[1]
             } as FugueLeaveMessage;
     }
     throw new Error("Unknown tuple format");

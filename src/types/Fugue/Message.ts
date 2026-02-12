@@ -5,7 +5,7 @@ export enum Operation {
     DELETE,
     JOIN,
     REJECT,
-    LEAVE
+    LEAVE,
 }
 
 export type Data = string;
@@ -16,15 +16,17 @@ export interface FugueMessage<P> {
     replicaId: string;
     position: P;
     data: Data | null;
-    email?: string;
+    userIdentity?: string;
 }
 
 export interface FugueJoinMessage<P> {
     operation: Operation.JOIN;
     documentID: string;
     state: FugueState<P> | null;
-    email?: string;
+    userIdentity?: string;
     collaborators?: string[];
+    offlineChanges?: FugueState<P> | null;
+    replicaId?: string;
 }
 
 export interface FugueRejectMessage {
@@ -33,7 +35,9 @@ export interface FugueRejectMessage {
 
 export interface FugueLeaveMessage {
     operation: Operation.LEAVE;
-    email: string
+    userIdentity: string;
 }
 
 export type FugueMessageType<P> = FugueMessage<P> | FugueJoinMessage<P> | FugueRejectMessage | FugueLeaveMessage;
+
+export type FugueMutationMessageTypes<P> = Extract<FugueMessageType<P>, FugueMessage<P> | FugueJoinMessage<P>>;
