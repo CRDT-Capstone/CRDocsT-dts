@@ -1,12 +1,5 @@
 import { encode, decode } from "@msgpack/msgpack";
-import {
-    FugueMessage,
-    FugueJoinMessage,
-    FugueMessageType,
-    Operation,
-    FugueRejectMessage,
-    FugueLeaveMessage,
-} from "../../../types/FugueTree/index.js";
+import { FugueMessageType } from "../../../types/FugueTree/index.js";
 
 function serialize(msgs: FugueMessageType[]) {
     return encode(msgs);

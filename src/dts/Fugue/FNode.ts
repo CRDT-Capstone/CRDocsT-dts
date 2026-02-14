@@ -1,6 +1,6 @@
 import { Operation } from "../../types";
 
-export class FNode<P> {
+export class FListNode<P> {
     value?: string;
     operation?: Operation;
     position: P;

@@ -27,6 +27,13 @@ export interface FNodeSave {
     rightOrigin?: ID | null;
 }
 
+/**
+ * FTree is a CRDT for collaborative text editing. It represents the document as a tree of nodes,
+ * where each node corresponds to a character. The tree structure encodes the relative ordering
+ * of characters, and each node has a unique ID that allows it to be referenced by other nodes.
+ * The tree supports insertions and deletions of characters, and can be traversed in order to reconstruct the document text.
+ *
+ */
 export class FTree {
     readonly root: FNode;
 

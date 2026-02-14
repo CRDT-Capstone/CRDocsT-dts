@@ -1,5 +1,4 @@
 import { FugueMessage, Operation } from "../../types/FugueTree/Message.js";
-import { ContributorSchema } from "../../types/index.js";
 import { randomString } from "../../utils/index.js";
 import { FugueMessageSerialzier } from "../Serailizers/FugueTree/index.js";
 import { FNode, FTree, ID } from "./FTree.js";

@@ -1,4 +1,4 @@
-import { FNode } from "./FNode.js";
+import { FListNode } from "./FNode.js";
 import { FugueState, FugueMessage, Operation } from "../../types/Fugue/index.js";
 import { UniquelyDenseTotalOrder } from "../TotalOrder/UniquelyDenseTotalOrder.js";
 import { FugueMessageSerialzier } from "../Serailizers/Fugue/index.js";
@@ -74,13 +74,13 @@ export class FugueList<P> {
             // Don't insert if it already exists,
             // TODO: ideally this should trigger a collision resolution
             if (!existing) {
-                cell.push(new FNode<P>(position, value, Operation.INSERT));
+                cell.push(new FListNode<P>(position, value, Operation.INSERT));
                 cell.sort((a, b) => this.totalOrder.compare(a.position, b.position));
             }
         }
         // Insert new cell at index
         else {
-            this.state.splice(index, 0, [new FNode<P>(position, value, Operation.INSERT)]);
+            this.state.splice(index, 0, [new FListNode<P>(position, value, Operation.INSERT)]);
         }
     }
 
@@ -134,7 +134,7 @@ export class FugueList<P> {
         // Find left and right anchors
         const lA = index > 0 ? this.findVisiblePosition(index - 1) : undefined;
         const rA = this.findVisiblePosition(index);
-        const newCells: FNode<P>[][] = [];
+        const newCells: FListNode<P>[][] = [];
 
         let cL = lA;
         let msgs: FugueMessage<P>[] = [];
@@ -142,7 +142,7 @@ export class FugueList<P> {
             const pos = this.totalOrder.createBetween(cL, rA);
 
             // Collect new cells
-            newCells.push([new FNode<P>(pos, c, Operation.INSERT)]);
+            newCells.push([new FListNode<P>(pos, c, Operation.INSERT)]);
 
             // Batch propagate
             msgs.push({
@@ -408,7 +408,7 @@ export class FugueList<P> {
             inserts.sort((a, b) => this.totalOrder.compare(a.position, b.position));
 
             // Group into chunks, of contiguous inserts
-            let batchCells: FNode<P>[][] = [];
+            let batchCells: FListNode<P>[][] = [];
             let startIdx = -1;
 
             for (const msg of inserts) {
@@ -426,7 +426,11 @@ export class FugueList<P> {
                     // Don't insert if it already exists
                     if (!existing) {
                         cell.push(
-                            new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE),
+                            new FListNode<P>(
+                                position,
+                                data ? data : undefined,
+                                data ? Operation.INSERT : Operation.DELETE,
+                            ),
                         );
                         cell.sort((a, b) => this.totalOrder.compare(a.position, b.position));
                     }
@@ -438,7 +442,7 @@ export class FugueList<P> {
                         startIdx = idx;
                         batchCells = [
                             [
-                                new FNode<P>(
+                                new FListNode<P>(
                                     position,
                                     data ? data : undefined,
                                     data ? Operation.INSERT : Operation.DELETE,
@@ -449,7 +453,11 @@ export class FugueList<P> {
                     // If the index is the same as startIdx, continue the batch
                     else if (idx === startIdx) {
                         batchCells.push([
-                            new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE),
+                            new FListNode<P>(
+                                position,
+                                data ? data : undefined,
+                                data ? Operation.INSERT : Operation.DELETE,
+                            ),
                         ]);
                     }
                     // The index is different, i.e. not contiguous, so flush the current batch,
@@ -467,7 +475,7 @@ export class FugueList<P> {
                         startIdx = idx + shift;
                         batchCells = [
                             [
-                                new FNode<P>(
+                                new FListNode<P>(
                                     position,
                                     data ? data : undefined,
                                     data ? Operation.INSERT : Operation.DELETE,
