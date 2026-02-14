@@ -1,3 +1,4 @@
+// Adapted from https://github.com/mweidner037/fugue/blob/main/fugue-max-simple/src/index.ts
 export type NodeSide = "L" | "R";
 
 export type ID = {
@@ -100,7 +101,7 @@ export class FTree {
             rightSibs.splice(i, 0, node);
         } else {
             const leftSibs = parent.leftChildren;
-            // Siblings are in lexicographic order by id.sender.
+            // Siblings are sorted in lexicographic order by id.sender.
             let i = 0;
             for (; i < leftSibs.length; i++) {
                 if (!(node.id.sender > leftSibs[i].id.sender)) break;
@@ -117,44 +118,44 @@ export class FTree {
         // Walk one node up the tree until they are both the same depth.
         const aDepth = this.depth(a);
         const bDepth = this.depth(b);
-        let aAnc = a;
-        let bAnc = b;
+        let aAn = a;
+        let bAn = b;
         if (aDepth > bDepth) {
-            let lastSide: "L" | "R";
+            let lastSide: NodeSide;
             for (let i = aDepth; i > bDepth; i--) {
-                lastSide = aAnc.side;
-                aAnc = aAnc.parent!;
+                lastSide = aAn.side;
+                aAn = aAn.parent!;
             }
-            if (aAnc === b) {
+            if (aAn === b) {
                 // a is a descendant of b on lastSide.
                 return lastSide! === "L";
             }
         }
         if (bDepth > aDepth) {
-            let lastSide: "L" | "R";
+            let lastSide: NodeSide;
             for (let i = bDepth; i > aDepth; i--) {
-                lastSide = bAnc.side;
-                bAnc = bAnc.parent!;
+                lastSide = bAn.side;
+                bAn = bAn.parent!;
             }
-            if (bAnc === a) {
+            if (bAn === a) {
                 // b is a descendant of a on lastSide.
                 return lastSide! === "R";
             }
         }
 
         // Walk both nodes up the tree until we find a common ancestor.
-        while (aAnc.parent !== bAnc.parent) {
+        while (aAn.parent !== bAn.parent) {
             // If we reach the root, the loop will terminate, so both parents
             // are non-null here.
-            aAnc = aAnc.parent!;
-            bAnc = bAnc.parent!;
+            aAn = aAn.parent!;
+            bAn = bAn.parent!;
         }
-        // Now aAnc and bAnc are distinct siblings. See how they are sorted
+        // Now aAn and bAn are distinct siblings. See how they are sorted
         // in their parent's child arrays.
-        if (aAnc.side !== bAnc.side) return aAnc.side === "L";
+        if (aAn.side !== bAn.side) return aAn.side === "L";
         else {
-            const siblings = aAnc.side === "L" ? aAnc.parent!.leftChildren : aAnc.parent!.rightChildren;
-            return siblings.indexOf(aAnc) < siblings.indexOf(bAnc);
+            const siblings = aAn.side === "L" ? aAn.parent!.leftChildren : aAn.parent!.rightChildren;
+            return siblings.indexOf(aAn) < siblings.indexOf(bAn);
         }
     }
 
@@ -267,7 +268,7 @@ export class FTree {
         // Stack records the next child to visit for that node.
         // We don't need to store node because we can infer it from the
         // current node's parent etc.
-        const stack: { side: "L" | "R"; childIndex: number }[] = [{ side: "L", childIndex: 0 }];
+        const stack: { side: NodeSide; childIndex: number }[] = [{ side: "L", childIndex: 0 }];
         while (true) {
             const top = stack[stack.length - 1];
             const children = top.side === "L" ? current.leftChildren : current.rightChildren;

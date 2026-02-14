@@ -1,4 +1,5 @@
 import { FugueMessage, Operation } from "../../types/FugueTree/Message.js";
+import { ContributorSchema } from "../../types/index.js";
 import { randomString } from "../../utils/index.js";
 import { FugueMessageSerialzier } from "../Serailizers/FugueTree/index.js";
 import { FNode, FTree, ID } from "./FTree.js";
@@ -10,7 +11,7 @@ export class FugueTree {
     documentID: string; //documentID consistent with the database documentID
     readonly replicaID = randomString(3);
     userIdentity: string | undefined;
-    pendingMsgs: FugueMessage[] = [];
+    pendingMsgs = new Map<string, FugueMessage>();
     readonly batchSize = 100;
 
     constructor(ws: WebSocket | null, documentID: string, userIdentity?: string) {
@@ -18,6 +19,10 @@ export class FugueTree {
         this.documentID = documentID;
         this.userIdentity = userIdentity;
         this.tree = new FTree();
+    }
+
+    private makeMsgKey(msg: FugueMessage): string {
+        return `${msg.replicaId}-${msg.id.counter}`;
     }
 
     /**
@@ -75,14 +80,24 @@ export class FugueTree {
     }
 
     insertMultiple(index: number, values: string) {
+        let msgs: FugueMessage[] = [];
         for (let i = 0; i < values.length; i++) {
             const val = values[i];
             const idx = index + i;
             const msg = this.insertImpl(idx, val);
 
             this.tree.addNode(msg.id, val, this.tree.getByID(msg.parent!), msg.side, msg.rightOrigin);
+            msgs.push(msg);
 
-            this.propagate(msg);
+            if (msgs.length >= this.batchSize) {
+                this.propagate(msgs);
+                msgs = [];
+            }
+        }
+
+        if (msgs.length > 0) {
+            this.propagate(msgs);
+            msgs = [];
         }
     }
 
@@ -93,14 +108,15 @@ export class FugueTree {
         this.propagate(msg);
     }
 
-    deleteMultiple(index: number, length: number) {
-        for (let i = 0; i < length; i++) {
-            this.delete(index);
-        }
-    }
-
-    delete(index: number) {
+    private deleteImpl(index: number) {
         const node = this.tree.getByIndex(this.tree.root, index);
+
+        if (!node.isDeleted) {
+            node.value = null;
+            node.isDeleted = true;
+            this.tree.updateSize(node, -1);
+        }
+
         const msg: FugueMessage = {
             operation: Operation.DELETE,
             documentID: this.documentID,
@@ -111,11 +127,29 @@ export class FugueTree {
             side: "R",
         };
 
-        if (!node.isDeleted) {
-            node.value = null;
-            node.isDeleted = true;
-            this.tree.updateSize(node, -1);
+        return msg;
+    }
+
+    deleteMultiple(index: number, length: number) {
+        let msgs: FugueMessage[] = [];
+        for (let i = 0; i < length; i++) {
+            const msg = this.deleteImpl(index);
+            msgs.push(msg);
+
+            if (msgs.length >= this.batchSize) {
+                this.propagate(msgs);
+                msgs = [];
+            }
         }
+
+        if (msgs.length > 0) {
+            this.propagate(msgs);
+            msgs = [];
+        }
+    }
+
+    delete(index: number) {
+        const msg = this.deleteImpl(index);
         this.propagate(msg);
     }
 
@@ -149,45 +183,22 @@ export class FugueTree {
         }
     }
 
-    /**
-     * Applies a single effect message to the list
-     * @param msg - Message to apply effect for
-     */
-    private singleEffect(msg: FugueMessage, applied: FugueMessage[]) {
-        const { replicaId } = msg;
-        if (replicaId === this.replicaID) return;
-
-        const succ = this.applyToTree(msg);
-
-        if (!succ) {
-            if (!this.pendingMsgs.some((m) => m.id.counter === msg.id.counter && m.replicaId === msg.replicaId)) {
-                this.pendingMsgs.push(msg);
-            }
-        } else {
-            applied.push(msg);
-            this.processPending(applied);
-        }
-    }
-
     private processPending(applied: FugueMessage[]) {
         let changed = true;
 
         // Iteratively try to apply pending messages until no more can be applied
         // This avoids recursion and handles deep causal chains (A -> B -> C)
-        while (changed && this.pendingMsgs.length > 0) {
+        while (changed && this.pendingMsgs.size > 0) {
             changed = false;
-            const stillPending: FugueMessage[] = [];
 
-            for (const msg of this.pendingMsgs) {
+            for (const [id, msg] of this.pendingMsgs) {
                 // Use applyToTree directly to avoid triggering processPending recursively
                 if (this.applyToTree(msg)) {
                     applied.push(msg);
+                    this.pendingMsgs.delete(id);
                     changed = true;
-                } else {
-                    stillPending.push(msg);
                 }
             }
-            this.pendingMsgs = stillPending;
         }
     }
 
@@ -197,13 +208,24 @@ export class FugueTree {
      */
     effect(msg: FugueMessage | FugueMessage[]) {
         const applied: FugueMessage[] = [];
-        if (Array.isArray(msg)) {
-            for (const m of msg) {
-                this.singleEffect(m, applied);
+        const msgs = Array.isArray(msg) ? msg : [msg];
+        for (const msg of msgs) {
+            // Skip messages from this replica
+            if (msg.replicaId == this.replicaId()) continue;
+
+            const succ = this.applyToTree(msg);
+            if (succ) {
+                applied.push(msg);
+            } else {
+                // Deduplication
+                if (!this.pendingMsgs.has(this.makeMsgKey(msg))) this.pendingMsgs.set(this.makeMsgKey(msg), msg);
             }
-        } else {
-            this.singleEffect(msg, applied);
         }
+
+        if (applied.length > 0) {
+            this.processPending(applied);
+        }
+
         return applied;
     }
 
