@@ -91,6 +91,7 @@ export class FugueTree {
                 documentID: this.documentID,
             };
         }
+        msg.userIdentity = this.userIdentity;
 
         return msg;
     }
@@ -185,18 +186,15 @@ export class FugueTree {
 
             // Propagate this batch
             if (msgs.length >= this.batchSize) {
-
                 if (this.ws?.readyState === WebSocket.OPEN) {
                     this.propagate(msgs);
                     msgs = [];
                 }
-
             }
         }
 
         // Propagate any remaining messages that didn't fill up the last batch
         if (msgs.length > 0) {
-
             if (this.ws?.readyState === WebSocket.OPEN) {
                 this.propagate(msgs);
                 msgs = [];

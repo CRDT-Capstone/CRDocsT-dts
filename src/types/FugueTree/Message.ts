@@ -37,6 +37,7 @@ export interface FugueJoinMessage {
 
 export interface FugueRejectMessage {
     operation: Operation.REJECT;
+    reason: string;
 }
 
 export interface FugueLeaveMessage {
@@ -49,6 +50,11 @@ export interface FugueUserJoinMessage {
     userIdentity: string;
 }
 
-export type FugueMessageType = FugueMessage | FugueJoinMessage | FugueRejectMessage | FugueLeaveMessage | FugueUserJoinMessage;
+export type FugueMessageType =
+    | FugueMessage
+    | FugueJoinMessage
+    | FugueRejectMessage
+    | FugueLeaveMessage
+    | FugueUserJoinMessage;
 
 export type FugueMutationMessageTypes = Extract<FugueMessageType, FugueMessage | FugueJoinMessage>;
