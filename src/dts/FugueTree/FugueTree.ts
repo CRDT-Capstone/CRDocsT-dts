@@ -89,15 +89,20 @@ export class FugueTree {
             msgs.push(msg);
 
             if (msgs.length >= this.batchSize) {
-                this.propagate(msgs);
-                msgs = [];
+                if (this.ws?.readyState === WebSocket.OPEN) {
+                    this.propagate(msgs);
+                    msgs = [];
+                }
             }
         }
 
         if (msgs.length > 0) {
-            this.propagate(msgs);
-            msgs = [];
+            if (this.ws?.readyState === WebSocket.OPEN) {
+                this.propagate(msgs);
+                msgs = [];
+            }
         }
+        return msgs;
     }
 
     insert(index: number, value: string) {
@@ -136,15 +141,24 @@ export class FugueTree {
             msgs.push(msg);
 
             if (msgs.length >= this.batchSize) {
+
+                if (this.ws?.readyState === WebSocket.OPEN) {
+                    this.propagate(msgs);
+                    msgs = [];
+                }
+
+            }
+        }
+
+        if (msgs.length > 0) {
+
+            if (this.ws?.readyState === WebSocket.OPEN) {
                 this.propagate(msgs);
                 msgs = [];
             }
         }
 
-        if (msgs.length > 0) {
-            this.propagate(msgs);
-            msgs = [];
-        }
+        return msgs;
     }
 
     delete(index: number) {
