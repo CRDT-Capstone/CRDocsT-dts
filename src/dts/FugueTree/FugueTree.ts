@@ -80,6 +80,7 @@ export class FugueTree {
 
     insertMultiple(index: number, values: string) {
         let msgs: FugueMessage[] = [];
+        let returnedMsgs: FugueMessage[] = []; //we need this to return messages whether or not we're online
         for (let i = 0; i < values.length; i++) {
             const val = values[i];
             const idx = index + i;
@@ -87,6 +88,7 @@ export class FugueTree {
 
             this.tree.addNode(msg.id, val, this.tree.getByID(msg.parent!), msg.side, msg.rightOrigin);
             msgs.push(msg);
+            returnedMsgs.push(msg);
 
             if (msgs.length >= this.batchSize) {
                 if (this.ws?.readyState === WebSocket.OPEN) {
@@ -102,7 +104,7 @@ export class FugueTree {
                 msgs = [];
             }
         }
-        return msgs;
+        return returnedMsgs;
     }
 
     insert(index: number, value: string) {
@@ -136,9 +138,11 @@ export class FugueTree {
 
     deleteMultiple(index: number, length: number) {
         let msgs: FugueMessage[] = [];
+        let returnedMsgs: FugueMessage[] = [];
         for (let i = 0; i < length; i++) {
             const msg = this.deleteImpl(index);
             msgs.push(msg);
+            returnedMsgs.push(msg);
 
             if (msgs.length >= this.batchSize) {
 
@@ -158,7 +162,7 @@ export class FugueTree {
             }
         }
 
-        return msgs;
+        return returnedMsgs;
     }
 
     delete(index: number) {

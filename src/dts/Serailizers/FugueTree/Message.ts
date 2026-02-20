@@ -5,12 +5,23 @@ function serialize(msgs: FugueMessageType[]) {
     return encode(msgs);
 }
 
+function serializeSingleMessage(msg: FugueMessageType) {
+    return encode(msg);
+}
+
 function deserialize(data: Uint8Array): FugueMessageType[] {
     const dec = decode(data);
     return dec as FugueMessageType[];
 }
 
+function deserializeSingleMessage(data: Uint8Array): FugueMessageType {
+    const dec = decode(data);
+    return dec as FugueMessageType;
+}
+
 export const FugueMessageSerialzier = {
     serialize,
+    serializeSingleMessage,
     deserialize,
+    deserializeSingleMessage
 };
