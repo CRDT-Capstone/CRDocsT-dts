@@ -1,7 +1,7 @@
-import { FNode } from "./FNode.js";
-import { FugueState, FugueMessage, Operation } from "../../types/index.js";
+import { FListNode } from "./FNode.js";
+import { FugueState, FugueMessage, Operation } from "../../types/Fugue/index.js";
 import { UniquelyDenseTotalOrder } from "../TotalOrder/UniquelyDenseTotalOrder.js";
-import { FugueMessageSerialzier } from "../Serailizers/index.js";
+import { FugueMessageSerialzier } from "../Serailizers/Fugue/index.js";
 
 /**
  * A Fugue List CRDT, with insert and delete operations
@@ -15,7 +15,12 @@ export class FugueList<P> {
     userIdentity: string | undefined;
     readonly batchSize = 100;
 
-    constructor(totalOrder: UniquelyDenseTotalOrder<P>, ws: WebSocket | null, documentID: string, userIdentity?: string) {
+    constructor(
+        totalOrder: UniquelyDenseTotalOrder<P>,
+        ws: WebSocket | null,
+        documentID: string,
+        userIdentity?: string,
+    ) {
         this.totalOrder = totalOrder;
         this.ws = ws;
         this.documentID = documentID;
@@ -69,13 +74,13 @@ export class FugueList<P> {
             // Don't insert if it already exists,
             // TODO: ideally this should trigger a collision resolution
             if (!existing) {
-                cell.push(new FNode<P>(position, value, Operation.INSERT));
+                cell.push(new FListNode<P>(position, value, Operation.INSERT));
                 cell.sort((a, b) => this.totalOrder.compare(a.position, b.position));
             }
         }
         // Insert new cell at index
         else {
-            this.state.splice(index, 0, [new FNode<P>(position, value, Operation.INSERT)]);
+            this.state.splice(index, 0, [new FListNode<P>(position, value, Operation.INSERT)]);
         }
     }
 
@@ -100,7 +105,6 @@ export class FugueList<P> {
      */
     insert(index: number, value: string) {
         const pos = this.generatePosition(index);
-        console.log({ index, pos });
 
         this.insertAtPosition(pos, value);
 
@@ -130,7 +134,7 @@ export class FugueList<P> {
         // Find left and right anchors
         const lA = index > 0 ? this.findVisiblePosition(index - 1) : undefined;
         const rA = this.findVisiblePosition(index);
-        const newCells: FNode<P>[][] = [];
+        const newCells: FListNode<P>[][] = [];
 
         let cL = lA;
         let msgs: FugueMessage<P>[] = [];
@@ -138,7 +142,7 @@ export class FugueList<P> {
             const pos = this.totalOrder.createBetween(cL, rA);
 
             // Collect new cells
-            newCells.push([new FNode<P>(pos, c, Operation.INSERT)]);
+            newCells.push([new FListNode<P>(pos, c, Operation.INSERT)]);
 
             // Batch propagate
             msgs.push({
@@ -233,7 +237,6 @@ export class FugueList<P> {
      */
     delete(index: number) {
         const position = this.findVisiblePosition(index);
-        console.log({ index, position });
 
         if (!position) {
             console.warn(`No element at position -> ${position}`);
@@ -405,7 +408,7 @@ export class FugueList<P> {
             inserts.sort((a, b) => this.totalOrder.compare(a.position, b.position));
 
             // Group into chunks, of contiguous inserts
-            let batchCells: FNode<P>[][] = [];
+            let batchCells: FListNode<P>[][] = [];
             let startIdx = -1;
 
             for (const msg of inserts) {
@@ -422,7 +425,13 @@ export class FugueList<P> {
 
                     // Don't insert if it already exists
                     if (!existing) {
-                        cell.push(new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE));
+                        cell.push(
+                            new FListNode<P>(
+                                position,
+                                data ? data : undefined,
+                                data ? Operation.INSERT : Operation.DELETE,
+                            ),
+                        );
                         cell.sort((a, b) => this.totalOrder.compare(a.position, b.position));
                     }
                 } else {
@@ -431,11 +440,25 @@ export class FugueList<P> {
                     // - This index is not contiguous with the previous group
                     if (startIdx === -1) {
                         startIdx = idx;
-                        batchCells = [[new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE)]];
+                        batchCells = [
+                            [
+                                new FListNode<P>(
+                                    position,
+                                    data ? data : undefined,
+                                    data ? Operation.INSERT : Operation.DELETE,
+                                ),
+                            ],
+                        ];
                     }
                     // If the index is the same as startIdx, continue the batch
                     else if (idx === startIdx) {
-                        batchCells.push([new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE)]);
+                        batchCells.push([
+                            new FListNode<P>(
+                                position,
+                                data ? data : undefined,
+                                data ? Operation.INSERT : Operation.DELETE,
+                            ),
+                        ]);
                     }
                     // The index is different, i.e. not contiguous, so flush the current batch,
                     // commit it and start a new one
@@ -450,7 +473,15 @@ export class FugueList<P> {
                         const shift = idx >= startIdx ? batchCells.length : 0;
 
                         startIdx = idx + shift;
-                        batchCells = [[new FNode<P>(position, data ? data : undefined, data ? Operation.INSERT : Operation.DELETE)]];
+                        batchCells = [
+                            [
+                                new FListNode<P>(
+                                    position,
+                                    data ? data : undefined,
+                                    data ? Operation.INSERT : Operation.DELETE,
+                                ),
+                            ],
+                        ];
                     }
                 }
             }

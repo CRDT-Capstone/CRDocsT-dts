@@ -1,3 +1,3 @@
-import { FNode } from "../../dts/index.js";
+import { FListNode } from "../../dts/Fugue/FNode.js";
 
-export type FugueState<P> = FNode<P>[][];
+export type FugueState<P> = FListNode<P>[][];

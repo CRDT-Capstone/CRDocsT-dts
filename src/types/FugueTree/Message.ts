@@ -1,0 +1,60 @@
+import { ID, NodeSide } from "../../dts/FugueTree/FTree";
+
+export enum Operation {
+    INSERT,
+    DELETE,
+    JOIN,
+    REJECT,
+    LEAVE,
+}
+
+export type Data = string;
+
+export interface FugueMessage {
+    operation: Operation.INSERT | Operation.DELETE;
+    documentID: string;
+    replicaId: string;
+    id: ID;
+    data: Data | null;
+    side: NodeSide;
+    parent?: ID;
+    rightOrigin?: ID;
+    userIdentity?: string;
+}
+
+export interface FugueJoinMessage {
+    operation: Operation.JOIN;
+    documentID: string;
+    userIdentity?: string;
+    collaborators?: string[];
+    state: Uint8Array<ArrayBufferLike> | null;
+    //the existing state of the document 
+    bufferedOperations?: Buffer<ArrayBuffer>[];
+    //We buffer all operations
+
+    replicaId?: string;
+}
+
+export interface FugueRejectMessage {
+    operation: Operation.REJECT;
+    reason: string;
+}
+
+export interface FugueLeaveMessage {
+    operation: Operation.LEAVE;
+    userIdentity: string;
+}
+
+export interface FugueUserJoinMessage {
+    operation: Operation.JOIN;
+    userIdentity: string;
+}
+
+export type FugueMessageType =
+    | FugueMessage
+    | FugueJoinMessage
+    | FugueRejectMessage
+    | FugueLeaveMessage
+    | FugueUserJoinMessage;
+
+export type FugueMutationMessageTypes = Extract<FugueMessageType, FugueMessage | FugueJoinMessage>;
