@@ -1,3 +1,16 @@
+# [0.25.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.24.0...v0.25.0) (2026-02-20)
+
+
+### Bug Fixes
+
+* update types in StringTotalOrder ([5f7fd06](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/5f7fd06be4087ca523c6b1cacd1d5d89b1e12328))
+
+
+### Features
+
+* Add userIdentity to message structure ([ca7874a](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/ca7874a0bb4bee4fa7453cae8b6f344eecb5c984))
+* **FugueTree:** add implementation of Fugue Tree ([3400427](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/340042761169d1425d1e7d1e4ad8092d1b462c80))
+
 # [0.24.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.23.0...v0.24.0) (2026-02-11)
 
 
