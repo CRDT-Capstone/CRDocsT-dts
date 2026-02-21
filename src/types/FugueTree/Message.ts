@@ -29,7 +29,8 @@ export interface FugueJoinMessage {
     collaborators?: string[];
     state: Uint8Array<ArrayBufferLike> | null;
     //the existing state of the document 
-    bufferedOperations?: Buffer<ArrayBuffer>[];
+    //bufferedOperations?: Buffer<ArrayBuffer>[];
+    bufferedOperations?: string[];
     //We buffer all operations
 
     replicaId?: string;
