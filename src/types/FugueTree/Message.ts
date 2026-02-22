@@ -3,51 +3,68 @@ import { ID, NodeSide } from "../../dts/FugueTree/FTree";
 export enum Operation {
     INSERT,
     DELETE,
-    JOIN,
+    INITIAL_SYNC,
+    USER_JOIN,
     REJECT,
     LEAVE,
 }
 
+export function operationToString(op: Operation): string {
+    switch (op) {
+        case Operation.INSERT:
+            return "INSERT";
+        case Operation.DELETE:
+            return "DELETE";
+        case Operation.INITIAL_SYNC:
+            return "INITIAL_SYNC";
+        case Operation.USER_JOIN:
+            return "USER_JOIN";
+        case Operation.REJECT:
+            return "REJECT";
+        case Operation.LEAVE:
+            return "LEAVE";
+        default:
+            return "UNKNOWN_OPERATION";
+    }
+}
+
 export type Data = string;
 
-export interface FugueMessage {
-    operation: Operation.INSERT | Operation.DELETE;
+// Base message interface that all other message types will extend
+export interface BaseFugueMessage<T extends Operation = Operation> {
+    operation: T;
     documentID: string;
     replicaId: string;
+    userIdentity: string; // All users should be identified even anonymous users
+}
+
+export interface FugueMessage extends BaseFugueMessage<Operation.INSERT | Operation.DELETE> {
     id: ID;
     data: Data | null;
     side: NodeSide;
     parent?: ID;
     rightOrigin?: ID;
-    userIdentity?: string;
 }
 
-export interface FugueJoinMessage {
-    operation: Operation.JOIN;
-    documentID: string;
-    userIdentity?: string;
-    collaborators?: string[];
+export interface FugueJoinMessage extends BaseFugueMessage<Operation.INITIAL_SYNC> {
     state: Uint8Array<ArrayBufferLike> | null;
-    //the existing state of the document 
+    //the existing state of the document
     bufferedOperations?: Buffer<ArrayBuffer>[];
     //We buffer all operations
-
-    replicaId?: string;
 }
 
-export interface FugueRejectMessage {
-    operation: Operation.REJECT;
+export interface FugueRejectMessage extends BaseFugueMessage<Operation.REJECT> {
+    documentID: string;
     reason: string;
 }
 
-export interface FugueLeaveMessage {
-    operation: Operation.LEAVE;
+export interface FugueLeaveMessage extends BaseFugueMessage<Operation.LEAVE> {
     userIdentity: string;
+    collaborators: string[];
 }
 
-export interface FugueUserJoinMessage {
-    operation: Operation.JOIN;
-    userIdentity: string;
+export interface FugueUserJoinMessage extends BaseFugueMessage<Operation.USER_JOIN> {
+    collaborators: string[];
 }
 
 export type FugueMessageType =

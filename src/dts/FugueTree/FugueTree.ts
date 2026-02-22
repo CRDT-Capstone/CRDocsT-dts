@@ -12,12 +12,12 @@ export class FugueTree {
     ws: WebSocket | null;
     documentID: string;
     readonly replicaID = randomString(3);
-    userIdentity: string | undefined;
+    userIdentity: string;
     pendingMsgs = new Map<string, FugueMessage>();
     // Tentative
     readonly batchSize = 100;
 
-    constructor(ws: WebSocket | null, documentID: string, userIdentity?: string) {
+    constructor(ws: WebSocket | null, documentID: string, userIdentity: string) {
         this.ws = ws;
         this.documentID = documentID;
         this.userIdentity = userIdentity;
@@ -63,6 +63,7 @@ export class FugueTree {
             // leftOrigin has no right children, so the new node becomes
             // a right child of leftOrigin.
             msg = {
+                userIdentity: this.userIdentity,
                 operation: Operation.INSERT,
                 id,
                 data: value,
@@ -82,6 +83,7 @@ export class FugueTree {
             // first right child.
             const rightOrigin = this.tree.leftmostDescendant(leftOrigin.rightChildren[0]);
             msg = {
+                userIdentity: this.userIdentity,
                 operation: Operation.INSERT,
                 id,
                 data: value,

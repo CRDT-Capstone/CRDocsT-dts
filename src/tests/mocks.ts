@@ -7,4 +7,4 @@ export const emptyFugueList = new FugueList<string>(
     crypto.randomBytes(24).toString("hex"),
 );
 
-export const emptyFugueTree = new FugueTree(null, crypto.randomBytes(24).toString("hex"), undefined);
+export const emptyFugueTree = new FugueTree(null, crypto.randomBytes(24).toString("hex"), "test-tree");
