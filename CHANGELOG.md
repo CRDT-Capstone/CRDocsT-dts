@@ -1,3 +1,10 @@
+# [0.26.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.25.0...v0.26.0) (2026-02-23)
+
+
+### Features
+
+* Add Project schema to Models ([3336a26](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/3336a269d0c7707269dcb8a878fff818032f03fa))
+
 # [0.25.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.24.0...v0.25.0) (2026-02-20)
 
 
