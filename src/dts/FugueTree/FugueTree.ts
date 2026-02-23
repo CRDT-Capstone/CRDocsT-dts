@@ -231,6 +231,7 @@ export class FugueTree {
                     this.tree.addNode(id, data, this.tree.getByID(parent), side, rightOrigin);
                     return true;
                 } catch (e) {
+                    //console.log('Error from insert -> ', e);
                     return false;
                 }
             case Operation.DELETE:
@@ -243,6 +244,7 @@ export class FugueTree {
                     }
                     return true;
                 } catch (e) {
+                    //console.log('Error from delete -> ', e);
                     return false;
                 }
             default:
@@ -286,6 +288,7 @@ export class FugueTree {
             if (msg.replicaId == this.replicaId()) continue;
 
             const succ = this.applyToTree(msg);
+            console.log('Succeed? -> ', succ);
             if (succ) {
                 applied.push(msg);
             } else {
@@ -382,5 +385,9 @@ export class FugueTree {
      */
     getVisibleIndex(node: FNode) {
         return this.tree.getVisibleIndex(node);
+    }
+
+    getState(){
+        return this.tree;
     }
 }

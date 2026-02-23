@@ -435,7 +435,7 @@ export class FTree {
                 return nodeSave;
             });
         }
-        return new Uint8Array(Buffer.from(JSON.stringify(save)));
+        return new TextEncoder().encode(JSON.stringify(save)); //allows us to encode from the frontend
     }
 
     /**
@@ -524,5 +524,10 @@ export class FTree {
         if (pendingNodes.size !== 0) {
             throw new Error("Failed to validate all nodes");
         }
+    }
+
+
+    getNodes(){
+        return this.nodes;
     }
 }
