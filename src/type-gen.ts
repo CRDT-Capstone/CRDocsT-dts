@@ -1,11 +1,12 @@
-import * as fs from "fs";
+// Inspired by https://github.com/github/semantic/tree/main/semantic-ast
+import { writeFileSync, readFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const dir = dirname(__filename);
 const INPUT_PATH = join(dir, "node-types.json"); // Adjust as needed
-const OUTPUT_PATH = join(dir, "types", "AST.ts");
+const OUTPUT_PATH = join(dir, "treesitter", "types", "AST.ts");
 
 interface NodeTypeReference {
     type: string;
@@ -41,103 +42,187 @@ const toPascalCase = (str: string): string => {
 };
 
 function generate() {
-    const rawData = fs.readFileSync(INPUT_PATH, "utf8");
+    const rawData = readFileSync(INPUT_PATH, "utf8");
     const nodes = JSON.parse(rawData) as NodeTypeDefinition[];
 
     let output = `// Auto-generated from node-types.json\n\n`;
+    output += `import  { Node } from 'web-tree-sitter';
+import { v4 } from 'uuid'
+
+export type NodeId = string;
+
+export interface ParserContext {
+    nodes: Map<NodeId, AstNode>;
+}
+
+`;
+
+    let interfacesOut = `// Interfaces
+
+`;
+    let unmarshalersOut = `// Unmarshalers
+
+`;
+    let switches = "";
 
     const allNamedNodes: string[] = [];
 
     for (const node of nodes) {
         if (!node.named) continue;
 
+        // Generate interfaces
         const interfaceName = toPascalCase(node.type) + "Node";
-        allNamedNodes.push(interfaceName);
 
         // Handle Supertypes
         if (node.subtypes && node.subtypes.length > 0) {
             const subtypeNames = node.subtypes.filter((st) => st.named).map((st) => toPascalCase(st.type) + "Node");
 
             if (subtypeNames.length > 0) {
-                output += `export type ${interfaceName} = ${subtypeNames.join(" | ")};\n\n`;
+                interfacesOut += `export type ${interfaceName} = ${subtypeNames.join(" | ")};\n\n`;
             }
             continue;
         }
+        allNamedNodes.push(interfaceName);
 
         // Handle Standard Concrete Nodes
-        output += `export interface ${interfaceName} {\n`;
+        interfacesOut += `export interface ${interfaceName} {\n`;
 
         // Use a Map to track properties so we can merge collisions
-        const properties = new Map<string, { type: string; optional: boolean }>();
+        const props = new Map<string, { type: string; optional: boolean }>();
 
         // Set default properties
-        properties.set("type", { type: `'${node.type}'`, optional: false });
-        properties.set("text", { type: "string", optional: false });
+        props.set("id", { type: "NodeId", optional: false });
+        props.set("parentId", { type: "NodeId | null", optional: false });
+        props.set("type", { type: `'${node.type}'`, optional: false });
+        props.set("text", { type: "string", optional: false });
 
         // Map Fields
         if (node.fields) {
             for (const [fieldName, fieldData] of Object.entries(node.fields)) {
-                const types = fieldData.types.filter((t) => t.named).map((t) => toPascalCase(t.type) + "Node");
-
-                let typeString = types.length > 0 ? types.join(" | ") : "any";
-
-                // Array union syntax
-                if (fieldData.multiple) {
-                    typeString = types.length > 1 ? `(${typeString})[]` : `${typeString}[]`;
-                }
-
+                let typeString = fieldData.multiple ? "NodeId[]" : "NodeId";
                 const isOptional = !fieldData.required;
-
-                if (properties.has(fieldName)) {
+                if (props.has(fieldName)) {
                     // Merge types on collision
-                    const existing = properties.get(fieldName)!;
+                    const existing = props.get(fieldName)!;
                     existing.type = `${existing.type} | ${typeString}`;
                     existing.optional = existing.optional && isOptional;
                 } else {
-                    properties.set(fieldName, { type: typeString, optional: isOptional });
+                    props.set(fieldName, { type: typeString, optional: isOptional });
                 }
             }
         }
 
-        // Map standard children
-        if (node.children) {
-            const types = node.children.types.filter((t) => t.named).map((t) => toPascalCase(t.type) + "Node");
-
-            let typeString = types.length > 0 ? types.join(" | ") : "any";
-            if (types.length > 1) {
-                typeString = `(${typeString})[]`;
-            } else if (types.length === 1) {
-                typeString = `${typeString}[]`;
-            } else {
-                typeString = "any[]";
-            }
-
-            // Merge if children was already defined as a specific field
-            if (properties.has("children")) {
-                const existing = properties.get("children")!;
-                existing.type = `${existing.type} | ${typeString}`;
-            } else {
-                properties.set("children", { type: typeString, optional: false });
-            }
-        }
+        props.set("childrenIds", { type: "NodeId[]", optional: false });
 
         // Write all properties to the interface
-        for (const [propName, propData] of properties.entries()) {
+        for (const [propName, propData] of props.entries()) {
             const optMod = propData.optional ? "?" : "";
-            output += `  ${propName}${optMod}: ${propData.type};\n`;
+            interfacesOut += `  ${propName}${optMod}: ${propData.type};\n`;
         }
 
-        output += `}\n\n`;
+        interfacesOut += `}\n\n`;
+
+        // Generate Unmarshalers
+        const funcName = `unmarshaler${interfaceName}`;
+        switches += `case '${node.type}': return ${funcName}(node, ctx, parentId);\n`;
+
+        unmarshalersOut += `function ${funcName}(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
+            const id = v4();
+            const n: Partial<${interfaceName}> = {
+                id,
+                parentId,
+                type: '${node.type}',
+                text: node.text,
+            };
+            ctx.nodes.set(id, n as AstNode);
+
+`;
+
+        let fieldExtractionNodes = "";
+        if (node.fields) {
+            for (const [fieldName, fieldData] of Object.entries(node.fields)) {
+                if (fieldData.multiple) {
+                    unmarshalersOut += `n.${fieldName} = node.childrenForFieldName('${fieldName}').map(n => unmarshalNode(n, ctx, id));\n`;
+                    fieldExtractionNodes += `...node.childrenForFieldName('${fieldName}').map(n => n.id), `;
+                } else {
+                    if (fieldData.required) {
+                        unmarshalersOut += `n.${fieldName} = unmarshalNode(node.childForFieldName('${fieldName}')!, ctx, id);\n`;
+                        fieldExtractionNodes += `node.childForFieldName('${fieldName}')!.id, `;
+                    } else {
+                        unmarshalersOut += `const ${fieldName}Node = node.childForFieldName('${fieldName}');
+n.${fieldName} = ${fieldName}Node ? unmarshalNode(${fieldName}Node, ctx, id) : undefined;
+`;
+                        fieldExtractionNodes += `${fieldName}Node ? ${fieldName}Node.id : undefined, `;
+                    }
+                }
+            }
+        }
+
+        if (fieldExtractionNodes.length > 0) {
+            unmarshalersOut += `
+const fieldNodes = new Set([${fieldExtractionNodes}].filter(id => id !== undefined));
+n.childrenIds = node.namedChildren.filter(n => !fieldNodes.has(n.id)).map(n => unmarshalNode(n, ctx, id));
+`;
+        } else {
+            unmarshalersOut += `n.childrenIds = node.namedChildren.map(n => unmarshalNode(n, ctx, id));\n`;
+        }
+
+        unmarshalersOut += `return id;
+}
+
+`;
     }
+
+    const core = `// Parser core
+
+export const unmarshalNode = (node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId => {
+    switch(node.type) {
+        ${switches}
+        default: {
+            const id = v4();
+            const n = {
+                id,
+                parentId,
+                type: node.type as any,
+                text: node.text,
+                childrenIds: [] as NodeId[],
+            };
+            ctx.nodes.set(id, n as AstNode);
+            n.childrenIds = node.namedChildren.map(n => unmarshalNode(n, ctx, id));
+            return id;
+        }
+    }
+}
+
+ export type BragiAST = {rootId: NodeId, nodes: Map<NodeId, AstNode> };
+
+ // Parses a treesitter CST into a Bragi AST node map
+ export const parseCST = (root: Node | null) : BragiAST => {
+     if (!root) throw new Error ("No root node provided");
+     const ctx: ParserContext = { nodes: new Map() };
+     const rootId = unmarshalNode(root, ctx, null);
+     return {rootId, nodes: ctx.nodes};
+ }
+    `;
 
     // Create a generic ASTNode type
     const concreteNodes = nodes
         .filter((n) => n.named && (!n.subtypes || n.subtypes.length === 0))
         .map((n) => toPascalCase(n.type) + "Node");
+    const genericType = `export type AstNode = ${concreteNodes.join(" | ")};\n`;
 
-    output += `export type AstNode = ${concreteNodes.join(" | ")};\n`;
+    // Consolidate output
+    output += `
+    ${interfacesOut}
 
-    fs.writeFileSync(OUTPUT_PATH, output);
+    ${genericType}
+
+    ${unmarshalersOut}
+
+    ${core}
+    `;
+
+    writeFileSync(OUTPUT_PATH, output);
     console.log(`Successfully generated AST types at ${OUTPUT_PATH}`);
 }
 

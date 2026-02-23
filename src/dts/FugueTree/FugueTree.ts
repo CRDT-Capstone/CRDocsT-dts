@@ -15,7 +15,7 @@ export class FugueTree {
     userIdentity: string;
     pendingMsgs = new Map<string, FugueMessage>();
     // Tentative
-    readonly batchSize = 100;
+    readonly batchSize = 400;
 
     constructor(ws: WebSocket | null, documentID: string, userIdentity: string) {
         this.ws = ws;
