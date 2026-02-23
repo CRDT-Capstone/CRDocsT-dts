@@ -1,7 +1,7 @@
 import { encode, decode } from "@msgpack/msgpack";
-import { FugueMessageType } from "../../../types/FugueTree/index.js";
+import { BaseFugueMessage, FugueMessageType } from "../../../types/FugueTree/index.js";
 
-function serialize(msgs: FugueMessageType[]) {
+function serialize(msgs: BaseFugueMessage[]) {
     return encode(msgs);
 }
 
@@ -9,19 +9,19 @@ function serializeSingleMessage(msg: FugueMessageType) {
     return encode(msg);
 }
 
-function deserialize(data: Uint8Array): FugueMessageType[] {
+function deserialize(data: Uint8Array): BaseFugueMessage[] {
     const dec = decode(data);
-    return dec as FugueMessageType[];
+    return dec as BaseFugueMessage[];
 }
 
-function deserializeSingleMessage(data: Uint8Array): FugueMessageType {
+function deserializeSingleMessage(data: Uint8Array): BaseFugueMessage {
     const dec = decode(data);
-    return dec as FugueMessageType;
+    return dec as BaseFugueMessage;
 }
 
 export const FugueMessageSerialzier = {
     serialize,
     serializeSingleMessage,
     deserialize,
-    deserializeSingleMessage
+    deserializeSingleMessage,
 };
