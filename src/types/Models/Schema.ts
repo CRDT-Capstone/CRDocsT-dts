@@ -17,8 +17,21 @@ export const DocumentSchema = IdentifiedSchema.extend({
     serializedCRDTState: z.string(),
     ownerId: z.string().optional(),
     contributors: z.array(ContributorSchema).default([]),
+    projectId: z.string().optional(),
+});
+
+export const ProjectSchema = IdentifiedSchema.extend({
+    name: z.string().min(1, "Name is required"),
+    ownerId: z.string().optional(),
+    documentIds: z.array(z.string()).default([]),
+    contributors: z.array(ContributorSchema).default([]),
 });
 
 export type Identified = z.infer<typeof IdentifiedSchema>;
 export type Contributor = z.infer<typeof ContributorSchema>;
 export type Document = z.infer<typeof DocumentSchema>;
+export type Project = z.infer<typeof ProjectSchema>;
+export type ProjectWithDocuments = {
+    project: Project;
+    documents: Document[];
+};
