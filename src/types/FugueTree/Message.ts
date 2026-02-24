@@ -49,8 +49,6 @@ export interface FugueMessage extends BaseFugueMessage<Operation.INSERT | Operat
 export interface FugueJoinMessage extends BaseFugueMessage<Operation.INITIAL_SYNC> {
     state: Uint8Array<ArrayBufferLike> | null;
     //the existing state of the document
-    bufferedOperations?: Buffer<ArrayBuffer>[];
-    //We buffer all operations
 }
 
 export interface FugueRejectMessage extends BaseFugueMessage<Operation.REJECT> {
@@ -65,6 +63,7 @@ export interface FugueLeaveMessage extends BaseFugueMessage<Operation.LEAVE> {
 
 export interface FugueUserJoinMessage extends BaseFugueMessage<Operation.USER_JOIN> {
     collaborators: string[];
+    offlineState?: Uint8Array<ArrayBufferLike>;
 }
 
 export type FugueMessageType =
