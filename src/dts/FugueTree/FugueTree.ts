@@ -288,7 +288,6 @@ export class FugueTree {
             if (msg.replicaId == this.replicaId()) continue;
 
             const succ = this.applyToTree(msg);
-            console.log('Succeed? -> ', succ);
             if (succ) {
                 applied.push(msg);
             } else {
@@ -387,7 +386,7 @@ export class FugueTree {
         return this.tree.getVisibleIndex(node);
     }
 
-    getState(){
+    getState() {
         return this.tree;
     }
 }
