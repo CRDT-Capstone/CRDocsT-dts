@@ -1,3 +1,11 @@
+# [0.27.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.26.0...v0.27.0) (2026-02-24)
+
+
+### Features
+
+* Fix AST parser generation ([9a0eb28](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/9a0eb2825b84214466287cc6930017db0d480790))
+* implement AST typescript types generation from treesitter node-types.json ([cfdda95](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/cfdda95d60a6b7ef3b8acb46748e7c23f64cc18d))
+
 # [0.26.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.25.0...v0.26.0) (2026-02-23)
 
 
