@@ -1,4 +1,3 @@
-import { compress, decompress } from "lz4js";
 import { FTree } from "../../FugueTree/index.js";
 
 function serialize(state: FTree): Uint8Array<ArrayBufferLike> {
