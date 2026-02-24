@@ -378,9 +378,7 @@ export class FTree {
      */
     *traverse(node: FNode): IterableIterator<string> {
         let current = node;
-        // Stack records the next child to visit for that node.
-        // We don't need to store node because we can infer it from the
-        // current node's parent etc.
+        // Stack based inorder traversal
         const S: { side: NodeSide; childIndex: number }[] = [{ side: "L", childIndex: 0 }];
         while (true) {
             const top = S[S.length - 1];
@@ -446,8 +444,7 @@ export class FTree {
      */
     load(saveData: Uint8Array) {
         const save: { [sender: string]: FNodeSave[] } = JSON.parse(new TextDecoder().decode(saveData));
-        // First create all nodes without pointers to other nodes (parent, children,
-        // rightOrigin).
+        // Create nodes without pointers
         for (const [sender, bySenderSave] of Object.entries(save)) {
             if (sender === "") {
                 // Root node. Just set its size.
@@ -468,7 +465,8 @@ export class FTree {
                 })),
             );
         }
-        // Next, fill in the parent and rightOrigin pointers.
+
+        // Fill in the parent and rightOrigin pointers.
         for (const [sender, bySender] of this.nodes) {
             if (sender === "") continue;
             const bySenderSave = save[sender]!;
@@ -484,15 +482,8 @@ export class FTree {
             }
         }
 
-        // Finally, call insertIntoSiblings on each node to fill in the children
-        // arrays.
-        // We must be careful to wait until after doing so for node.rightOrigin
-        // and its ancestors, since insertIntoSiblings references the existing list order
-        // on node.rightOrigin.
-
-        // Nodes go from "pending" -> "ready" (rightOrigin valid) ->
-        // "valid" (insertIntoSiblings called).
-        // readyNodes is a stack; pendingNodes maps from a node to its dependencies.
+        // Call insertIntoSiblings on each node to fill in the children arrays. Making sure to buffer nodes
+        // until their rightOrigin exists because insertIntoSiblings uses it to maintain sibling order
         const readyNodes: FNode[] = [];
         const pendingNodes = new Map<FNode, FNode[]>();
         for (const [sender, bySender] of this.nodes) {
@@ -516,7 +507,6 @@ export class FTree {
         while (readyNodes.length !== 0) {
             const node = readyNodes.pop()!;
             this.insertIntoSiblings(node);
-            // node's dependencies are now ready.
             const deps = pendingNodes.get(node);
             if (deps !== undefined) readyNodes.push(...deps);
             pendingNodes.delete(node);

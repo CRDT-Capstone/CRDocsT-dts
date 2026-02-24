@@ -1,3 +1,10 @@
+## [0.28.1](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.28.0...v0.28.1) (2026-02-24)
+
+
+### Bug Fixes
+
+* Needs to deploy ([d1d893a](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/d1d893a469b3eae1307c70ee83678285dd028549))
+
 # [0.28.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.27.0...v0.28.0) (2026-02-24)
 
 
