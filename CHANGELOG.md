@@ -1,3 +1,10 @@
+# [0.29.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.28.1...v0.29.0) (2026-02-24)
+
+
+### Features
+
+* cst-ast-merge ([18ff685](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/18ff6852bf8705fdb47b87b54bc343d4828adb02))
+
 ## [0.28.1](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.28.0...v0.28.1) (2026-02-24)
 
 
