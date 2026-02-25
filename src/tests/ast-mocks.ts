@@ -216,23 +216,12 @@ export const AST: BragiAST = {
 };
 
 
-function getRandomParentId(ast: BragiAST) {
-    const keys = Array.from(ast.nodes.keys());
-    const randomIndex = Math.floor(Math.random() * (keys.length - 1));
-    return keys[randomIndex];
-}
 
-export function doRandomDeletion(ast: BragiAST): BragiAST {
-    const keys = Array.from(ast.nodes.keys());
-    let randomIndex = Math.floor(Math.random() * (keys.length - 1));
-    while(randomIndex === 0){
-        //we cannot really delete the root
-        randomIndex = Math.floor(Math.random() * (keys.length - 1));
-    }
-    const newAST = structuredClone(ast);
-
+export function doDeletion(ast: BragiAST, index: number): BragiAST {
     
-    const deletedKey = keys[randomIndex];
+    const newAST = structuredClone(ast);
+    const keys = Array.from(ast.nodes.keys());
+    const deletedKey = keys[index];
     newAST.nodes.delete(deletedKey);
     for(const node of ast.nodes.values()){
         if(node.parentId === deletedKey) node.parentId = null;
@@ -245,20 +234,30 @@ export function doRandomDeletion(ast: BragiAST): BragiAST {
     return newAST;
 }
 
-export function doRandomInsertion(ast: BragiAST): BragiAST {
+export function doInsertion(ast: BragiAST, index: number): BragiAST {
     const id = v4();
     const newAST = structuredClone(ast);
-    const parentId = getRandomParentId(newAST);
 
     const newNode: AstNode = {
         id,
-        parentId,
+        parentId: null, //for now
         type: "word",
         text: "dog.",
         childrenIds: [],
     };
 
     newAST.nodes.set(id, newNode);
+    const keys = Array.from(ast.nodes.keys());
+
+    const node = newAST.nodes.get(keys[index])!;
+    newNode.parentId = node.id;
+    if(node.type === "text"){
+        node.word.push(newNode.id);
+    }else{
+        node.childrenIds.push(newNode.id);
+    }
+
+    console.log(Array.from(newAST.nodes.keys()));
     return newAST;
 }
 

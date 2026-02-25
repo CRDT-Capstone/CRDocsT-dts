@@ -30,19 +30,19 @@ const getChildNodeThatIsEqualWithWordId = (oldChildNode: AstNode, newNode: AstNo
     return undefined;
 }
 
-const changeChildrenParentId = (nodeA: AstNode, newParentId: string, tree: BragiAST)=>{
-    for(const id of nodeA.childrenIds){
+const changeChildrenParentId = (nodeA: AstNode, newParentId: string, tree: BragiAST) => {
+    for (const id of nodeA.childrenIds) {
         const node = tree.nodes.get(id);
-        if(!node) continue; //we shouldn't have this happen 
+        if (!node) continue; //we shouldn't have this happen 
         node.parentId = newParentId;
     }
-    if(nodeA.type === "text"){
-        for(const id of nodeA.word){
+    if (nodeA.type === "text") {
+        for (const id of nodeA.word) {
             const node = tree.nodes.get(id);
-            if(!node) continue;
+            if (!node) continue;
             node.parentId = newParentId;
         }
-    } 
+    }
 }
 
 
@@ -56,7 +56,6 @@ const changeChildrenParentId = (nodeA: AstNode, newParentId: string, tree: Bragi
 export const GetNewMappedTree = (oldTree: BragiAST, newTree: BragiAST) => {
     const newMappedTree = structuredClone(newTree);
     const newNodes = new Map<NodeId, AstNode>();
-    const visited = new Set();
 
     function dfs(oldTreeNode: AstNode, newTreeNode: AstNode | undefined) {
         if (!newTreeNode) return;
@@ -91,16 +90,20 @@ export const GetNewMappedTree = (oldTree: BragiAST, newTree: BragiAST) => {
             newTreeNode.word = newWordIds;
         }
 
-        const newChildrenIds = []; //need to keep track of the new children Ids
-        for (const id of oldTreeNode.childrenIds) {
-            const oldChildNode = oldTree.nodes.get(id)!;//this will definitely exist;
-            const newChildNode = getChildNodeThatIsEqualWithChildrenId(oldChildNode, newTreeNode, newMappedTree);
+        if (oldTreeNode.childrenIds.length === 0 && newTreeNode.childrenIds.length > 0) {
+
+        } else {
+            const newChildrenIds = []; //need to keep track of the new children Ids
+            for (const id of oldTreeNode.childrenIds) {
+                const oldChildNode = oldTree.nodes.get(id)!;//this will definitely exist;
+                const newChildNode = getChildNodeThatIsEqualWithChildrenId(oldChildNode, newTreeNode, newMappedTree);
 
 
-            dfs(oldChildNode, newChildNode);
-            if (newChildNode) newChildrenIds.push(newChildNode.id);
+                dfs(oldChildNode, newChildNode);
+                if (newChildNode) newChildrenIds.push(newChildNode.id);
+            }
+            newTreeNode.childrenIds = newChildrenIds; //change the children Ids
         }
-        newTreeNode.childrenIds = newChildrenIds; //change the children Ids
     }
 
     const oldRoot = oldTree.nodes.get(oldTree.rootId)!;
