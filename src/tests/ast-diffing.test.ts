@@ -45,7 +45,7 @@ describe("To test a bunch of functions that help us with diffing the AST", () =>
         expect(oldKeys).toEqual(expect.arrayContaining(newMappedKeys));
     });
 
-    fit.each([
+    it.each([
         [AST, 0],
         [AST, 1],
         // [MORE_COMPLEX_AST, 0],
