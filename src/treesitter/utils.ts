@@ -57,15 +57,53 @@ export const GetNewMappedTree = (oldTree: BragiAST, newTree: BragiAST) => {
     const newMappedTree = structuredClone(newTree);
     const newNodes = new Map<NodeId, AstNode>();
 
+    function recursivelyAddToNewNodes(node: AstNode | undefined) {
+        if (!node) return;
+        if(!newNodes.has(node.id)) newNodes.set(node.id, node);
+        for (const id of node.childrenIds) {
+            const next = newMappedTree.nodes.get(id);
+            if (next) {
+                newNodes.set(id, next);
+                recursivelyAddToNewNodes(next)
+            }
+
+        }
+    }
+
+    function handleTextNodes(oldTreeNode: AstNode, newTreeNode: AstNode) {
+        if (oldTreeNode.type !== "text" || newTreeNode.type !== "text") return;
+
+        const newWordIds: string[] = [];
+        let oldWordIds = structuredClone(newTreeNode.word);
+
+
+        for (const id of oldTreeNode.word) {
+            const oldChildNode = oldTree.nodes.get(id)!;
+            const newChildNode = getChildNodeThatIsEqualWithWordId(oldChildNode, newTreeNode, newMappedTree);
+
+            if (newChildNode) {
+                oldWordIds = oldWordIds.filter((wordId) => wordId !== newChildNode.id);
+                dfs(oldChildNode, newChildNode);
+
+                newWordIds.push(newChildNode.id);
+            }
+
+
+        }
+
+        if (newTreeNode.word.length > oldTreeNode.word.length) {
+            //if we have new words 
+            //Jut append them to the newWordIds
+            newWordIds.concat(oldWordIds);
+        }
+        newTreeNode.word = newWordIds;
+    }
+
+
     function dfs(oldTreeNode: AstNode, newTreeNode: AstNode | undefined) {
         if (!newTreeNode) return;
-        // if(visited.has(newTreeNode)) return;
-        // visited.add(newTreeNode);
-
-
         const oldId = oldTreeNode.id;
 
-        if (!newTreeNode) return; //if the node doesn't exist, we can return and continue walking through the tree
 
         newTreeNode.id = oldId; //change the Id of this node to the one in the old tree
         changeChildrenParentId(newTreeNode, oldId, newMappedTree);
@@ -77,33 +115,34 @@ export const GetNewMappedTree = (oldTree: BragiAST, newTree: BragiAST) => {
             //And if it's not then it's fine
             //Something was deleted and we don't need it in our new mapped tree
 
-            const oldWordIds = oldTreeNode.word;
-
-            const newWordIds: string[] = [];
-
-            for (const id of oldWordIds) {
-                const oldChildNode = oldTree.nodes.get(id)!;
-                const newChildNode = getChildNodeThatIsEqualWithWordId(oldChildNode, newTreeNode, newMappedTree);
-                dfs(oldChildNode, newChildNode);
-                if (newChildNode) newWordIds.push(newChildNode.id);
-            }
-            newTreeNode.word = newWordIds;
+            handleTextNodes(oldTreeNode, newTreeNode);
         }
 
-        if (oldTreeNode.childrenIds.length === 0 && newTreeNode.childrenIds.length > 0) {
-
-        } else {
-            const newChildrenIds = []; //need to keep track of the new children Ids
-            for (const id of oldTreeNode.childrenIds) {
-                const oldChildNode = oldTree.nodes.get(id)!;//this will definitely exist;
-                const newChildNode = getChildNodeThatIsEqualWithChildrenId(oldChildNode, newTreeNode, newMappedTree);
+        let oldChildrenId = structuredClone(newTreeNode.childrenIds);
+        const newChildrenIds = []; //need to keep track of the new children Ids
+        for (const id of oldTreeNode.childrenIds) {
+            const oldChildNode = oldTree.nodes.get(id)!;//this will definitely exist;
+            const newChildNode = getChildNodeThatIsEqualWithChildrenId(oldChildNode, newTreeNode, newMappedTree);
 
 
+            
+            if (newChildNode){
+                oldChildrenId = oldChildrenId.filter((nodeId)=> nodeId!== newChildNode.id)
                 dfs(oldChildNode, newChildNode);
-                if (newChildNode) newChildrenIds.push(newChildNode.id);
-            }
-            newTreeNode.childrenIds = newChildrenIds; //change the children Ids
+                newChildrenIds.push(newChildNode.id);
+            } 
         }
+
+        if(oldChildrenId.length > 0){
+            //we had some nodes that were in the newTree but weren't in the old tree
+            newChildrenIds.concat(oldChildrenId);
+            for(const Id of oldChildrenId){
+                const childNode = newMappedTree.nodes.get(Id);
+                recursivelyAddToNewNodes(childNode);
+            }
+        }
+        newTreeNode.childrenIds = newChildrenIds; //change the children Ids
+
     }
 
     const oldRoot = oldTree.nodes.get(oldTree.rootId)!;

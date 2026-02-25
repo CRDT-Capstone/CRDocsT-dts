@@ -257,7 +257,6 @@ export function doInsertion(ast: BragiAST, index: number): BragiAST {
         node.childrenIds.push(newNode.id);
     }
 
-    console.log(Array.from(newAST.nodes.keys()));
     return newAST;
 }
 

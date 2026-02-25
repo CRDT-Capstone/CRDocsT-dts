@@ -47,7 +47,7 @@ describe("To test a bunch of functions that help us with diffing the AST", () =>
 
     fit.each([
         [AST, 0],
-        // [AST, 1],
+        [AST, 1],
         // [MORE_COMPLEX_AST, 0],
         // [MORE_COMPLEX_AST, 1],
         // [MORE_COMPLEX_AST, 2],
