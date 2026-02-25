@@ -222,16 +222,30 @@ function getRandomParentId(ast: BragiAST) {
     return keys[randomIndex];
 }
 
-function doRandomDeletion(ast: BragiAST): BragiAST {
+export function doRandomDeletion(ast: BragiAST): BragiAST {
     const keys = Array.from(ast.nodes.keys());
-    const randomIndex = Math.floor(Math.random() * (keys.length - 1))
+    let randomIndex = Math.floor(Math.random() * (keys.length - 1));
+    while(randomIndex === 0){
+        //we cannot really delete the root
+        randomIndex = Math.floor(Math.random() * (keys.length - 1));
+    }
     const newAST = structuredClone(ast);
-    newAST.nodes.delete(keys[randomIndex]);
+
+    
+    const deletedKey = keys[randomIndex];
+    newAST.nodes.delete(deletedKey);
+    for(const node of ast.nodes.values()){
+        if(node.parentId === deletedKey) node.parentId = null;
+        node.childrenIds = node.childrenIds.filter((id)=> id!== deletedKey);
+        if(node.type === "text"){
+            node.word = node.word.filter((id)=> id !== deletedKey);
+        }
+    }
 
     return newAST;
 }
 
-function doRandomInsertion(ast: BragiAST): BragiAST {
+export function doRandomInsertion(ast: BragiAST): BragiAST {
     const id = v4();
     const newAST = structuredClone(ast);
     const parentId = getRandomParentId(newAST);
