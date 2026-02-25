@@ -117,7 +117,9 @@ export const AST: BragiAST = {
                     "26df82fd-534d-4a44-84bf-957cbd1d12df",
                     "788be876-fef8-4cef-a602-eecf60d84694",
                 ],
-                childrenIds: [],
+                childrenIds: [
+
+                ],
             },
         ],
         [
@@ -214,7 +216,7 @@ export const AST: BragiAST = {
 };
 
 
-function getRandomParentId(ast: BragiAST){
+function getRandomParentId(ast: BragiAST) {
     const keys = Array.from(ast.nodes.keys());
     const randomIndex = Math.floor(Math.random() * (keys.length - 1));
     return keys[randomIndex];
@@ -248,22 +250,49 @@ function doRandomInsertion(ast: BragiAST): BragiAST {
 
 export function createNewAST(ast: BragiAST): BragiAST {
     const newAST = structuredClone(ast);
+    const newNodes = new Map<string, AstNode>();
+    const visited = new Set();
 
-    function dfs(node?: AstNode, parentId:string|null = null){
-        if(!node) return;
+    function dfs(node?: AstNode, parentId: string | null = null) {
+        if (!node) return;
+
+        if(visited.has(node)) return;
+
+        visited.add(node);
         const newId = v4();
         node.parentId = parentId;
+
         node.id = newId;
-        for(const Id of node.childrenIds){
-            const nextNode = newAST.nodes.get(Id);
-            dfs(nextNode, newId);
+        newNodes.set(newId, node);
+        if (node.type === "text") {
+            const oldWordIds = node.word;
+            const newWordIds: string[] = [];
+            for (const oldId of oldWordIds) {
+                const childNode = newAST.nodes.get(oldId);
+                dfs(childNode, newId);
+                if (childNode) newWordIds.push(childNode.id);
+            }
+            node.word = newWordIds;
         }
+        const oldChildrenIds = node.childrenIds;
+        const newChildrenIds: string[] = [];
+        for (const oldId of oldChildrenIds) {
+
+            const childNode = newAST.nodes.get(oldId);
+            dfs(childNode, newId);
+            if (childNode) newChildrenIds.push(childNode.id);
+        }
+        node.childrenIds = newChildrenIds;
+
+
+
     }
 
     const root = newAST.nodes.get(newAST.rootId);
 
     dfs(root);
     newAST.rootId = root!.id;
+    newAST.nodes = newNodes;
     return newAST;
 
 }
