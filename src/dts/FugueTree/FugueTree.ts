@@ -1,4 +1,5 @@
-import { FugueMessage, Operation } from "../../types/FugueTree/Message.js";
+import { FugueMessage, makeFugueMessage, Operation } from "../../types/FugueTree/Message.js";
+import { MessageType } from "../../types/Message.js";
 import { randomString } from "../../utils/index.js";
 import { FugueMessageSerialzier } from "../Serailizers/FugueTree/index.js";
 import { FNode, FTree, ID } from "./FTree.js";
@@ -63,6 +64,7 @@ export class FugueTree {
             // leftOrigin has no right children, so the new node becomes
             // a right child of leftOrigin.
             msg = {
+                msgType: MessageType.FUGUE,
                 userIdentity: this.userIdentity,
                 operation: Operation.INSERT,
                 id,
@@ -83,6 +85,7 @@ export class FugueTree {
             // first right child.
             const rightOrigin = this.tree.leftmostDescendant(leftOrigin.rightChildren[0]);
             msg = {
+                msgType: MessageType.FUGUE,
                 userIdentity: this.userIdentity,
                 operation: Operation.INSERT,
                 id,
@@ -161,6 +164,7 @@ export class FugueTree {
         }
 
         const msg: FugueMessage = {
+            msgType: MessageType.FUGUE,
             operation: Operation.DELETE,
             documentID: this.documentID,
             replicaId: this.replicaID,

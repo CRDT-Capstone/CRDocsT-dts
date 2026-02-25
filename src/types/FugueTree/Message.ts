@@ -1,4 +1,5 @@
-import { ID, NodeSide } from "../../dts/FugueTree/FTree";
+import { ID, NodeSide } from "../../dts/FugueTree/FTree.js";
+import { BaseMessage, MessageType } from "../Message.js";
 
 export enum Operation {
     INSERT,
@@ -31,11 +32,9 @@ export function operationToString(op: Operation): string {
 export type Data = string;
 
 // Base message interface that all other message types will extend
-export interface BaseFugueMessage<T extends Operation = Operation> {
+export interface BaseFugueMessage<T extends Operation = Operation> extends BaseMessage<MessageType.FUGUE> {
     operation: T;
-    documentID: string;
     replicaId: string;
-    userIdentity: string; // All users should be identified even anonymous users
 }
 
 export interface FugueMessage extends BaseFugueMessage<Operation.INSERT | Operation.DELETE> {
@@ -74,3 +73,10 @@ export type FugueMessageType =
     | FugueUserJoinMessage;
 
 export type FugueMutationMessageTypes = Extract<FugueMessageType, FugueMessage | FugueJoinMessage>;
+
+export const makeFugueMessage = <T extends FugueMessageType>(msg: Omit<T, "msgType">): BaseFugueMessage => {
+    return {
+        ...msg,
+        msgType: MessageType.FUGUE,
+    };
+};
