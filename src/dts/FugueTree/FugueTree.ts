@@ -393,4 +393,8 @@ export class FugueTree {
     getState() {
         return this.tree;
     }
+
+    clear() {
+        return this.tree.clear();
+    }
 }
