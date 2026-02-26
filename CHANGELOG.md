@@ -1,3 +1,10 @@
+# [0.31.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.30.0...v0.31.0) (2026-02-26)
+
+
+### Features
+
+* add clear method to FTree and FugueTree ([d82d147](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/d82d147812e922e1687eac989926aaba77d16f61))
+
 # [0.30.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.29.0...v0.30.0) (2026-02-26)
 
 
