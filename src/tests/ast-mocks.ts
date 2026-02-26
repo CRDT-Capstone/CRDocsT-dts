@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { AstNode, BragiAST } from "../treesitter";
+import { AstNode, BragiAST, NodeId } from "../treesitter";
 
 
 
@@ -231,6 +231,15 @@ export function doDeletion(ast: BragiAST, index: number): BragiAST {
         }
     }
 
+    //remove the nodes that have the deleted node as their parent
+    const newNodes = new Map<NodeId, AstNode>();
+    for(const node of ast.nodes.values()){
+        if(node.parentId === deletedKey) continue;
+        newNodes.set(node.id, node);
+    }
+
+    newAST.nodes = newNodes;
+
     return newAST;
 }
 
@@ -256,6 +265,41 @@ export function doInsertion(ast: BragiAST, index: number): BragiAST {
     }else{
         node.childrenIds.push(newNode.id);
     }
+
+    return newAST;
+}
+
+export function getFirstTextNode(ast: BragiAST){
+    for(const [id, node] of ast.nodes.entries()){
+        if(node.type === "text") return node;
+    }
+    return undefined;
+}
+
+export function doInsertionToTextNode(ast: BragiAST): BragiAST {
+
+    
+    const id = v4();
+    const newAST = structuredClone(ast);
+
+    const TextNode = getFirstTextNode(newAST);
+    if(!TextNode) throw Error("This tree doesn't have any text nodes");
+    
+    TextNode.word.push(id);
+    const newNode: AstNode = {
+        id,
+        parentId: TextNode.id, 
+        type: "word",
+        text: "Tani",
+        childrenIds: [],
+    };
+
+    TextNode.text = `${TextNode.text} ${newNode.text}`;
+
+    newAST.nodes.set(id, newNode);
+
+    console.log(TextNode);
+    console.log('ast -> ', newAST);
 
     return newAST;
 }

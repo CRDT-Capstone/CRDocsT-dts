@@ -1,5 +1,5 @@
 import { GetNewMappedTree } from "../treesitter/utils";
-import { AST, createNewAST, doDeletion, doInsertion, MORE_COMPLEX_AST } from "./ast-mocks"
+import { AST, createNewAST, doDeletion, doInsertion, doInsertionToTextNode, getFirstTextNode, MORE_COMPLEX_AST } from "./ast-mocks"
 
 describe("To test a bunch of functions that help us with diffing the AST", () => {
     it.each([
@@ -48,9 +48,9 @@ describe("To test a bunch of functions that help us with diffing the AST", () =>
     it.each([
         [AST, 0],
         [AST, 1],
-        // [MORE_COMPLEX_AST, 0],
-        // [MORE_COMPLEX_AST, 1],
-        // [MORE_COMPLEX_AST, 2],
+        [MORE_COMPLEX_AST, 0],
+        [MORE_COMPLEX_AST, 1],
+        [MORE_COMPLEX_AST, 2],
     ])("Given the old AST, we create a new AST with an insertion. And we should end up with a new mapped tree having the same keys, plus a new key", (ast, index) => {
         const oldAST = structuredClone(ast);
         const newASTWithInsertion = doInsertion(oldAST, index);
@@ -67,8 +67,42 @@ describe("To test a bunch of functions that help us with diffing the AST", () =>
 
         expect(oldKeys.length).toBeLessThan(newMappedKeys.length);
         expect(oldKeys.length).toEqual(newMappedKeys.length - 1);
-        expect(oldKeys).toEqual(expect.arrayContaining(newMappedKeys.slice(0, newMappedKeys.length - 1)));
+        expect(newMappedKeys).toEqual(expect.arrayContaining(oldKeys));
+    });
+    
+
+    it.each([
+        AST,
+       MORE_COMPLEX_AST
+    ])("Given the old AST and new AST with a word insertion to a text node, we should have the new mapped tree generated as expected", (ast) => {
+        const oldAST = structuredClone(ast);
+        const newASTWithInsertion = doInsertionToTextNode(oldAST); 
+        /*
+        Without Loss Of Generality
+        the function above inserts into the first text node
+        */
+        const newAST = createNewAST(newASTWithInsertion);
+
+        const oldKeys = Array.from(oldAST.nodes.keys());
+        const newASTKeys = Array.from(newAST.nodes.keys());
+
+        expect(oldKeys.length).toBeLessThan(newASTKeys.length);
+        expect(oldKeys).not.toEqual(expect.arrayContaining(newASTKeys));
+
+        const newMappedTree = GetNewMappedTree(oldAST, newAST);
+        const newMappedKeys = Array.from(newMappedTree.nodes.keys());
+
+        const oldTextNode = getFirstTextNode(oldAST)!;
+        const newMappedTextNode = getFirstTextNode(newMappedTree)!;
+
+        expect(oldKeys.length).toBeLessThan(newMappedKeys.length);
+        expect(oldKeys.length).toEqual(newMappedKeys.length - 1);
+        expect(newMappedKeys).toEqual(expect.arrayContaining(oldKeys));
+
+        expect(newMappedTextNode.word.length).toEqual(oldTextNode.word.length + 1);
+        expect(newMappedTextNode.word).toEqual(expect.arrayContaining(oldTextNode.word));
     });
 
+   
 
 })
