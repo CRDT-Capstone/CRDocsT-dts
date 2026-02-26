@@ -32,7 +32,6 @@ describe("To test a bunch of functions that help us with diffing the AST", () =>
         const newASTWithDeletion = doDeletion(oldAST, index);
         const newAST = createNewAST(newASTWithDeletion);
 
-        console.log('new AST -> ', newAST);
 
         const oldKeys = Array.from(oldAST.nodes.keys());
         const newASTKeys = Array.from(newAST.nodes.keys());
@@ -101,10 +100,12 @@ describe("To test a bunch of functions that help us with diffing the AST", () =>
 
         expect(oldKeys.length).toBeLessThan(newMappedKeys.length);
         expect(oldKeys.length).toEqual(newMappedKeys.length - 1);
-        expect(newMappedKeys).toEqual(expect.arrayContaining(oldKeys));
+        expect(newMappedKeys).not.toEqual(expect.arrayContaining(oldKeys));
+        //not equal cause we tree this these nodes as new ones
 
         expect(newMappedTextNode.word.length).toEqual(oldTextNode.word.length + 1);
-        expect(newMappedTextNode.word).toEqual(expect.arrayContaining(oldTextNode.word));
+        expect(newMappedTextNode.word).not.toEqual(expect.arrayContaining(oldTextNode.word));
+        
     });
 
         it.each([
@@ -132,10 +133,10 @@ describe("To test a bunch of functions that help us with diffing the AST", () =>
         const newMappedTextNode = getFirstTextNode(newMappedTree)!;
 
         expect(oldKeys.length).toBeGreaterThan(newMappedKeys.length);
-        expect(oldKeys).toEqual(expect.arrayContaining(newMappedKeys));
+        expect(oldKeys).not.toEqual(expect.arrayContaining(newMappedKeys));
 
         expect(newMappedTextNode.word.length).toEqual(oldTextNode.word.length - 1);
-        expect(oldTextNode.word).toEqual(expect.arrayContaining(newMappedTextNode.word));
+        expect(oldTextNode.word).not.toEqual(expect.arrayContaining(newMappedTextNode.word));
     });
 
    

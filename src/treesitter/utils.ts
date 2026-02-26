@@ -1,23 +1,11 @@
 import { BragiAST, AstNode, NodeId } from "./types";
 
-function shareAtLeastOneWord(a: string, b: string) {
-  const normalize = (str: string) =>
-    str
-      .toLowerCase()
-      .trim()
-      .split(/\s+/);
-
-  const wordsA = new Set(normalize(a));
-  const wordsB = new Set(normalize(b));
-
-  return [...wordsA].some(word => wordsB.has(word));
-}
 
 const isEqual = (nodeA?: AstNode, nodeB?: AstNode) => {
     if (!nodeA || !nodeB) return false;
     return (
         nodeA.parentId === nodeB.parentId &&
-        shareAtLeastOneWord(nodeA.text.toString(), nodeB.text.toString()) &&
+        nodeA.text === nodeB.text &&
         nodeA.type === nodeB.type
     );
 }
