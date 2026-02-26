@@ -516,8 +516,17 @@ export class FTree {
         }
     }
 
-
-    getNodes(){
+    getNodes() {
         return this.nodes;
+    }
+
+    clear() {
+        this.nodes.clear();
+
+        this.root.leftChildren = [];
+        this.root.rightChildren = [];
+        this.root.size = 0;
+
+        this.nodes.set("", [this.root]);
     }
 }
