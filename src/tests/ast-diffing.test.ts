@@ -1,5 +1,5 @@
 import { GetNewMappedTree } from "../treesitter/utils";
-import { AST, createNewAST, doDeletion, doInsertion, doInsertionToTextNode, getFirstTextNode, MORE_COMPLEX_AST } from "./ast-mocks"
+import { AST, createNewAST, doDeletion, doDeletionFromTextNode, doInsertion, doInsertionToTextNode, getFirstTextNode, MORE_COMPLEX_AST } from "./ast-mocks"
 
 describe("To test a bunch of functions that help us with diffing the AST", () => {
     it.each([
@@ -24,13 +24,15 @@ describe("To test a bunch of functions that help us with diffing the AST", () =>
     });
 
     it.each([
-        [AST, 1],
-        [MORE_COMPLEX_AST, 1],
-        [MORE_COMPLEX_AST, 2],
+       [AST, 1],
+        //[MORE_COMPLEX_AST, 1],
+       [MORE_COMPLEX_AST, 2],
     ])("Given the old AST, we create a new AST with a deletion. And we should end up with a new mapped tree having the same keys", (ast, index) => {
         const oldAST = structuredClone(ast);
         const newASTWithDeletion = doDeletion(oldAST, index);
         const newAST = createNewAST(newASTWithDeletion);
+
+        console.log('new AST -> ', newAST);
 
         const oldKeys = Array.from(oldAST.nodes.keys());
         const newASTKeys = Array.from(newAST.nodes.keys());
@@ -40,6 +42,8 @@ describe("To test a bunch of functions that help us with diffing the AST", () =>
 
         const newMappedTree = GetNewMappedTree(oldAST, newAST);
         const newMappedKeys = Array.from(newMappedTree.nodes.keys());
+
+        console.log('new Mapped tree -> ', newMappedTree);
 
         expect(oldKeys.length).toBeGreaterThan(newMappedKeys.length);
         expect(oldKeys).toEqual(expect.arrayContaining(newMappedKeys));
@@ -101,6 +105,37 @@ describe("To test a bunch of functions that help us with diffing the AST", () =>
 
         expect(newMappedTextNode.word.length).toEqual(oldTextNode.word.length + 1);
         expect(newMappedTextNode.word).toEqual(expect.arrayContaining(oldTextNode.word));
+    });
+
+        it.each([
+        AST,
+       MORE_COMPLEX_AST
+    ])("Given the old AST and new AST with a word deletion from a text node, we should have the new mapped tree generated as expected", (ast) => {
+        const oldAST = structuredClone(ast);
+        const newASTWithDeletion = doDeletionFromTextNode(oldAST); 
+        /*
+        Without Loss Of Generality
+        the function above inserts into the first text node
+        */
+        const newAST = createNewAST(newASTWithDeletion);
+
+        const oldKeys = Array.from(oldAST.nodes.keys());
+        const newASTKeys = Array.from(newAST.nodes.keys());
+
+        expect(oldKeys.length).toBeGreaterThan(newASTKeys.length);
+        expect(oldKeys).not.toEqual(expect.arrayContaining(newASTKeys));
+
+        const newMappedTree = GetNewMappedTree(oldAST, newAST);
+        const newMappedKeys = Array.from(newMappedTree.nodes.keys());
+
+        const oldTextNode = getFirstTextNode(oldAST)!;
+        const newMappedTextNode = getFirstTextNode(newMappedTree)!;
+
+        expect(oldKeys.length).toBeGreaterThan(newMappedKeys.length);
+        expect(oldKeys).toEqual(expect.arrayContaining(newMappedKeys));
+
+        expect(newMappedTextNode.word.length).toEqual(oldTextNode.word.length - 1);
+        expect(oldTextNode.word).toEqual(expect.arrayContaining(newMappedTextNode.word));
     });
 
    

@@ -220,24 +220,22 @@ export const AST: BragiAST = {
 export function doDeletion(ast: BragiAST, index: number): BragiAST {
     
     const newAST = structuredClone(ast);
-    const keys = Array.from(ast.nodes.keys());
+    const keys = Array.from(newAST.nodes.keys());
     const deletedKey = keys[index];
     newAST.nodes.delete(deletedKey);
-    for(const node of ast.nodes.values()){
-        if(node.parentId === deletedKey) node.parentId = null;
+    const newNodes = new Map<NodeId, AstNode>();
+
+    //remove the nodes that have the deleted node as their parent
+    //and remove the deleted node id from word and children arrays
+    for(const node of newAST.nodes.values()){
+        if(node.parentId === deletedKey) continue;
         node.childrenIds = node.childrenIds.filter((id)=> id!== deletedKey);
         if(node.type === "text"){
             node.word = node.word.filter((id)=> id !== deletedKey);
         }
-    }
-
-    //remove the nodes that have the deleted node as their parent
-    const newNodes = new Map<NodeId, AstNode>();
-    for(const node of ast.nodes.values()){
-        if(node.parentId === deletedKey) continue;
         newNodes.set(node.id, node);
     }
-
+    
     newAST.nodes = newNodes;
 
     return newAST;
@@ -298,8 +296,43 @@ export function doInsertionToTextNode(ast: BragiAST): BragiAST {
 
     newAST.nodes.set(id, newNode);
 
-    console.log(TextNode);
-    console.log('ast -> ', newAST);
+
+    return newAST;
+}
+
+export function doDeletionFromTextNode(ast: BragiAST): BragiAST {
+
+    const newAST = structuredClone(ast);
+
+    const TextNode = getFirstTextNode(newAST);
+    if(!TextNode) throw Error("This tree doesn't have any text nodes");
+    
+    //WLOG just gonna delete the last word
+    const deletedNodeId = TextNode.word.pop()!;
+    const deletedNode = newAST.nodes.get(deletedNodeId)!;
+
+    newAST.nodes.delete(deletedNodeId);
+
+    const newNodes = new Map<NodeId, AstNode>();
+
+    //remove the nodes that have the deleted node as their parent
+    //and remove the deleted node id from word and children arrays
+    for(const node of newAST.nodes.values()){
+        if(node.parentId === deletedNodeId) continue;
+        node.childrenIds = node.childrenIds.filter((id)=> id!== deletedNodeId);
+        if(node.type === "text"){
+            node.word = node.word.filter((id)=> id !== deletedNodeId);
+        }
+        newNodes.set(node.id, node);
+    }
+    
+    newAST.nodes = newNodes;
+
+    const newText = TextNode.text.split(' ').filter((word)=> word !== deletedNode.text).join(" ");
+    TextNode.text = newText;
+
+    //assuming words can't have any children here 
+
 
     return newAST;
 }
