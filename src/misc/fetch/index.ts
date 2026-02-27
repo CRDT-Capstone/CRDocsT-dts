@@ -1,3 +1,5 @@
+import { logger } from "../../utils/logging.js";
+
 export class APIError extends Error {
     constructor(
         public message: string,
@@ -50,7 +52,7 @@ class Fetch {
                     errorData = null;
                 }
 
-                console.error("FetchError: ", {
+                logger.error("FetchError: ", {
                     status: response.status,
                     statusText: response.statusText,
                     url: response.url,
