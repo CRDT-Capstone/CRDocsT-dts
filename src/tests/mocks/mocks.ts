@@ -1,6 +1,5 @@
-import { FugueList, FugueTree, StringTotalOrder } from "../dts/index.js";
-import crypto from "crypto";
-import { BragiAST } from "./../treesitter";
+import crypto from "node:crypto";
+import { FugueList, FugueTree, StringTotalOrder } from "../../dts/index.js";
 
 export const emptyFugueList = new FugueList<string>(
     new StringTotalOrder(crypto.randomBytes(3).toString("hex")),

@@ -1,4 +1,4 @@
-import { emptyFugueList } from "./mocks.js";
+import { emptyFugueList } from "./mocks/mocks.js";
 
 describe("Fugue List Tests", () => {
     describe("Given a Fugue list ", () => {

@@ -1,6 +1,7 @@
 import { v4 } from "uuid";
-import { AstNode, BragiAST, NodeId } from "../treesitter";
+import type { AstNode, BragiAST, NodeId } from "../../treesitter";
 
+// ---- SRC ----
 
 
 export const MORE_COMPLEX_AST: BragiAST = {
@@ -216,9 +217,8 @@ export const AST: BragiAST = {
 };
 
 
-
 export function doDeletion(ast: BragiAST, index: number): BragiAST {
-    
+
     const newAST = structuredClone(ast);
     const keys = Array.from(newAST.nodes.keys());
     const deletedKey = keys[index];
@@ -227,22 +227,33 @@ export function doDeletion(ast: BragiAST, index: number): BragiAST {
 
     //remove the nodes that have the deleted node as their parent
     //and remove the deleted node id from word and children arrays
-    for(const node of newAST.nodes.values()){
-        if(node.parentId === deletedKey) continue;
-        node.childrenIds = node.childrenIds.filter((id)=> id!== deletedKey);
-        if(node.type === "text"){
-            node.word = node.word.filter((id)=> id !== deletedKey);
+    for (const node of newAST.nodes.values()) {
+        if (node.parentId === deletedKey) continue;
+        node.childrenIds = node.childrenIds.filter((id) => id !== deletedKey);
+        if (node.type === "text") {
+            node.word = node.word.filter((id) => id !== deletedKey);
         }
         newNodes.set(node.id, node);
     }
-    
+
     newAST.nodes = newNodes;
+    // Update parent text node's text field if the deleted node was a word
+    for (const node of newAST.nodes.values()) {
+        if (node.type === "text" && node.word.length > 0) {
+            const wordTexts = node.word.map((id) => newAST.nodes.get(id)!.text);
+            node.text = wordTexts.join(" ");
+        }
+        if(node.childrenIds.length > 0){
+            const wordTexts = node.childrenIds.map((id) => newAST.nodes.get(id)!.text);
+            node.text = wordTexts.join(" ");
+        }
+    }
 
     return newAST;
 }
 
-export function doInsertion(ast: BragiAST, index: number): BragiAST {
-    const id = v4();
+export function doInsertion(ast: BragiAST, index: number, id:string = v4()): BragiAST {
+
     const newAST = structuredClone(ast);
 
     const newNode: AstNode = {
@@ -258,41 +269,45 @@ export function doInsertion(ast: BragiAST, index: number): BragiAST {
 
     const node = newAST.nodes.get(keys[index])!;
     newNode.parentId = node.id;
-    if(node.type === "text"){
+    if (node.type === "text") {
         node.word.push(newNode.id);
-    }else{
+    } else {
         node.childrenIds.push(newNode.id);
+    }
+
+    if (node.type === "text") {
+        const wordTexts = node.word.map((id) => newAST.nodes.get(id)!.text);
+        node.text = wordTexts.join(" ");
     }
 
     return newAST;
 }
 
-export function getFirstTextNode(ast: BragiAST){
-    for(const [id, node] of ast.nodes.entries()){
-        if(node.type === "text") return node;
+export function getFirstTextNode(ast: BragiAST) {
+    for (const [_id, node] of ast.nodes.entries()) {
+        if (node.type === "text") return node;
     }
     return undefined;
 }
 
-export function doInsertionToTextNode(ast: BragiAST): BragiAST {
+export function doInsertionToTextNode(ast: BragiAST, id: string = v4()): BragiAST {
 
-    
-    const id = v4();
     const newAST = structuredClone(ast);
 
     const TextNode = getFirstTextNode(newAST);
-    if(!TextNode) throw Error("This tree doesn't have any text nodes");
-    
+    if (!TextNode) throw Error("This tree doesn't have any text nodes");
+
     TextNode.word.push(id);
     const newNode: AstNode = {
         id,
-        parentId: TextNode.id, 
+        parentId: TextNode.id,
         type: "word",
         text: "Tani",
         childrenIds: [],
     };
 
-    TextNode.text = `${TextNode.text} ${newNode.text}`;
+    const wordTexts = TextNode.word.map((id) => newAST.nodes.get(id)!.text);
+    TextNode.text = wordTexts.join(" ");
 
     newAST.nodes.set(id, newNode);
 
@@ -305,11 +320,10 @@ export function doDeletionFromTextNode(ast: BragiAST): BragiAST {
     const newAST = structuredClone(ast);
 
     const TextNode = getFirstTextNode(newAST);
-    if(!TextNode) throw Error("This tree doesn't have any text nodes");
-    
+    if (!TextNode) throw Error("This tree doesn't have any text nodes");
+
     //WLOG just gonna delete the last word
     const deletedNodeId = TextNode.word.pop()!;
-    const deletedNode = newAST.nodes.get(deletedNodeId)!;
 
     newAST.nodes.delete(deletedNodeId);
 
@@ -317,21 +331,26 @@ export function doDeletionFromTextNode(ast: BragiAST): BragiAST {
 
     //remove the nodes that have the deleted node as their parent
     //and remove the deleted node id from word and children arrays
-    for(const node of newAST.nodes.values()){
-        if(node.parentId === deletedNodeId) continue;
-        node.childrenIds = node.childrenIds.filter((id)=> id!== deletedNodeId);
-        if(node.type === "text"){
-            node.word = node.word.filter((id)=> id !== deletedNodeId);
+    for (const node of newAST.nodes.values()) {
+        if (node.parentId === deletedNodeId) continue;
+        node.childrenIds = node.childrenIds.filter((id) => id !== deletedNodeId);
+        if (node.type === "text") {
+            node.word = node.word.filter((id) => id !== deletedNodeId);
         }
         newNodes.set(node.id, node);
     }
-    
+
     newAST.nodes = newNodes;
 
-    const newText = TextNode.text.split(' ').filter((word)=> word !== deletedNode.text).join(" ");
-    TextNode.text = newText;
-
-    //assuming words can't have any children here 
+    for (const node of newAST.nodes.values()) {
+        if (node.type === "text") {
+            const wordTexts = node.word.map((id) => newAST.nodes.get(id)!.text);
+            node.text = wordTexts.join(" ");
+        }else{
+            const wordTexts = node.childrenIds.map((id) => newAST.nodes.get(id)!.text);
+            node.text = wordTexts.join(" ");
+        }
+    }
 
 
     return newAST;
@@ -345,7 +364,7 @@ export function createNewAST(ast: BragiAST): BragiAST {
     function dfs(node?: AstNode, parentId: string | null = null) {
         if (!node) return;
 
-        if(visited.has(node)) return;
+        if (visited.has(node)) return;
 
         visited.add(node);
         const newId = v4();
