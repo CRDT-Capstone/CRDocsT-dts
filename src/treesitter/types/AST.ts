@@ -4025,3 +4025,8 @@ export const parseCST = (root: Node | null): BragiAST => {
     const rootId = unmarshalNode(root, ctx, null);
     return { rootId, nodes: ctx.nodes };
 };
+
+export const nodeEquals = (nodeA: AstNode | undefined, nodeB: AstNode | undefined): boolean => {
+    if (!nodeA || !nodeB) return false;
+    return nodeA.parentId === nodeB.parentId && nodeA.text === nodeB.text && nodeA.type === nodeB.type;
+};
