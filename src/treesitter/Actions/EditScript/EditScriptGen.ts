@@ -1,6 +1,6 @@
-import { BragiAST } from "../../types/AST.js";
-import { MappingStore } from "../../types/GumTree.js";
-import { Action, Actions, ActionType } from "../Model/index.js";
+
+import type { MappingStore } from "../../types/GumTree/GumTree.js";
+import { type Action, Actions } from "../Model/index.js";
 
 export type EditScript = Actions;
 

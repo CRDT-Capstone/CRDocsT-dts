@@ -1,5 +1,8 @@
 import FastPriorityQueue from "fastpriorityqueue";
-import { AstNode, BragiAST, NodeId } from "./types";
+import type { AstNode, BragiAST, NodeId } from "./types";
+import { MappingStore } from "./types/GumTree/GumTree";
+import { HashBasedMapper, Pair } from "./types/GumTree/HashBasedMapper";
+import { TreeMetricComputer } from "./types/GumTree/TreeMetricComputer";
 
 export type pqType = {
     nodeId: string,
@@ -8,43 +11,22 @@ export type pqType = {
 
 export class GumTreeTopDown{
 
-    private oldTree: BragiAST;
-    private newTree: BragiAST;
-    private oldTreePQ = new FastPriorityQueue((a: pqType, b: pqType) => a.height > b.height);
-    private newTreePQ = new FastPriorityQueue((a: pqType, b: pqType) => a.height > b.height);
-    private oldTreeHeightMap = new Map<NodeId, number>();
-    private newTreeHeightMap = new Map<NodeId, number>();
-    private mapping: [string, string][] = [];
+    private srcTree: BragiAST;
+    private dstTree: BragiAST;
+    private srcTreePQ = new FastPriorityQueue((a: pqType, b: pqType) => a.height > b.height);
+    private dstTreePQ = new FastPriorityQueue((a: pqType, b: pqType) => a.height > b.height);
+    private srcMetrics: TreeMetricComputer = new TreeMetricComputer();
+    private dstMetrics: TreeMetricComputer = new TreeMetricComputer();
+    private mapping: MappingStore;
 
-    constructor(oldTree: BragiAST, newTree: BragiAST){
-        this.oldTree = oldTree;
-        this.newTree = newTree;
+    constructor(srcTree: BragiAST, dstTree: BragiAST){
+        this.srcTree = srcTree;
+        this.dstTree = dstTree;
+        this.mapping = new MappingStore(srcTree, dstTree);
+        this.srcMetrics.buildMetrics(this.srcTree, this.srcTree.nodes.get(this.srcTree.rootId));
+        this.dstMetrics.buildMetrics(this.dstTree, this.dstTree.nodes.get(this.dstTree.rootId));
     } 
-    //TOP-DOWN PHASE
-    private HeightfiyTrees = () => {
-        //Please help with a better name if you have one
-
-        function dfs(tree: BragiAST, nodeHeightMap: Map<NodeId, number>, node?: AstNode) {
-            if (!node) return -1;
-            let height = 0;
-            const childIds = node.type === "text" ? node.word : node.childrenIds;
-
-            for (const id of childIds) {
-                const newNode = tree.nodes.get(id);
-                height = Math.max(height, 1 + dfs(tree, nodeHeightMap, newNode));
-            }
-
-            nodeHeightMap.set(node.id, height);
-            return height;
-        }
-
-        const oldRoot = this.oldTree.nodes.get(this.oldTree.rootId);
-        const newRoot = this.newTree.nodes.get(this.newTree.rootId);
-
-        dfs(this.oldTree, this.oldTreeHeightMap, oldRoot);
-        dfs(this.newTree, this.newTreeHeightMap, newRoot);
-    }
-
+    
     private IsInQueue(entry: pqType, pq: FastPriorityQueue<pqType>) {
         let isIn = false;
         pq.forEach((node) => {
@@ -55,10 +37,11 @@ export class GumTreeTopDown{
         return isIn;
     }
 
-    private AddChildToQueue(heightMap: Map<NodeId, number>, node: AstNode, PQ: FastPriorityQueue<pqType>) {
+    private AddChildrenToQueue(node: AstNode, PQ: FastPriorityQueue<pqType>, metricComputer: TreeMetricComputer) {
         const childrenIds = (node.type === "text") ? node.word : node.childrenIds;
         for (const nodeId of childrenIds) {
-            const height = heightMap.get(nodeId)!;
+            const height = metricComputer.getMetrics().get(node.id)!.height
+
             if (!this.IsInQueue({ nodeId, height }, PQ)) {
                 PQ.add({
                     nodeId,
@@ -81,133 +64,52 @@ export class GumTreeTopDown{
         }
     }
 
+    private addNodeToPQ(PQ: FastPriorityQueue<pqType>, tree: BragiAST, metricComputer: TreeMetricComputer, nodeId: NodeId){
+        const node = tree.nodes.get(nodeId);
+        if(!node) return;
+
+        const height = metricComputer.getMetrics().get(nodeId)!.height;
+        PQ.add({
+            nodeId: nodeId,
+            height
+        });
+    }
+
 
 
     topDown = () => {
-        this.HeightfiyTrees();
 
-        this.oldTreePQ.add({
-            nodeId: this.oldTree.rootId,
-            height: this.oldTreeHeightMap.get(this.oldTree.rootId)!
-        });
+        this.addNodeToPQ(this.srcTreePQ, this.srcTree, this.srcMetrics, this.srcTree.rootId);
+        this.addNodeToPQ(this.dstTreePQ, this.dstTree, this.dstMetrics, this.dstTree.rootId);
 
-        this.newTreePQ.add({
-            nodeId: this.newTree.rootId,
-            height: this.newTreeHeightMap.get(this.newTree.rootId)!
-        });
+        const ambiguousMappings: Pair<Set<AstNode>>[] = [];
 
-        while (!this.oldTreePQ.isEmpty() && !this.newTreePQ.isEmpty()) {
-            const oldTop = this.oldTreePQ.peek()!;
-            const newTop = this.newTreePQ.peek()!;
-            const maxHeight = newTop.height;
-            if (oldTop.height !== newTop.height) {
-                if (oldTop.height < newTop.height) {
-                    const oldNode = this.oldTree.nodes.get(oldTop.nodeId)!;
-                    this.AddChildToQueue(this.oldTreeHeightMap, oldNode, this.oldTreePQ);
+        while(this.synchronize()){
+            let localHashMappings = new HashBasedMapper(this.srcTree, this.dstTree, this.srcMetrics, this.dstMetrics);
+            this.srcTreePQ.poll();
+            this.dstTreePQ.poll();
+            localHashMappings.addSrcNodesFromQueue(this.srcTreePQ);
+            localHashMappings.addDstNodesFromQueue(this.dstTreePQ);
 
-                    this.oldTreePQ.poll();
-                } else {
-                    const newNode = this.newTree.nodes.get(newTop.nodeId)!;
-                    this.AddChildToQueue(this.newTreeHeightMap, newNode, this.newTreePQ);
-                    this.newTreePQ.poll();
-                }
-                continue;
-            }
-
-
-            const oldToNewPairings = new Map<NodeId, NodeId[]>();
-            const newToOldPairings = new Map<NodeId, NodeId[]>();
-
-            this.oldTreePQ.forEach((oldPQEntry, index) => {
-                if (oldPQEntry.height === maxHeight) {
-                    this.newTreePQ.forEach((newPQEntry, index) => {
-                        if (newPQEntry.height === maxHeight) {
-                            const oldNode = this.oldTree.nodes.get(oldPQEntry.nodeId)!;
-                            const newNode = this.newTree.nodes.get(newPQEntry.nodeId)!;
-
-                            if (this.isIsomorphic(oldNode, newNode)) {
-
-                                const priorOldToNewPairings = oldToNewPairings.get(oldNode.id);
-                                const priorNewToOldPairings = newToOldPairings.get(newNode.id);
-
-                                if (priorOldToNewPairings) oldToNewPairings.set(oldNode.id, [...priorOldToNewPairings, newNode.id]);
-                                else oldToNewPairings.set(oldNode.id, [newNode.id]);
-
-                                if (priorNewToOldPairings) newToOldPairings.set(newNode.id, [...priorNewToOldPairings, oldNode.id]);
-                                else newToOldPairings.set(newNode.id, [oldNode.id]);
-
-                            }
-                        }
-                    });
-                }
-
+            localHashMappings.unique().forEach((pair)=>{
+                
+                this.mapping.addMappingRecursively(
+                    pair.first.values().next().value!.id,
+                    pair.second.values().next().value!.id
+                );
             });
 
+            localHashMappings.ambiguous().forEach((pair)=> {ambiguousMappings.push(pair)});
 
-            for (const [oldNodeId, pairing] of oldToNewPairings) {
-                if (pairing.length === 1) {
-                    const newNodeId = pairing[0];
-                    const newNodePairing = newToOldPairings.get(newNodeId)!;
-                    if (newNodePairing.length === 1) {
-                        //unique match 
-                        const oldNode = this.oldTree.nodes.get(oldNodeId);
-                        const newNode = this.newTree.nodes.get(newNodeId);
-                        this.addToMapping(oldNode, newNode);
+            localHashMappings.unmapped().forEach((pair)=>{
+                pair.first.forEach((srcNode)=>{
+                    this.AddChildrenToQueue(srcNode, this.srcTreePQ, this.srcMetrics);
+                });
 
-
-                        //remove descendants from the queue
-                        this.removeNodeAndDesendantsFromQueue(this.oldTreePQ, this.oldTreeHeightMap, this.oldTree, this.oldTree.nodes.get(oldNodeId));
-
-                        this.removeNodeAndDesendantsFromQueue(this.newTreePQ, this.newTreeHeightMap, this.newTree, this.newTree.nodes.get(newNodeId));
-                    }
-                } else {
-
-                    this.AddChildToQueue(this.oldTreeHeightMap, this.oldTree.nodes.get(oldNodeId)!, this.oldTreePQ);
-                    let removeQuery = {
-                        nodeId: oldNodeId,
-                        height: this.oldTreeHeightMap.get(oldNodeId)!
-                    };
-                    this.oldTreePQ.removeOne((node) => node.nodeId === removeQuery.nodeId && node.height === removeQuery.height);
-                    for (const newNodeId of oldToNewPairings.get(oldNodeId)!) {
-                        this.AddChildToQueue(this.newTreeHeightMap, this.newTree.nodes.get(newNodeId)!, this.newTreePQ);
-                        const newRemoveQuery = {
-                            nodeId: newNodeId,
-                            height: this.newTreeHeightMap.get(newNodeId)!
-                        };
-                       this.newTreePQ.removeOne((node) => node.nodeId === newRemoveQuery.nodeId && node.height === newRemoveQuery.height);
-                    }
-
-
-                }
-            }
-
-            const oldNodesToExpand: AstNode[] = [];
-
-            this.oldTreePQ.forEach((node, index)=>{
-                if(node.height === maxHeight){
-                    const oldNode = this.oldTree.nodes.get(node.nodeId)!;
-                    oldNodesToExpand.push(oldNode)
-                }
-            });
-
-            for(const node of oldNodesToExpand){
-                this.AddChildToQueue(this.oldTreeHeightMap, node, this.oldTreePQ);
-                this.oldTreePQ.removeOne((entry)=> entry.height === this.oldTreeHeightMap.get(node.id)! && entry.nodeId === node.id);
-            }
-
-            const newNodesToExpand: AstNode[] = [];
-
-            this.newTreePQ.forEach((node, index)=>{
-                if(node.height === maxHeight){
-                    const newNode = this.newTree.nodes.get(node.nodeId)!;
-                    newNodesToExpand.push(newNode)
-                }
-            });
-
-            for(const node of newNodesToExpand){
-                this.AddChildToQueue(this.newTreeHeightMap, node, this.newTreePQ);
-                this.newTreePQ.removeOne((entry)=> entry.height === this.newTreeHeightMap.get(node.id)! && entry.nodeId === node.id);
-            }
+                pair.second.forEach((dstNode)=>{
+                    this.AddChildrenToQueue(dstNode, this.dstTreePQ, this.dstMetrics);
+                });
+            })
         }
 
         return this.mapping;
@@ -215,75 +117,35 @@ export class GumTreeTopDown{
     }
 
 
-    private isIsomorphic = (nodeA?: AstNode, nodeB?: AstNode): boolean => {
-        if (!nodeA || !nodeB) return false;
+    private synchronize(){
+        while (
+            (!this.srcTreePQ.isEmpty() && !this.dstTreePQ.isEmpty()) &&
+            this.srcTreePQ.peek()?.height !== this.dstTreePQ.peek()?.height
+        
+        ) {
+            const srcTop = this.srcTreePQ.peek()!;
+            const dstTop = this.dstTreePQ.peek()!;
+                if (srcTop.height < dstTop.height) {
+                    const srcNode = this.srcTree.nodes.get(srcTop.nodeId)!;
+                    this.AddChildrenToQueue(srcNode, this.srcTreePQ, this.srcMetrics);
 
-        if (
-            (nodeA.type !== nodeB.type) ||
-            (nodeA.text !== nodeB.text) ||
-            (nodeA.childrenIds.length !== nodeB.childrenIds.length)
-        ) return false;
-
-        if (
-            (nodeA.type === "text" && nodeB.type === "text") &&
-            (nodeA.word.length !== nodeB.word.length)
-        ) return false;
-
-
-        let isIso = true;
-
-        for (let i = 0; i < nodeA.childrenIds.length; ++i) {
-            const id_A = nodeA.childrenIds[i];
-            const newNodeA = this.oldTree.nodes.get(id_A);
-
-            const id_B = nodeB.childrenIds[i];
-            const newNodeB = this.newTree.nodes.get(id_B);
-
-            isIso = isIso && this.isIsomorphic(newNodeA, newNodeB);
-        }
-
-        //we are assuming words and childrenIds are going to be disjoint
-        if (nodeA.type === "text" && nodeB.type === "text") {
-            for (let i = 0; i < nodeA.word.length; ++i) {
-                const id_A = nodeA.word[i];
-                const newNodeA = this.oldTree.nodes.get(id_A);
-
-                const id_B = nodeB.word[i];
-                const newNodeB = this.newTree.nodes.get(id_B);
-
-                isIso = isIso && this.isIsomorphic(newNodeA, newNodeB);
+                    this.srcTreePQ.poll();
+                } else {
+                    const newNode = this.dstTree.nodes.get(dstTop.nodeId)!;
+                    this.AddChildrenToQueue(newNode, this.dstTreePQ, this.srcMetrics);
+                    this.dstTreePQ.poll();
+                }
             }
+        if(this.srcTreePQ.isEmpty() || this.dstTreePQ.isEmpty()){
+            this.dstTreePQ = new FastPriorityQueue<pqType>();
+            this.srcTreePQ = new FastPriorityQueue<pqType>();
+            return false;
+        }
+        return true;
+
+        
 
         }
+    
 
-
-        return isIso;
-
-
-    }
-
-    private addToMapping( nodeA?: AstNode, nodeB?: AstNode) {
-        if (!nodeA || !nodeB) return;
-        this.mapping.push([nodeA.id, nodeB.id]);
-
-        if (nodeA.type === "text" && nodeB.type === "text") {
-            if (nodeA.word.length !== nodeB.word.length) throw Error("This shouldn't be happening because they're isomorphic!!");
-
-            for (let i = 0; i < nodeA.word.length; ++i) {
-                const newNodeA = this.oldTree.nodes.get(nodeA.word[i]);
-                const newNodeB = this.newTree.nodes.get(nodeB.word[i]);
-                this.addToMapping(newNodeA, newNodeB);
-            }
-        } else if (nodeA.type !== "text" && nodeB.type !== "text") {
-            if (nodeA.childrenIds.length !== nodeB.childrenIds.length) throw Error("This shouldn't be happening because they're isomorphic!!");
-
-            for (let i = 0; i < nodeA.childrenIds.length; ++i) {
-                const newNodeA = this.oldTree.nodes.get(nodeA.childrenIds[i]);
-                const newNodeB = this.newTree.nodes.get(nodeB.childrenIds[i]);
-                this.addToMapping(newNodeA, newNodeB);
-            }
-        } else {
-            throw Error("This should not be happening because of isomorphism!");
-        }
-    }
 }

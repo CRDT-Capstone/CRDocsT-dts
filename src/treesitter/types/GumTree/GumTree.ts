@@ -1,10 +1,10 @@
-import { AstNode, BragiAST, NodeId } from "./AST";
+import { type BragiAST, type NodeId } from "../AST";
 
 export class Mapping {
     constructor(
         public readonly f: NodeId, // src node id
         public readonly s: NodeId, // dst node id
-    ) {}
+    ) { }
 }
 
 /**

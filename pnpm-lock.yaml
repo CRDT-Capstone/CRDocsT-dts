@@ -11,6 +11,9 @@ importers:
       '@msgpack/msgpack':
         specifier: ^3.1.3
         version: 3.1.3
+      '@types/object-hash':
+        specifier: ^3.0.6
+        version: 3.0.6
       fastpriorityqueue:
         specifier: ^0.8.0
         version: 0.8.0
@@ -20,6 +23,9 @@ importers:
       mnemonist:
         specifier: ^0.40.3
         version: 0.40.3
+      object-hash:
+        specifier: ^3.0.0
+        version: 3.0.0
       uuid:
         specifier: ^13.0.0
         version: 13.0.0
@@ -753,6 +759,9 @@ packages:
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
+
+  '@types/object-hash@3.0.6':
+    resolution: {integrity: sha512-fOBV8C1FIu2ELinoILQ+ApxcUKz4ngq+IWUYrxSGjXzzjUALijilampwkMgEtJ+h2njAW3pi853QpzNVCHB73w==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -1960,6 +1969,10 @@ packages:
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
+
+  object-hash@3.0.0:
+    resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
+    engines: {node: '>= 6'}
 
   obliterator@2.0.5:
     resolution: {integrity: sha512-42CPE9AhahZRsMNslczq0ctAEtqk8Eka26QofnqC346BZdHDySk3LWka23LI7ULIw11NmltpiLagIq8gBozxTw==}
@@ -3422,6 +3435,8 @@ snapshots:
 
   '@types/normalize-package-data@2.4.4': {}
 
+  '@types/object-hash@3.0.6': {}
+
   '@types/stack-utils@2.0.3': {}
 
   '@types/yargs-parser@21.0.3': {}
@@ -4690,6 +4705,8 @@ snapshots:
   npm@11.7.0: {}
 
   object-assign@4.1.1: {}
+
+  object-hash@3.0.0: {}
 
   obliterator@2.0.5: {}
 

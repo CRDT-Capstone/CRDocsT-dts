@@ -1,9 +1,9 @@
-import { AstNode, BragiAST, NodeId } from "../../types";
-import { MappingStore, Mapping } from "../../types/GumTree";
-import { preoderAstTraversal, preorderAstTraversalIterator } from "../../utils";
-import { EditScript, EditScriptGen } from "./EditScriptGen";
-import { Delete, Insert, Move, Update } from "../Model/index.js";
 import { v4 as uuidv4 } from "uuid";
+import type { AstNode, BragiAST, NodeId } from "../../types";
+import { Mapping, MappingStore } from "../../types/GumTree/GumTree";
+import { preoderAstTraversal, preorderAstTraversalIterator } from "../../utils";
+import { Delete, Insert, Move, Update } from "../Model/index.js";
+import type { EditScript, EditScriptGen } from "./EditScriptGen";
 
 export class ChawatheScriptGen implements EditScriptGen {
     ogOldAst: BragiAST = { rootId: "", nodes: new Map() };
@@ -19,8 +19,6 @@ export class ChawatheScriptGen implements EditScriptGen {
     cpyToOgIdMap: Map<NodeId, NodeId> = new Map();
     ogNodeMap: Map<NodeId, AstNode> = new Map();
     cpyNodeMap: Map<NodeId, AstNode> = new Map();
-
-    constructor() {}
 
     init(m: MappingStore): void {
         this.ogOldAst = m.oldAst;

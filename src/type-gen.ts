@@ -95,6 +95,8 @@ export interface ParserContext {
         props.set("parentId", { type: "NodeId | null", optional: false });
         props.set("type", { type: `'${node.type}'`, optional: false });
         props.set("text", { type: "string", optional: false });
+        props.set("startIndex", {type: "number", optional: false});
+        props.set("endIndex", {type: "number", optional: false});
 
         // Map Fields
         if (node.fields) {
@@ -133,6 +135,8 @@ export interface ParserContext {
                 parentId,
                 type: '${node.type}',
                 text: node.text,
+                startIndex: node.startIndex, 
+                endIndex: node.endIndex
             };
             ctx.nodes.set(id, n as AstNode);
 
@@ -186,6 +190,8 @@ export const unmarshalNode = (node: Node, ctx: ParserContext, parentId: NodeId |
                 type: node.type as any,
                 text: node.text,
                 childrenIds: [] as NodeId[],
+                startIndex: node.startIndex, 
+                endIndex: node.endIndex
             };
             ctx.nodes.set(id, n as AstNode);
             n.childrenIds = node.namedChildren.map(n => unmarshalNode(n, ctx, id));
