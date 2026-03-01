@@ -2,6 +2,7 @@ import { FListNode } from "./FNode.js";
 import { FugueState, FugueMessage, Operation } from "../../types/Fugue/index.js";
 import { UniquelyDenseTotalOrder } from "../TotalOrder/UniquelyDenseTotalOrder.js";
 import { FugueMessageSerialzier } from "../Serailizers/Fugue/index.js";
+import { logger } from "../../utils/logging.js";
 
 /**
  * A Fugue List CRDT, with insert and delete operations
@@ -238,7 +239,7 @@ export class FugueList<P> {
         const position = this.findVisiblePosition(index);
 
         if (!position) {
-            console.warn(`No element at position -> ${position}`);
+            logger.warn(`No element at position -> ${position}`);
             return;
         }
 

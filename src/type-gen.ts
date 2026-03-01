@@ -2,6 +2,7 @@
 import { writeFileSync, readFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import { logger } from "./utils/logging.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const dir = dirname(__filename);
@@ -204,14 +205,22 @@ export const unmarshalNode = (node: Node, ctx: ParserContext, parentId: NodeId |
      return {rootId, nodes: ctx.nodes};
  }
 
- export const nodeEquals = (nodeA: AstNode | undefined, nodeB: AstNode | undefined): boolean => {
-    if (!nodeA || !nodeB) return false;
-    return (
-        nodeA.parentId === nodeB.parentId &&
-        nodeA.text === nodeB.text &&
-        nodeA.type === nodeB.type
-    );
-}
+export const allChildIds = (ast: BragiAST, node: AstNode): string[] => {
+    const ids: string[] = [];
+    for (const [key, value] of Object.entries(node)) {
+        if (key === "id" || key === "parentId") continue;
+
+        if (typeof value === "string" && ast.nodes.has(value)) {
+            ids.push(value);
+        } else if (Array.isArray(value)) {
+            value.forEach((v) => {
+                if (typeof v === "string" && ast.nodes.has(v)) ids.push(v);
+            });
+        }
+    }
+    return ids;
+};
+
     `;
 
     // Create a generic ASTNode type
@@ -232,7 +241,7 @@ export const unmarshalNode = (node: Node, ctx: ParserContext, parentId: NodeId |
     `;
 
     writeFileSync(OUTPUT_PATH, output);
-    console.log(`Successfully generated AST types at ${OUTPUT_PATH}`);
+    logger.log(`Successfully generated AST types at ${OUTPUT_PATH}`);
 }
 
 generate();
