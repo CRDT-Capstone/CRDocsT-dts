@@ -22,11 +22,8 @@ export class ChawatheScriptGen implements EditScriptGen {
 
     constructor() {}
 
-    init(m: MappingStore): void {
-        this.ogOldAst = m.oldAst;
-        this.cpyOldAst = structuredClone(m.oldAst);
-        this.ogNewAst = m.newAst;
-        this.ogMappings = m;
+    private resetCpy() {
+        this.cpyOldAst = structuredClone(this.ogOldAst);
 
         this.ogToCpyIdMap = new Map();
         this.cpyToOgIdMap = new Map();
@@ -46,10 +43,21 @@ export class ChawatheScriptGen implements EditScriptGen {
         }
     }
 
+    init(m: MappingStore) {
+        this.ogOldAst = m.oldAst;
+        this.ogNewAst = m.newAst;
+        this.ogMappings = m;
+
+        this.resetCpy();
+    }
+
     generate(): EditScript {
         this.actions = [];
         this.newInOrder = new Map();
         this.oldInOrder = new Map();
+
+        // Ensure idempotency in case generate() is called multiple times on the same instance.
+        this.resetCpy();
 
         // BFS over the new tree.
         for (const xId of this.breadthFirst(this.ogNewAst.rootId)) {
