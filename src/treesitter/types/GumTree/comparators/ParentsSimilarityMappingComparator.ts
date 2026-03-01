@@ -1,6 +1,7 @@
-import { AstNode, BragiAST, NodeId } from "../AST";
-import { Mapping } from "./GumTree";
-import { diceCoefficient, getParent, getParents, longestCommonSubsequenceWithType } from "./utils";
+
+import { NodeId, AstNode, BragiAST } from "../../AST";
+import { Mapping } from "../GumTree";
+import { diceCoefficient, getParent, getParents, longestCommonSubsequenceWithType } from "../utils";
 
 export class ParentsSimilarityMappingComparator {
     private srcAncestors: Map<NodeId, AstNode[]> = new Map();

@@ -1,8 +1,7 @@
-import { int } from "zod";
-import { ms } from "zod/locales";
-import { NodeId, AstNode, BragiAST } from "../AST";
-import { Mapping, MappingStore } from "./GumTree";
-import { diceCoefficient, getParent } from "./utils";
+import { NodeId, AstNode, BragiAST } from "../../AST";
+import { MappingStore, Mapping } from "../GumTree";
+import { getParent, diceCoefficient } from "../utils";
+
 
 export class SiblingsSimilarityMappingComparator {
     private ms: MappingStore;
@@ -67,7 +66,7 @@ export class SiblingsSimilarityMappingComparator {
         let common = 0;
         for (const t of this.srcDescendants.get(src)!) {
             const m = this.ms.getDstForSrc(t.id);
-            if (m !== null && this.dstDescendants.get(dst)!.some(n => n.id === m)) {
+            if (m !== null && this.dstDescendants.get(dst)?.some(n => n.id === m)) {
                 common++;
             }
         }

@@ -1,6 +1,6 @@
-import { Tree } from "web-tree-sitter";
-import { Mapping } from "./GumTree";
-import { AstNode, BragiAST } from "../AST";
+import { BragiAST, AstNode } from "../../AST";
+import { Mapping } from "../GumTree";
+
 
 export class TextualPositionDistanceMappingComparator {
     private srcTree: BragiAST;

@@ -1,10 +1,11 @@
 import FastPriorityQueue from "fastpriorityqueue";
-import type { AstNode, BragiAST, NodeId } from "./types";
-import { Mapping, MappingStore } from "./types/GumTree/GumTree";
-import { HashBasedMapper, Pair } from "./types/GumTree/HashBasedMapper";
+import { BragiAST, AstNode, NodeId } from "./types";
+import { FullMappingComparator } from "./types/GumTree/comparators/FullMappingComparator";
+import { MappingStore, Mapping } from "./types/GumTree/GumTree";
+import { Pair, HashBasedMapper } from "./types/GumTree/HashBasedMapper";
 import { TreeMetricComputer } from "./types/GumTree/TreeMetricComputer";
-import { FullMappingComparator } from "./types/GumTree/FullMappingComparator";
 import { TreeMetrics } from "./types/GumTree/TreeMetrics";
+
 
 export type pqType = {
     nodeId: string,
@@ -42,7 +43,7 @@ export class GumTreeTopDown {
     private AddChildrenToQueue(node: AstNode, PQ: FastPriorityQueue<pqType>, metricComputer: TreeMetricComputer) {
         const childrenIds = (node.type === "text") ? node.word : node.childrenIds;
         for (const nodeId of childrenIds) {
-            const height = metricComputer.getMetrics().get(node.id)!.height
+            const height = metricComputer.getMetrics().get(nodeId)!.height
 
             if (!this.IsInQueue({ nodeId, height }, PQ)) {
                 PQ.add({
@@ -54,17 +55,6 @@ export class GumTreeTopDown {
         }
     }
 
-    private removeNodeAndDesendantsFromQueue(PQ: FastPriorityQueue<pqType>, heightMap: Map<NodeId, number>, tree: BragiAST, node?: AstNode,) {
-        if (!node) return;
-        const query = { nodeId: node.id, height: heightMap.get(node.id)! };
-        if (this.IsInQueue(query, PQ)) {
-            PQ.removeOne(node => node.nodeId === query.nodeId && node.height === query.height);
-            const children = (node.type === "text") ? node.word : node.childrenIds;
-            for (const id of children) {
-                this.removeNodeAndDesendantsFromQueue(PQ, heightMap, tree, tree.nodes.get(id));
-            }
-        }
-    }
 
     private addNodeToPQ(PQ: FastPriorityQueue<pqType>, tree: BragiAST, metricComputer: TreeMetricComputer, nodeId: NodeId) {
         const node = tree.nodes.get(nodeId);
@@ -87,11 +77,14 @@ export class GumTreeTopDown {
         const ambiguousMappings: Pair<Set<AstNode>>[] = [];
 
         while (this.synchronize()) {
-            let localHashMappings = new HashBasedMapper(this.srcTree, this.dstTree, this.srcMetrics, this.dstMetrics);
-            this.srcTreePQ.poll();
-            this.dstTreePQ.poll();
+            const localHashMappings = new HashBasedMapper(this.srcTree, this.dstTree, this.srcMetrics, this.dstMetrics);
+            const srcTopHeight = this.srcTreePQ.peek()!.height;
             localHashMappings.addSrcNodesFromQueue(this.srcTreePQ);
+            while (this.srcTreePQ.peek()?.height === srcTopHeight) this.srcTreePQ.poll();
+
+            const dstTopHeight = this.dstTreePQ.peek()!.height;
             localHashMappings.addDstNodesFromQueue(this.dstTreePQ);
+            while (this.dstTreePQ.peek()?.height === dstTopHeight) this.dstTreePQ.poll();
 
             localHashMappings.unique().forEach((pair) => {
 
@@ -125,19 +118,19 @@ export class GumTreeTopDown {
         ambiguousMappings.sort((m1, m2) => this.ambiguousMappingsComparator(m1, m2, this.srcMetrics.getMetrics()));
         ambiguousMappings.forEach((pair) => {
             const candidates: Mapping[] = this.convertToMappings(pair);
-            candidates.sort((m1,m2)=> comparator.compare(m1, m2));
-            candidates.forEach((mapping)=>{
-                if(this.mappings.areBothUnmapped(mapping.f, mapping.s)){
+            candidates.sort((m1, m2) => comparator.compare(m1, m2));
+            candidates.forEach((mapping) => {
+                if (this.mappings.areBothUnmapped(mapping.f, mapping.s)) {
                     this.mappings.addMappingRecursively(mapping.f, mapping.s);
                 }
             })
         })
     }
 
-    convertToMappings(ambiguousMappings: Pair<Set<AstNode>>){
+    convertToMappings(ambiguousMappings: Pair<Set<AstNode>>) {
         const mappings: Mapping[] = [];
-        for(const srcNode of ambiguousMappings.first){
-            for(const dstNode of ambiguousMappings.second){
+        for (const srcNode of ambiguousMappings.first) {
+            for (const dstNode of ambiguousMappings.second) {
                 mappings.push(new Mapping(srcNode.id, dstNode.id));
             }
         }

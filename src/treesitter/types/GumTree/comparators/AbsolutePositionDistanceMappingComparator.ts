@@ -1,7 +1,7 @@
-import { Tree } from "web-tree-sitter";
-import { AstNode, BragiAST, NodeId } from "../AST";
-import { Mapping } from "./GumTree";
-import { TreeMetricComputer } from "./TreeMetricComputer";
+
+import { type BragiAST, type NodeId } from "../../AST";
+import type { Mapping } from "../GumTree";
+import type { TreeMetricComputer } from "../TreeMetricComputer";
 
 export class AbsolutePositionDistanceMappingComparator {
     private srcTree: BragiAST;
@@ -23,8 +23,8 @@ export class AbsolutePositionDistanceMappingComparator {
     }
 
     absolutePositionDistance(src: NodeId, dst: NodeId): number {
-        const srcPosition = this.srcMetricComputer.getMetrics().get(src)!.position;
-        const dstPosition = this.dstMetricComputer.getMetrics().get(dst)!.position;
-        return Math.abs(srcPosition - dstPosition);
+        const srcPosition = this.srcMetricComputer.getMetrics().get(src)?.position;
+        const dstPosition = this.dstMetricComputer.getMetrics().get(dst)?.position;
+        return Math.abs(srcPosition! - dstPosition!);
     }
 }

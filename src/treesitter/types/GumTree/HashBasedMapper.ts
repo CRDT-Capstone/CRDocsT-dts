@@ -29,20 +29,25 @@ export class HashBasedMapper {
         this.mapping.set(hash, pair);
     }
 
-    addSrcNodesFromQueue(srcPQ: FastPriorityQueue<pqType>){
-        srcPQ.forEach((value, index)=>{
+   addSrcNodesFromQueue(srcPQ: FastPriorityQueue<pqType>) {
+    const topHeight = srcPQ.peek()!.height;
+    srcPQ.forEach((value) => {
+        if (value.height === topHeight) {
             const node = this.srcTree.nodes.get(value.nodeId)!;
             this.addSrcNode(node);
-        })
-    }
+        }
+    });
+}
 
-
-    addDstNodesFromQueue(dstPQ: FastPriorityQueue<pqType>){
-        dstPQ.forEach((value, index)=>{
+addDstNodesFromQueue(dstPQ: FastPriorityQueue<pqType>) {
+    const topHeight = dstPQ.peek()!.height;
+    dstPQ.forEach((value) => {
+        if (value.height === topHeight) {
             const node = this.dstTree.nodes.get(value.nodeId)!;
             this.addDstNode(node);
-        })
-    }
+        }
+    });
+}
 
 
 
