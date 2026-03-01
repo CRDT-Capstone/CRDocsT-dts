@@ -2,6 +2,7 @@
 import { writeFileSync, readFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import { logger } from "./utils/logging.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const dir = dirname(__filename);
@@ -232,7 +233,7 @@ export const unmarshalNode = (node: Node, ctx: ParserContext, parentId: NodeId |
     `;
 
     writeFileSync(OUTPUT_PATH, output);
-    console.log(`Successfully generated AST types at ${OUTPUT_PATH}`);
+    logger.log(`Successfully generated AST types at ${OUTPUT_PATH}`);
 }
 
 generate();

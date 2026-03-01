@@ -8,7 +8,6 @@ export const newParser = async (treeSitterLatexPath: string, queryFilePath: stri
         try {
             await Parser.init({
                 locateFile: (name: string, dir: string) => {
-                    console.log({ name, dir });
                     // return `/${name}`;
                     return "/tree-sitter.wasm";
                 },

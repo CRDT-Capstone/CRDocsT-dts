@@ -1,3 +1,53 @@
+# [0.32.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.31.0...v0.32.0) (2026-03-01)
+
+
+### Features
+
+* add pako for compression support ([9d4adc5](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/9d4adc504cc479925e57e6922de621c2d2a43457))
+
+# [0.31.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.30.0...v0.31.0) (2026-02-26)
+
+
+### Features
+
+* add clear method to FTree and FugueTree ([d82d147](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/d82d147812e922e1687eac989926aaba77d16f61))
+
+# [0.30.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.29.0...v0.30.0) (2026-02-26)
+
+
+### Features
+
+* add message serialization for Fugue and Presence ([f87a31c](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/f87a31cc65fe088713fdd433fa4586ad6789b82a))
+
+# [0.29.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.28.1...v0.29.0) (2026-02-24)
+
+
+### Features
+
+* cst-ast-merge ([18ff685](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/18ff6852bf8705fdb47b87b54bc343d4828adb02))
+
+## [0.28.1](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.28.0...v0.28.1) (2026-02-24)
+
+
+### Bug Fixes
+
+* Needs to deploy ([d1d893a](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/d1d893a469b3eae1307c70ee83678285dd028549))
+
+# [0.28.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.27.0...v0.28.0) (2026-02-24)
+
+
+### Features
+
+* Needs to deploy ([57498c5](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/57498c55878fbde25869b9ed2859df8fcdc875c3))
+
+# [0.27.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.26.0...v0.27.0) (2026-02-24)
+
+
+### Features
+
+* Fix AST parser generation ([9a0eb28](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/9a0eb2825b84214466287cc6930017db0d480790))
+* implement AST typescript types generation from treesitter node-types.json ([cfdda95](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/cfdda95d60a6b7ef3b8acb46748e7c23f64cc18d))
+
 # [0.26.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.25.0...v0.26.0) (2026-02-23)
 
 

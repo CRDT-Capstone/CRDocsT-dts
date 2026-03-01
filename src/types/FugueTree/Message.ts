@@ -1,4 +1,5 @@
-import { ID, NodeSide } from "../../dts/FugueTree/FTree";
+import { ID, NodeSide } from "../../dts/FugueTree/FTree.js";
+import { BaseMessage, MessageType } from "../Message.js";
 
 export enum Operation {
     INSERT,
@@ -31,11 +32,9 @@ export function operationToString(op: Operation): string {
 export type Data = string;
 
 // Base message interface that all other message types will extend
-export interface BaseFugueMessage<T extends Operation = Operation> {
+export interface BaseFugueMessage<T extends Operation = Operation> extends BaseMessage<MessageType.FUGUE> {
     operation: T;
-    documentID: string;
     replicaId: string;
-    userIdentity: string; // All users should be identified even anonymous users
 }
 
 export interface FugueMessage extends BaseFugueMessage<Operation.INSERT | Operation.DELETE> {
@@ -49,8 +48,6 @@ export interface FugueMessage extends BaseFugueMessage<Operation.INSERT | Operat
 export interface FugueJoinMessage extends BaseFugueMessage<Operation.INITIAL_SYNC> {
     state: Uint8Array<ArrayBufferLike> | null;
     //the existing state of the document
-    bufferedOperations?: Buffer<ArrayBuffer>[];
-    //We buffer all operations
 }
 
 export interface FugueRejectMessage extends BaseFugueMessage<Operation.REJECT> {
@@ -65,6 +62,7 @@ export interface FugueLeaveMessage extends BaseFugueMessage<Operation.LEAVE> {
 
 export interface FugueUserJoinMessage extends BaseFugueMessage<Operation.USER_JOIN> {
     collaborators: string[];
+    offlineState?: Uint8Array<ArrayBufferLike>;
 }
 
 export type FugueMessageType =
@@ -75,3 +73,10 @@ export type FugueMessageType =
     | FugueUserJoinMessage;
 
 export type FugueMutationMessageTypes = Extract<FugueMessageType, FugueMessage | FugueJoinMessage>;
+
+export const makeFugueMessage = <T extends FugueMessageType>(msg: Omit<T, "msgType">): BaseFugueMessage => {
+    return {
+        ...msg,
+        msgType: MessageType.FUGUE,
+    };
+};
