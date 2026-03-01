@@ -1,8 +1,8 @@
 import { FNode, FugueTree } from "../../../dts/index.js";
-import { FugueMessage } from "../../../types";
+import { FugueMessage } from "../../../types/index.js";
 import { EditScript } from "../../Actions/EditScript/EditScriptGen.js";
 import { Action, Actions, ActionType, Delete, Move, TreeInsert, Update } from "../../Actions/Model/Action.js";
-import { AstNode, BragiAST } from "../../types";
+import { AstNode, BragiAST } from "../../types/index.js";
 import { Anchor, Registry } from "../Registry/index.js";
 
 /**

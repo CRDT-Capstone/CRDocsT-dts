@@ -16,6 +16,8 @@ export interface AcronymDefinitionNode {
     parentId: NodeId | null;
     type: "acronym_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     long: NodeId;
     name: NodeId;
@@ -29,6 +31,8 @@ export interface AcronymReferenceNode {
     parentId: NodeId | null;
     type: "acronym_reference";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     options?: NodeId;
@@ -40,6 +44,8 @@ export interface AsyEnvironmentNode {
     parentId: NodeId | null;
     type: "asy_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -51,6 +57,8 @@ export interface AsydefEnvironmentNode {
     parentId: NodeId | null;
     type: "asydef_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -62,6 +70,8 @@ export interface AuthorNode {
     parentId: NodeId | null;
     type: "author";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -70,6 +80,8 @@ export interface AuthorDeclarationNode {
     parentId: NodeId | null;
     type: "author_declaration";
     text: string;
+    startIndex: number;
+    endIndex: number;
     authors: NodeId;
     command: NodeId;
     options?: NodeId;
@@ -81,6 +93,8 @@ export interface BeginNode {
     parentId: NodeId | null;
     type: "begin";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     language?: NodeId;
     name: NodeId;
@@ -93,6 +107,8 @@ export interface BiblatexIncludeNode {
     parentId: NodeId | null;
     type: "biblatex_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     glob: NodeId;
     options?: NodeId;
     childrenIds: NodeId[];
@@ -103,6 +119,8 @@ export interface BibstyleIncludeNode {
     parentId: NodeId | null;
     type: "bibstyle_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     path: NodeId;
     childrenIds: NodeId[];
@@ -113,6 +131,8 @@ export interface BibtexIncludeNode {
     parentId: NodeId | null;
     type: "bibtex_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     paths: NodeId;
     childrenIds: NodeId[];
@@ -123,6 +143,8 @@ export interface BlockCommentNode {
     parentId: NodeId | null;
     type: "block_comment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     comment?: NodeId;
     end?: NodeId;
@@ -134,6 +156,8 @@ export interface BrackGroupNode {
     parentId: NodeId | null;
     type: "brack_group";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -142,6 +166,8 @@ export interface BrackGroupArgcNode {
     parentId: NodeId | null;
     type: "brack_group_argc";
     text: string;
+    startIndex: number;
+    endIndex: number;
     value: NodeId;
     childrenIds: NodeId[];
 }
@@ -151,6 +177,8 @@ export interface BrackGroupKeyValueNode {
     parentId: NodeId | null;
     type: "brack_group_key_value";
     text: string;
+    startIndex: number;
+    endIndex: number;
     pair?: NodeId[];
     childrenIds: NodeId[];
 }
@@ -160,6 +188,8 @@ export interface BrackGroupTextNode {
     parentId: NodeId | null;
     type: "brack_group_text";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -168,6 +198,8 @@ export interface BrackGroupWordNode {
     parentId: NodeId | null;
     type: "brack_group_word";
     text: string;
+    startIndex: number;
+    endIndex: number;
     word: NodeId;
     childrenIds: NodeId[];
 }
@@ -177,6 +209,8 @@ export interface CaptionNode {
     parentId: NodeId | null;
     type: "caption";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     long: NodeId;
     short?: NodeId;
@@ -188,6 +222,8 @@ export interface ChangesReplacedNode {
     parentId: NodeId | null;
     type: "changes_replaced";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     text_added: NodeId;
     text_deleted: NodeId;
@@ -199,6 +235,8 @@ export interface ChapterNode {
     parentId: NodeId | null;
     type: "chapter";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -209,6 +247,8 @@ export interface CitationNode {
     parentId: NodeId | null;
     type: "citation";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     keys: NodeId;
     postnote?: NodeId;
@@ -221,6 +261,8 @@ export interface ClassIncludeNode {
     parentId: NodeId | null;
     type: "class_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     path: NodeId;
@@ -232,6 +274,8 @@ export interface ColorDefinitionNode {
     parentId: NodeId | null;
     type: "color_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     model: NodeId;
     name: NodeId;
@@ -244,6 +288,8 @@ export interface ColorReferenceNode {
     parentId: NodeId | null;
     type: "color_reference";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     model?: NodeId;
     name?: NodeId;
@@ -256,6 +302,8 @@ export interface ColorSetDefinitionNode {
     parentId: NodeId | null;
     type: "color_set_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     head: NodeId;
     model: NodeId;
@@ -270,6 +318,8 @@ export interface CommentEnvironmentNode {
     parentId: NodeId | null;
     type: "comment_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     comment: NodeId;
     end: NodeId;
@@ -281,6 +331,8 @@ export interface CounterAdditionNode {
     parentId: NodeId | null;
     type: "counter_addition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     value: NodeId[];
@@ -292,6 +344,8 @@ export interface CounterDeclarationNode {
     parentId: NodeId | null;
     type: "counter_declaration";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     supercounter?: NodeId;
@@ -303,6 +357,8 @@ export interface CounterDefinitionNode {
     parentId: NodeId | null;
     type: "counter_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     value: NodeId[];
@@ -314,6 +370,8 @@ export interface CounterIncrementNode {
     parentId: NodeId | null;
     type: "counter_increment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     childrenIds: NodeId[];
@@ -324,6 +382,8 @@ export interface CounterTypesettingNode {
     parentId: NodeId | null;
     type: "counter_typesetting";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     childrenIds: NodeId[];
@@ -334,6 +394,8 @@ export interface CounterValueNode {
     parentId: NodeId | null;
     type: "counter_value";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     childrenIds: NodeId[];
@@ -344,6 +406,8 @@ export interface CounterWithinDeclarationNode {
     parentId: NodeId | null;
     type: "counter_within_declaration";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     supercounter: NodeId;
@@ -355,6 +419,8 @@ export interface CounterWithoutDeclarationNode {
     parentId: NodeId | null;
     type: "counter_without_declaration";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     supercounter: NodeId;
@@ -366,6 +432,8 @@ export interface CurlyGroupNode {
     parentId: NodeId | null;
     type: "curly_group";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -374,6 +442,8 @@ export interface CurlyGroupAuthorListNode {
     parentId: NodeId | null;
     type: "curly_group_author_list";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -382,6 +452,8 @@ export interface CurlyGroupCommandNameNode {
     parentId: NodeId | null;
     type: "curly_group_command_name";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     childrenIds: NodeId[];
 }
@@ -391,6 +463,8 @@ export interface CurlyGroupGlobPatternNode {
     parentId: NodeId | null;
     type: "curly_group_glob_pattern";
     text: string;
+    startIndex: number;
+    endIndex: number;
     pattern: NodeId;
     childrenIds: NodeId[];
 }
@@ -400,6 +474,8 @@ export interface CurlyGroupImplNode {
     parentId: NodeId | null;
     type: "curly_group_impl";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -408,6 +484,8 @@ export interface CurlyGroupKeyValueNode {
     parentId: NodeId | null;
     type: "curly_group_key_value";
     text: string;
+    startIndex: number;
+    endIndex: number;
     pair?: NodeId[];
     childrenIds: NodeId[];
 }
@@ -417,6 +495,8 @@ export interface CurlyGroupLabelNode {
     parentId: NodeId | null;
     type: "curly_group_label";
     text: string;
+    startIndex: number;
+    endIndex: number;
     label: NodeId;
     childrenIds: NodeId[];
 }
@@ -426,6 +506,8 @@ export interface CurlyGroupLabelListNode {
     parentId: NodeId | null;
     type: "curly_group_label_list";
     text: string;
+    startIndex: number;
+    endIndex: number;
     label?: NodeId[];
     childrenIds: NodeId[];
 }
@@ -435,6 +517,8 @@ export interface CurlyGroupPathNode {
     parentId: NodeId | null;
     type: "curly_group_path";
     text: string;
+    startIndex: number;
+    endIndex: number;
     path: NodeId;
     childrenIds: NodeId[];
 }
@@ -444,6 +528,8 @@ export interface CurlyGroupPathListNode {
     parentId: NodeId | null;
     type: "curly_group_path_list";
     text: string;
+    startIndex: number;
+    endIndex: number;
     path?: NodeId[];
     childrenIds: NodeId[];
 }
@@ -453,6 +539,8 @@ export interface CurlyGroupSpecNode {
     parentId: NodeId | null;
     type: "curly_group_spec";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -461,6 +549,8 @@ export interface CurlyGroupTextNode {
     parentId: NodeId | null;
     type: "curly_group_text";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -469,6 +559,8 @@ export interface CurlyGroupTextListNode {
     parentId: NodeId | null;
     type: "curly_group_text_list";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -477,6 +569,8 @@ export interface CurlyGroupUriNode {
     parentId: NodeId | null;
     type: "curly_group_uri";
     text: string;
+    startIndex: number;
+    endIndex: number;
     uri: NodeId;
     childrenIds: NodeId[];
 }
@@ -486,6 +580,8 @@ export interface CurlyGroupValueNode {
     parentId: NodeId | null;
     type: "curly_group_value";
     text: string;
+    startIndex: number;
+    endIndex: number;
     value: NodeId;
     childrenIds: NodeId[];
 }
@@ -495,6 +591,8 @@ export interface CurlyGroupWordNode {
     parentId: NodeId | null;
     type: "curly_group_word";
     text: string;
+    startIndex: number;
+    endIndex: number;
     word: NodeId;
     childrenIds: NodeId[];
 }
@@ -504,6 +602,8 @@ export interface DisplayedEquationNode {
     parentId: NodeId | null;
     type: "displayed_equation";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -512,6 +612,8 @@ export interface EndNode {
     parentId: NodeId | null;
     type: "end";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     childrenIds: NodeId[];
@@ -522,6 +624,8 @@ export interface EnumItemNode {
     parentId: NodeId | null;
     type: "enum_item";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     label?: NodeId;
     childrenIds: NodeId[];
@@ -532,6 +636,8 @@ export interface EnvironmentDefinitionNode {
     parentId: NodeId | null;
     type: "environment_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     argc?: NodeId;
     begin?: NodeId;
     command: NodeId;
@@ -546,6 +652,8 @@ export interface GenericCommandNode {
     parentId: NodeId | null;
     type: "generic_command";
     text: string;
+    startIndex: number;
+    endIndex: number;
     arg?: NodeId[];
     command: NodeId;
     childrenIds: NodeId[];
@@ -556,6 +664,8 @@ export interface GenericEnvironmentNode {
     parentId: NodeId | null;
     type: "generic_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     end: NodeId;
     childrenIds: NodeId[];
@@ -566,6 +676,8 @@ export interface GlobPatternNode {
     parentId: NodeId | null;
     type: "glob_pattern";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -574,6 +686,8 @@ export interface GlossaryEntryDefinitionNode {
     parentId: NodeId | null;
     type: "glossary_entry_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     options: NodeId;
@@ -585,6 +699,8 @@ export interface GlossaryEntryReferenceNode {
     parentId: NodeId | null;
     type: "glossary_entry_reference";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     options?: NodeId;
@@ -596,6 +712,8 @@ export interface GraphicsIncludeNode {
     parentId: NodeId | null;
     type: "graphics_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     path: NodeId;
@@ -607,6 +725,8 @@ export interface HyperlinkNode {
     parentId: NodeId | null;
     type: "hyperlink";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     label?: NodeId;
     uri: NodeId;
@@ -618,6 +738,8 @@ export interface ImportIncludeNode {
     parentId: NodeId | null;
     type: "import_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     directory: NodeId;
     file: NodeId;
@@ -629,6 +751,8 @@ export interface InkscapeIncludeNode {
     parentId: NodeId | null;
     type: "inkscape_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     path: NodeId;
@@ -640,6 +764,8 @@ export interface InlineFormulaNode {
     parentId: NodeId | null;
     type: "inline_formula";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -648,6 +774,8 @@ export interface KeyValuePairNode {
     parentId: NodeId | null;
     type: "key_value_pair";
     text: string;
+    startIndex: number;
+    endIndex: number;
     key: NodeId;
     value?: NodeId;
     childrenIds: NodeId[];
@@ -658,6 +786,8 @@ export interface LabelDefinitionNode {
     parentId: NodeId | null;
     type: "label_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     childrenIds: NodeId[];
@@ -668,6 +798,8 @@ export interface LabelNumberNode {
     parentId: NodeId | null;
     type: "label_number";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     number: NodeId;
@@ -679,6 +811,8 @@ export interface LabelReferenceNode {
     parentId: NodeId | null;
     type: "label_reference";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     names: NodeId;
     childrenIds: NodeId[];
@@ -689,6 +823,8 @@ export interface LabelReferenceRangeNode {
     parentId: NodeId | null;
     type: "label_reference_range";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     from: NodeId;
     to: NodeId;
@@ -700,6 +836,8 @@ export interface LatexIncludeNode {
     parentId: NodeId | null;
     type: "latex_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     path: NodeId;
     childrenIds: NodeId[];
@@ -710,6 +848,8 @@ export interface LetCommandDefinitionNode {
     parentId: NodeId | null;
     type: "let_command_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     declaration: NodeId;
     implementation: NodeId;
@@ -721,6 +861,8 @@ export interface ListingEnvironmentNode {
     parentId: NodeId | null;
     type: "listing_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -732,6 +874,8 @@ export interface LuacodeEnvironmentNode {
     parentId: NodeId | null;
     type: "luacode_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -743,6 +887,8 @@ export interface MathDelimiterNode {
     parentId: NodeId | null;
     type: "math_delimiter";
     text: string;
+    startIndex: number;
+    endIndex: number;
     left_command: NodeId;
     left_delimiter: NodeId;
     right_command: NodeId;
@@ -755,6 +901,8 @@ export interface MathEnvironmentNode {
     parentId: NodeId | null;
     type: "math_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     end: NodeId;
     childrenIds: NodeId[];
@@ -765,6 +913,8 @@ export interface MintedEnvironmentNode {
     parentId: NodeId | null;
     type: "minted_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -776,6 +926,8 @@ export interface NewCommandDefinitionNode {
     parentId: NodeId | null;
     type: "new_command_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     argc?: NodeId;
     command: NodeId;
     declaration: NodeId;
@@ -790,6 +942,8 @@ export interface OldCommandDefinitionNode {
     parentId: NodeId | null;
     type: "old_command_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     declaration: NodeId;
     childrenIds: NodeId[];
@@ -800,6 +954,8 @@ export interface OperatorNode {
     parentId: NodeId | null;
     type: "operator";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -808,6 +964,8 @@ export interface PackageIncludeNode {
     parentId: NodeId | null;
     type: "package_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     paths: NodeId;
@@ -819,6 +977,8 @@ export interface PairedDelimiterDefinitionNode {
     parentId: NodeId | null;
     type: "paired_delimiter_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     argc?: NodeId;
     body?: NodeId;
     command: NodeId;
@@ -833,6 +993,8 @@ export interface ParagraphNode {
     parentId: NodeId | null;
     type: "paragraph";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -843,6 +1005,8 @@ export interface PartNode {
     parentId: NodeId | null;
     type: "part";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -853,6 +1017,8 @@ export interface PycodeEnvironmentNode {
     parentId: NodeId | null;
     type: "pycode_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -864,6 +1030,8 @@ export interface SageblockEnvironmentNode {
     parentId: NodeId | null;
     type: "sageblock_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -875,6 +1043,8 @@ export interface SagesilentEnvironmentNode {
     parentId: NodeId | null;
     type: "sagesilent_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -886,6 +1056,8 @@ export interface SectionNode {
     parentId: NodeId | null;
     type: "section";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -896,6 +1068,8 @@ export interface SourceFileNode {
     parentId: NodeId | null;
     type: "source_file";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -904,6 +1078,8 @@ export interface SubparagraphNode {
     parentId: NodeId | null;
     type: "subparagraph";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -914,6 +1090,8 @@ export interface SubscriptNode {
     parentId: NodeId | null;
     type: "subscript";
     text: string;
+    startIndex: number;
+    endIndex: number;
     subscript: NodeId;
     childrenIds: NodeId[];
 }
@@ -923,6 +1101,8 @@ export interface SubsectionNode {
     parentId: NodeId | null;
     type: "subsection";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -933,6 +1113,8 @@ export interface SubsubsectionNode {
     parentId: NodeId | null;
     type: "subsubsection";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -943,6 +1125,8 @@ export interface SuperscriptNode {
     parentId: NodeId | null;
     type: "superscript";
     text: string;
+    startIndex: number;
+    endIndex: number;
     superscript: NodeId;
     childrenIds: NodeId[];
 }
@@ -952,6 +1136,8 @@ export interface SvgIncludeNode {
     parentId: NodeId | null;
     type: "svg_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     path: NodeId;
@@ -963,6 +1149,8 @@ export interface TextNode {
     parentId: NodeId | null;
     type: "text";
     text: string;
+    startIndex: number;
+    endIndex: number;
     word: NodeId[];
     childrenIds: NodeId[];
 }
@@ -972,6 +1160,8 @@ export interface TextModeNode {
     parentId: NodeId | null;
     type: "text_mode";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     content: NodeId;
     childrenIds: NodeId[];
@@ -982,6 +1172,8 @@ export interface TheoremDefinitionNode {
     parentId: NodeId | null;
     type: "theorem_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter?: NodeId;
     name: NodeId;
@@ -995,6 +1187,8 @@ export interface TikzLibraryImportNode {
     parentId: NodeId | null;
     type: "tikz_library_import";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     paths: NodeId;
     childrenIds: NodeId[];
@@ -1005,6 +1199,8 @@ export interface TitleDeclarationNode {
     parentId: NodeId | null;
     type: "title_declaration";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     childrenIds: NodeId[];
@@ -1015,6 +1211,8 @@ export interface TodoNode {
     parentId: NodeId | null;
     type: "todo";
     text: string;
+    startIndex: number;
+    endIndex: number;
     arg: NodeId;
     command: NodeId;
     options?: NodeId;
@@ -1026,6 +1224,8 @@ export interface ValueNode {
     parentId: NodeId | null;
     type: "value";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1034,6 +1234,8 @@ export interface VerbatimEnvironmentNode {
     parentId: NodeId | null;
     type: "verbatim_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     end: NodeId;
     verbatim: NodeId;
@@ -1045,6 +1247,8 @@ export interface VerbatimIncludeNode {
     parentId: NodeId | null;
     type: "verbatim_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     path: NodeId;
     childrenIds: NodeId[];
@@ -1055,6 +1259,8 @@ export interface ArgcNode {
     parentId: NodeId | null;
     type: "argc";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1063,6 +1269,8 @@ export interface CommandNameNode {
     parentId: NodeId | null;
     type: "command_name";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1071,6 +1279,8 @@ export interface CommentNode {
     parentId: NodeId | null;
     type: "comment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1079,6 +1289,8 @@ export interface DelimiterNode {
     parentId: NodeId | null;
     type: "delimiter";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1087,6 +1299,8 @@ export interface LabelNode {
     parentId: NodeId | null;
     type: "label";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1095,6 +1309,8 @@ export interface LetterNode {
     parentId: NodeId | null;
     type: "letter";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1103,6 +1319,8 @@ export interface LineCommentNode {
     parentId: NodeId | null;
     type: "line_comment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1111,6 +1329,8 @@ export interface PathNode {
     parentId: NodeId | null;
     type: "path";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1119,6 +1339,8 @@ export interface PlaceholderNode {
     parentId: NodeId | null;
     type: "placeholder";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1127,6 +1349,8 @@ export interface SourceCodeNode {
     parentId: NodeId | null;
     type: "source_code";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1135,6 +1359,8 @@ export interface TodoCommandNameNode {
     parentId: NodeId | null;
     type: "todo_command_name";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1143,6 +1369,8 @@ export interface UriNode {
     parentId: NodeId | null;
     type: "uri";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1151,6 +1379,8 @@ export interface ValueLiteralNode {
     parentId: NodeId | null;
     type: "value_literal";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1159,6 +1389,8 @@ export interface WordNode {
     parentId: NodeId | null;
     type: "word";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1289,6 +1521,8 @@ function unmarshalerAcronymDefinitionNode(node: Node, ctx: ParserContext, parent
         parentId,
         type: "acronym_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1325,6 +1559,8 @@ function unmarshalerAcronymReferenceNode(node: Node, ctx: ParserContext, parentI
         parentId,
         type: "acronym_reference",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1353,6 +1589,8 @@ function unmarshalerAsyEnvironmentNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "asy_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1381,6 +1619,8 @@ function unmarshalerAsydefEnvironmentNode(node: Node, ctx: ParserContext, parent
         parentId,
         type: "asydef_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1409,6 +1649,8 @@ function unmarshalerAuthorNode(node: Node, ctx: ParserContext, parentId: NodeId 
         parentId,
         type: "author",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1424,6 +1666,8 @@ function unmarshalerAuthorDeclarationNode(node: Node, ctx: ParserContext, parent
         parentId,
         type: "author_declaration",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1452,6 +1696,8 @@ function unmarshalerBeginNode(node: Node, ctx: ParserContext, parentId: NodeId |
         parentId,
         type: "begin",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1484,6 +1730,8 @@ function unmarshalerBiblatexIncludeNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "biblatex_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1508,6 +1756,8 @@ function unmarshalerBibstyleIncludeNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "bibstyle_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1532,6 +1782,8 @@ function unmarshalerBibtexIncludeNode(node: Node, ctx: ParserContext, parentId: 
         parentId,
         type: "bibtex_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1556,6 +1808,8 @@ function unmarshalerBlockCommentNode(node: Node, ctx: ParserContext, parentId: N
         parentId,
         type: "block_comment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1584,6 +1838,8 @@ function unmarshalerBrackGroupNode(node: Node, ctx: ParserContext, parentId: Nod
         parentId,
         type: "brack_group",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1599,6 +1855,8 @@ function unmarshalerBrackGroupArgcNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "brack_group_argc",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1619,6 +1877,8 @@ function unmarshalerBrackGroupKeyValueNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "brack_group_key_value",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1636,6 +1896,8 @@ function unmarshalerBrackGroupTextNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "brack_group_text",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1651,6 +1913,8 @@ function unmarshalerBrackGroupWordNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "brack_group_word",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1671,6 +1935,8 @@ function unmarshalerCaptionNode(node: Node, ctx: ParserContext, parentId: NodeId
         parentId,
         type: "caption",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1699,6 +1965,8 @@ function unmarshalerChangesReplacedNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "changes_replaced",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1727,6 +1995,8 @@ function unmarshalerChapterNode(node: Node, ctx: ParserContext, parentId: NodeId
         parentId,
         type: "chapter",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1751,6 +2021,8 @@ function unmarshalerCitationNode(node: Node, ctx: ParserContext, parentId: NodeI
         parentId,
         type: "citation",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1783,6 +2055,8 @@ function unmarshalerClassIncludeNode(node: Node, ctx: ParserContext, parentId: N
         parentId,
         type: "class_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1811,6 +2085,8 @@ function unmarshalerColorDefinitionNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "color_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1843,6 +2119,8 @@ function unmarshalerColorReferenceNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "color_reference",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1875,6 +2153,8 @@ function unmarshalerColorSetDefinitionNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "color_set_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1915,6 +2195,8 @@ function unmarshalerCommentEnvironmentNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "comment_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1943,6 +2225,8 @@ function unmarshalerCounterAdditionNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "counter_addition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1968,6 +2252,8 @@ function unmarshalerCounterDeclarationNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "counter_declaration",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -1996,6 +2282,8 @@ function unmarshalerCounterDefinitionNode(node: Node, ctx: ParserContext, parent
         parentId,
         type: "counter_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2021,6 +2309,8 @@ function unmarshalerCounterIncrementNode(node: Node, ctx: ParserContext, parentI
         parentId,
         type: "counter_increment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2045,6 +2335,8 @@ function unmarshalerCounterTypesettingNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "counter_typesetting",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2069,6 +2361,8 @@ function unmarshalerCounterValueNode(node: Node, ctx: ParserContext, parentId: N
         parentId,
         type: "counter_value",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2093,6 +2387,8 @@ function unmarshalerCounterWithinDeclarationNode(node: Node, ctx: ParserContext,
         parentId,
         type: "counter_within_declaration",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2121,6 +2417,8 @@ function unmarshalerCounterWithoutDeclarationNode(node: Node, ctx: ParserContext
         parentId,
         type: "counter_without_declaration",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2149,6 +2447,8 @@ function unmarshalerCurlyGroupNode(node: Node, ctx: ParserContext, parentId: Nod
         parentId,
         type: "curly_group",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2164,6 +2464,8 @@ function unmarshalerCurlyGroupAuthorListNode(node: Node, ctx: ParserContext, par
         parentId,
         type: "curly_group_author_list",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2179,6 +2481,8 @@ function unmarshalerCurlyGroupCommandNameNode(node: Node, ctx: ParserContext, pa
         parentId,
         type: "curly_group_command_name",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2199,6 +2503,8 @@ function unmarshalerCurlyGroupGlobPatternNode(node: Node, ctx: ParserContext, pa
         parentId,
         type: "curly_group_glob_pattern",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2219,6 +2525,8 @@ function unmarshalerCurlyGroupImplNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "curly_group_impl",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2234,6 +2542,8 @@ function unmarshalerCurlyGroupKeyValueNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "curly_group_key_value",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2251,6 +2561,8 @@ function unmarshalerCurlyGroupLabelNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "curly_group_label",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2271,6 +2583,8 @@ function unmarshalerCurlyGroupLabelListNode(node: Node, ctx: ParserContext, pare
         parentId,
         type: "curly_group_label_list",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2288,6 +2602,8 @@ function unmarshalerCurlyGroupPathNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "curly_group_path",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2308,6 +2624,8 @@ function unmarshalerCurlyGroupPathListNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "curly_group_path_list",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2325,6 +2643,8 @@ function unmarshalerCurlyGroupSpecNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "curly_group_spec",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2340,6 +2660,8 @@ function unmarshalerCurlyGroupTextNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "curly_group_text",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2355,6 +2677,8 @@ function unmarshalerCurlyGroupTextListNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "curly_group_text_list",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2370,6 +2694,8 @@ function unmarshalerCurlyGroupUriNode(node: Node, ctx: ParserContext, parentId: 
         parentId,
         type: "curly_group_uri",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2390,6 +2716,8 @@ function unmarshalerCurlyGroupValueNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "curly_group_value",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2410,6 +2738,8 @@ function unmarshalerCurlyGroupWordNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "curly_group_word",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2430,6 +2760,8 @@ function unmarshalerDisplayedEquationNode(node: Node, ctx: ParserContext, parent
         parentId,
         type: "displayed_equation",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2445,6 +2777,8 @@ function unmarshalerEndNode(node: Node, ctx: ParserContext, parentId: NodeId | n
         parentId,
         type: "end",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2469,6 +2803,8 @@ function unmarshalerEnumItemNode(node: Node, ctx: ParserContext, parentId: NodeI
         parentId,
         type: "enum_item",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2493,6 +2829,8 @@ function unmarshalerEnvironmentDefinitionNode(node: Node, ctx: ParserContext, pa
         parentId,
         type: "environment_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2530,6 +2868,8 @@ function unmarshalerGenericCommandNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "generic_command",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2551,6 +2891,8 @@ function unmarshalerGenericEnvironmentNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "generic_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2575,6 +2917,8 @@ function unmarshalerGlobPatternNode(node: Node, ctx: ParserContext, parentId: No
         parentId,
         type: "glob_pattern",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2590,6 +2934,8 @@ function unmarshalerGlossaryEntryDefinitionNode(node: Node, ctx: ParserContext, 
         parentId,
         type: "glossary_entry_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2618,6 +2964,8 @@ function unmarshalerGlossaryEntryReferenceNode(node: Node, ctx: ParserContext, p
         parentId,
         type: "glossary_entry_reference",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2646,6 +2994,8 @@ function unmarshalerGraphicsIncludeNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "graphics_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2674,6 +3024,8 @@ function unmarshalerHyperlinkNode(node: Node, ctx: ParserContext, parentId: Node
         parentId,
         type: "hyperlink",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2702,6 +3054,8 @@ function unmarshalerImportIncludeNode(node: Node, ctx: ParserContext, parentId: 
         parentId,
         type: "import_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2730,6 +3084,8 @@ function unmarshalerInkscapeIncludeNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "inkscape_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2758,6 +3114,8 @@ function unmarshalerInlineFormulaNode(node: Node, ctx: ParserContext, parentId: 
         parentId,
         type: "inline_formula",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2773,6 +3131,8 @@ function unmarshalerKeyValuePairNode(node: Node, ctx: ParserContext, parentId: N
         parentId,
         type: "key_value_pair",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2797,6 +3157,8 @@ function unmarshalerLabelDefinitionNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "label_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2821,6 +3183,8 @@ function unmarshalerLabelNumberNode(node: Node, ctx: ParserContext, parentId: No
         parentId,
         type: "label_number",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2849,6 +3213,8 @@ function unmarshalerLabelReferenceNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "label_reference",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2873,6 +3239,8 @@ function unmarshalerLabelReferenceRangeNode(node: Node, ctx: ParserContext, pare
         parentId,
         type: "label_reference_range",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2901,6 +3269,8 @@ function unmarshalerLatexIncludeNode(node: Node, ctx: ParserContext, parentId: N
         parentId,
         type: "latex_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2925,6 +3295,8 @@ function unmarshalerLetCommandDefinitionNode(node: Node, ctx: ParserContext, par
         parentId,
         type: "let_command_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2953,6 +3325,8 @@ function unmarshalerListingEnvironmentNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "listing_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -2981,6 +3355,8 @@ function unmarshalerLuacodeEnvironmentNode(node: Node, ctx: ParserContext, paren
         parentId,
         type: "luacode_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3009,6 +3385,8 @@ function unmarshalerMathDelimiterNode(node: Node, ctx: ParserContext, parentId: 
         parentId,
         type: "math_delimiter",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3041,6 +3419,8 @@ function unmarshalerMathEnvironmentNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "math_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3065,6 +3445,8 @@ function unmarshalerMintedEnvironmentNode(node: Node, ctx: ParserContext, parent
         parentId,
         type: "minted_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3093,6 +3475,8 @@ function unmarshalerNewCommandDefinitionNode(node: Node, ctx: ParserContext, par
         parentId,
         type: "new_command_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3133,6 +3517,8 @@ function unmarshalerOldCommandDefinitionNode(node: Node, ctx: ParserContext, par
         parentId,
         type: "old_command_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3157,6 +3543,8 @@ function unmarshalerOperatorNode(node: Node, ctx: ParserContext, parentId: NodeI
         parentId,
         type: "operator",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3172,6 +3560,8 @@ function unmarshalerPackageIncludeNode(node: Node, ctx: ParserContext, parentId:
         parentId,
         type: "package_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3200,6 +3590,8 @@ function unmarshalerPairedDelimiterDefinitionNode(node: Node, ctx: ParserContext
         parentId,
         type: "paired_delimiter_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3240,6 +3632,8 @@ function unmarshalerParagraphNode(node: Node, ctx: ParserContext, parentId: Node
         parentId,
         type: "paragraph",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3264,6 +3658,8 @@ function unmarshalerPartNode(node: Node, ctx: ParserContext, parentId: NodeId | 
         parentId,
         type: "part",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3288,6 +3684,8 @@ function unmarshalerPycodeEnvironmentNode(node: Node, ctx: ParserContext, parent
         parentId,
         type: "pycode_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3316,6 +3714,8 @@ function unmarshalerSageblockEnvironmentNode(node: Node, ctx: ParserContext, par
         parentId,
         type: "sageblock_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3344,6 +3744,8 @@ function unmarshalerSagesilentEnvironmentNode(node: Node, ctx: ParserContext, pa
         parentId,
         type: "sagesilent_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3372,6 +3774,8 @@ function unmarshalerSectionNode(node: Node, ctx: ParserContext, parentId: NodeId
         parentId,
         type: "section",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3396,6 +3800,8 @@ function unmarshalerSourceFileNode(node: Node, ctx: ParserContext, parentId: Nod
         parentId,
         type: "source_file",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3411,6 +3817,8 @@ function unmarshalerSubparagraphNode(node: Node, ctx: ParserContext, parentId: N
         parentId,
         type: "subparagraph",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3435,6 +3843,8 @@ function unmarshalerSubscriptNode(node: Node, ctx: ParserContext, parentId: Node
         parentId,
         type: "subscript",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3455,6 +3865,8 @@ function unmarshalerSubsectionNode(node: Node, ctx: ParserContext, parentId: Nod
         parentId,
         type: "subsection",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3479,6 +3891,8 @@ function unmarshalerSubsubsectionNode(node: Node, ctx: ParserContext, parentId: 
         parentId,
         type: "subsubsection",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3503,6 +3917,8 @@ function unmarshalerSuperscriptNode(node: Node, ctx: ParserContext, parentId: No
         parentId,
         type: "superscript",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3523,6 +3939,8 @@ function unmarshalerSvgIncludeNode(node: Node, ctx: ParserContext, parentId: Nod
         parentId,
         type: "svg_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3551,6 +3969,8 @@ function unmarshalerTextNode(node: Node, ctx: ParserContext, parentId: NodeId | 
         parentId,
         type: "text",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3568,6 +3988,8 @@ function unmarshalerTextModeNode(node: Node, ctx: ParserContext, parentId: NodeI
         parentId,
         type: "text_mode",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3592,6 +4014,8 @@ function unmarshalerTheoremDefinitionNode(node: Node, ctx: ParserContext, parent
         parentId,
         type: "theorem_definition",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3628,6 +4052,8 @@ function unmarshalerTikzLibraryImportNode(node: Node, ctx: ParserContext, parent
         parentId,
         type: "tikz_library_import",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3652,6 +4078,8 @@ function unmarshalerTitleDeclarationNode(node: Node, ctx: ParserContext, parentI
         parentId,
         type: "title_declaration",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3676,6 +4104,8 @@ function unmarshalerTodoNode(node: Node, ctx: ParserContext, parentId: NodeId | 
         parentId,
         type: "todo",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3704,6 +4134,8 @@ function unmarshalerValueNode(node: Node, ctx: ParserContext, parentId: NodeId |
         parentId,
         type: "value",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3719,6 +4151,8 @@ function unmarshalerVerbatimEnvironmentNode(node: Node, ctx: ParserContext, pare
         parentId,
         type: "verbatim_environment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3747,6 +4181,8 @@ function unmarshalerVerbatimIncludeNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "verbatim_include",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3771,6 +4207,8 @@ function unmarshalerArgcNode(node: Node, ctx: ParserContext, parentId: NodeId | 
         parentId,
         type: "argc",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3786,6 +4224,8 @@ function unmarshalerCommandNameNode(node: Node, ctx: ParserContext, parentId: No
         parentId,
         type: "command_name",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3801,6 +4241,8 @@ function unmarshalerCommentNode(node: Node, ctx: ParserContext, parentId: NodeId
         parentId,
         type: "comment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3816,6 +4258,8 @@ function unmarshalerDelimiterNode(node: Node, ctx: ParserContext, parentId: Node
         parentId,
         type: "delimiter",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3831,6 +4275,8 @@ function unmarshalerLabelNode(node: Node, ctx: ParserContext, parentId: NodeId |
         parentId,
         type: "label",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3846,6 +4292,8 @@ function unmarshalerLetterNode(node: Node, ctx: ParserContext, parentId: NodeId 
         parentId,
         type: "letter",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3861,6 +4309,8 @@ function unmarshalerLineCommentNode(node: Node, ctx: ParserContext, parentId: No
         parentId,
         type: "line_comment",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3876,6 +4326,8 @@ function unmarshalerPathNode(node: Node, ctx: ParserContext, parentId: NodeId | 
         parentId,
         type: "path",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3891,6 +4343,8 @@ function unmarshalerPlaceholderNode(node: Node, ctx: ParserContext, parentId: No
         parentId,
         type: "placeholder",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3906,6 +4360,8 @@ function unmarshalerSourceCodeNode(node: Node, ctx: ParserContext, parentId: Nod
         parentId,
         type: "source_code",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3921,6 +4377,8 @@ function unmarshalerTodoCommandNameNode(node: Node, ctx: ParserContext, parentId
         parentId,
         type: "todo_command_name",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3936,6 +4394,8 @@ function unmarshalerUriNode(node: Node, ctx: ParserContext, parentId: NodeId | n
         parentId,
         type: "uri",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3951,6 +4411,8 @@ function unmarshalerValueLiteralNode(node: Node, ctx: ParserContext, parentId: N
         parentId,
         type: "value_literal",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
@@ -3966,6 +4428,8 @@ function unmarshalerWordNode(node: Node, ctx: ParserContext, parentId: NodeId | 
         parentId,
         type: "word",
         text: node.text,
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 

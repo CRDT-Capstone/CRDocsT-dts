@@ -1,7 +1,7 @@
-import { allChildIds, AstNode, BragiAST, NodeId } from "../../types";
-import { MappingStore, Mapping } from "../../types/GumTree";
-import { preoderAstTraversal, preorderAstTraversalIterator } from "../../utils";
-import { EditScript, EditScriptGen } from "./EditScriptGen";
+import { allChildIds, AstNode, BragiAST, NodeId } from "../../types/index.js";
+import { MappingStore, Mapping } from "../../types/GumTree.js";
+import { preoderAstTraversal, preorderAstTraversalIterator } from "../../utils.js";
+import { EditScript, EditScriptGen } from "./EditScriptGen.js";
 import { Delete, Insert, Move, Update } from "../Model/index.js";
 import { v4 as uuidv4 } from "uuid";
 

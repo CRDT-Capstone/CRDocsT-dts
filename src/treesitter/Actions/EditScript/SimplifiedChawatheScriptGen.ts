@@ -1,8 +1,8 @@
-import { BragiAST, NodeId } from "../../types";
+import type { BragiAST, NodeId } from "../../types";
 import { MappingStore } from "../../types/GumTree";
-import { EditScript, EditScriptGen, lastIndexOf } from "./EditScriptGen";
-import { Action, Delete, Insert, TreeDelete, TreeInsert } from "../Model/index.js";
+import { type Action, Delete, Insert, TreeDelete, TreeInsert } from "../Model/index.js";
 import { ChawatheScriptGen } from "./ChawatheScriptGen";
+import { type EditScript, type EditScriptGen, lastIndexOf } from "./EditScriptGen";
 
 export class SimplifiedChawatheScriptGen implements EditScriptGen {
     computeActions(ms: MappingStore): EditScript {

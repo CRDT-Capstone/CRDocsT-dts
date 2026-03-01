@@ -4,7 +4,7 @@ import { ActionType, TreeInsert, Delete, Update, Move } from "../treesitter/Acti
 import { Ratatoskr } from "../treesitter/COAST/Ratatoskr/index.js";
 import { getParser } from "./mocks/BragiAST-mocks.js";
 import { FugueTree, ID } from "../dts/index.js";
-import { bragiAstFromFugueTree, fugueTreeWithContent } from "./mocks/ratatoskr-mocks.js";
+import { bragiAstFromFugueTree, fugueTreeWithContent } from "./mocks/Ratatoskr-mocks.js";
 import { describe, expect, it, beforeAll, beforeEach, afterEach, jest } from "@jest/globals";
 
 describe("Ratatoskr", () => {

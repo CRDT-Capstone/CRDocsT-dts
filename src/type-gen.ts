@@ -96,9 +96,11 @@ export interface ParserContext {
         props.set("parentId", { type: "NodeId | null", optional: false });
         props.set("type", { type: `'${node.type}'`, optional: false });
         props.set("text", { type: "string", optional: false });
+        props.set("startIndex", { type: "number", optional: false });
+        props.set("endIndex", { type: "number", optional: false });
 
         // Map Fields skipping any field whose name collides with a reserved base property
-        const RESERVED = new Set(["id", "parentId", "type", "text", "childrenIds"]);
+        const RESERVED = new Set(["id", "parentId", "type", "text", "childrenIds", "startIndex", "endIndex"]);
         if (node.fields) {
             for (const [fieldName, fieldData] of Object.entries(node.fields)) {
                 if (RESERVED.has(fieldName)) continue;
@@ -129,6 +131,8 @@ export interface ParserContext {
                 parentId,
                 type: '${node.type}',
                 text: node.text,
+                startIndex: node.startIndex, 
+                endIndex: node.endIndex
             };
             ctx.nodes.set(id, n as AstNode);
 

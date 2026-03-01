@@ -84,10 +84,12 @@
     "dependencies": {
         "@msgpack/msgpack": "^3.1.3",
         "fastpriorityqueue": "^0.8.0",
+        "@types/object-hash": "^3.0.6",
         "lz4js": "^0.2.0",
         "pako": "^2.1.0",
         "uuid": "^13.0.0",
         "web-tree-sitter": "^0.26.5",
-        "zod": "^4.3.6"
+        "zod": "^4.3.6",
+        "object-hash": "^3.0.0"
     }
 }
