@@ -1,3 +1,10 @@
+# [0.32.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.31.0...v0.32.0) (2026-03-01)
+
+
+### Features
+
+* add pako for compression support ([9d4adc5](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/9d4adc504cc479925e57e6922de621c2d2a43457))
+
 # [0.31.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.30.0...v0.31.0) (2026-02-26)
 
 
