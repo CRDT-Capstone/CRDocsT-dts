@@ -10,7 +10,8 @@ function serialize(msgs: BaseFugueMessage[]) {
     const buff = new Uint8Array(enced.length + 1);
     buff[0] = MessageType.FUGUE;
     buff.set(enced, 1);
-    return buff;
+    let bytes = buff;
+    return bytes;
 }
 
 function deserialize(data: Uint8Array): BaseFugueMessage[] {
