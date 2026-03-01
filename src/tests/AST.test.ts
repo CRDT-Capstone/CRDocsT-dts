@@ -1,6 +1,7 @@
 import { Parser } from "web-tree-sitter";
 import { allChildIds, AstNode, BragiAST, parseCST } from "../treesitter/types/AST";
 import { getParser } from "./mocks/BragiAST-mocks.js";
+import { breadthFirstAstTraversalFunc, postorderAstTraversalFunc, preoderAstTraversalFunc } from "../treesitter/utils";
 
 describe("AST Codegen and Parsing", () => {
     let parser: Parser;
@@ -100,47 +101,21 @@ describe("AST Codegen and Parsing", () => {
 
         it("should be traversable in Pre-order (Root -> L -> R)", () => {
             const visited: string[] = [];
-            const traverse = (id: string) => {
-                const node = ast.nodes.get(id);
-                if (!node) return;
-                visited.push(node.type); // Visit Node
-                allChildIds(ast, node).forEach((childId) => traverse(childId)); // Visit ALL children
-            };
-            traverse(ast.rootId);
+            preoderAstTraversalFunc(ast, (node) => visited.push(node.type));
             expect(visited[0]).toBe("source_file");
             expect(visited.length).toBe(ast.nodes.size);
         });
 
         it("should be traversable in Post-order (Left -> Right -> Root)", () => {
             const visited: string[] = [];
-            const traverse = (id: string) => {
-                const node = ast.nodes.get(id);
-                if (!node) return;
-                allChildIds(ast, node).forEach((childId) => traverse(childId)); // Visit ALL children
-                visited.push(node.type); // Visit Node
-            };
-            traverse(ast.rootId);
+            postorderAstTraversalFunc(ast, (node) => visited.push(node.type));
             expect(visited[visited.length - 1]).toBe("source_file");
             expect(visited.length).toBe(ast.nodes.size);
         });
 
         it("should be traversable in Breadth-First (Level Order)", () => {
             const visited: string[] = [];
-            const queue: string[] = [ast.rootId];
-            const seen = new Set<string>();
-
-            while (queue.length > 0) {
-                const id = queue.shift()!;
-                if (seen.has(id)) continue;
-                seen.add(id);
-
-                const node = ast.nodes.get(id);
-                if (node) {
-                    visited.push(node.type);
-                    allChildIds(ast, node).forEach((childId) => queue.push(childId));
-                }
-            }
-
+            breadthFirstAstTraversalFunc(ast, (node) => visited.push(node.type));
             expect(visited[0]).toBe("source_file");
             expect(visited.length).toBe(ast.nodes.size);
         });

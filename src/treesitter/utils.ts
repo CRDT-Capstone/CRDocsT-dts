@@ -1,4 +1,4 @@
-import { AstNode, BragiAST } from "./types";
+import { allChildIds, AstNode, BragiAST } from "./types";
 
 export const preoderAstTraversalFunc = (ast: BragiAST, callback: (node: AstNode) => void) => {
     const stack: AstNode[] = [ast.nodes.get(ast.rootId)!];
@@ -6,15 +6,10 @@ export const preoderAstTraversalFunc = (ast: BragiAST, callback: (node: AstNode)
         const node = stack.pop();
         if (!node) continue;
         callback(node);
-        for (let i = node.childrenIds.length - 1; i >= 0; i--) {
-            const childNode = ast.nodes.get(node.childrenIds[i]);
+        const children = allChildIds(ast, node);
+        for (let i = children.length - 1; i >= 0; i--) {
+            const childNode = ast.nodes.get(children[i]);
             if (childNode) stack.push(childNode);
-        }
-        if (node.type === "text") {
-            for (let i = node.word.length - 1; i >= 0; i--) {
-                const childNode = ast.nodes.get(node.word[i]);
-                if (childNode) stack.push(childNode);
-            }
         }
     }
 };
@@ -34,15 +29,10 @@ export const postorderAstTraversalFunc = (ast: BragiAST, callback: (node: AstNod
             continue;
         }
         visited.add(node.id);
-        for (let i = node.childrenIds.length - 1; i >= 0; i--) {
-            const childNode = ast.nodes.get(node.childrenIds[i]);
+        const children = allChildIds(ast, node);
+        for (let i = children.length - 1; i >= 0; i--) {
+            const childNode = ast.nodes.get(children[i]);
             if (childNode) stack.push(childNode);
-        }
-        if (node.type === "text") {
-            for (let i = node.word.length - 1; i >= 0; i--) {
-                const childNode = ast.nodes.get(node.word[i]);
-                if (childNode) stack.push(childNode);
-            }
         }
     }
 };
@@ -53,15 +43,10 @@ export const breadthFirstAstTraversalFunc = (ast: BragiAST, callback: (node: Ast
         const node = queue.shift();
         if (!node) continue;
         callback(node);
-        for (const childId of node.childrenIds) {
+        const children = allChildIds(ast, node);
+        for (const childId of children) {
             const childNode = ast.nodes.get(childId);
             if (childNode) queue.push(childNode);
-        }
-        if (node.type === "text") {
-            for (const wordId of node.word) {
-                const childNode = ast.nodes.get(wordId);
-                if (childNode) queue.push(childNode);
-            }
         }
     }
 };
@@ -90,15 +75,10 @@ export const preorderAstTraversalIterator = function* (ast: BragiAST): IterableI
         const node = stack.pop();
         if (!node) continue;
         yield node;
-        for (let i = node.childrenIds.length - 1; i >= 0; i--) {
-            const childNode = ast.nodes.get(node.childrenIds[i]);
+        const children = allChildIds(ast, node);
+        for (let i = children.length - 1; i >= 0; i--) {
+            const childNode = ast.nodes.get(children[i]);
             if (childNode) stack.push(childNode);
-        }
-        if (node.type === "text") {
-            for (let i = node.word.length - 1; i >= 0; i--) {
-                const childNode = ast.nodes.get(node.word[i]);
-                if (childNode) stack.push(childNode);
-            }
         }
     }
 };

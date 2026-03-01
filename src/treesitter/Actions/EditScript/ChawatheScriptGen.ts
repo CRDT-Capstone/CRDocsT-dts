@@ -1,4 +1,4 @@
-import { AstNode, BragiAST, NodeId } from "../../types";
+import { allChildIds, AstNode, BragiAST, NodeId } from "../../types";
 import { MappingStore, Mapping } from "../../types/GumTree";
 import { preoderAstTraversal, preorderAstTraversalIterator } from "../../utils";
 import { EditScript, EditScriptGen } from "./EditScriptGen";
@@ -147,11 +147,11 @@ export class ChawatheScriptGen implements EditScriptGen {
     }
 
     private alignChildren(wId: NodeId, xId: NodeId): void {
-        for (const c of this.getCpyNode(wId).childrenIds) this.oldInOrder.delete(c);
-        for (const c of this.getDstNode(xId).childrenIds) this.newInOrder.delete(c);
+        for (const c of allChildIds(this.cpyOldAst, this.getCpyNode(wId))) this.oldInOrder.delete(c);
+        for (const c of allChildIds(this.ogNewAst, this.getDstNode(xId))) this.newInOrder.delete(c);
 
-        const xChildren = this.getDstNode(xId).childrenIds;
-        const wChildren = this.getCpyNode(wId).childrenIds;
+        const xChildren = allChildIds(this.ogNewAst, this.getDstNode(xId));
+        const wChildren = allChildIds(this.cpyOldAst, this.getCpyNode(wId));
 
         // s1: children of w mapped to a child of x.
         const s1: NodeId[] = [];
@@ -202,7 +202,7 @@ export class ChawatheScriptGen implements EditScriptGen {
         const yId = this.getDstParent(xId);
         if (yId === null) return 0;
 
-        const siblings = this.getDstNode(xId).parentId !== null ? this.getDstNode(yId).childrenIds : [];
+        const siblings = this.getDstNode(xId).parentId !== null ? allChildIds(this.ogNewAst, this.getDstNode(yId)) : [];
 
         for (const c of siblings) {
             if (this.newInOrder.has(c)) {
@@ -311,7 +311,8 @@ export class ChawatheScriptGen implements EditScriptGen {
         while (queue.length > 0) {
             const id = queue.shift()!;
             result.push(id);
-            for (const child of this.getDstNode(id).childrenIds) queue.push(child);
+            const children = allChildIds(this.ogNewAst, this.getDstNode(id));
+            for (const child of children) queue.push(child);
         }
         return result;
     }
@@ -319,7 +320,8 @@ export class ChawatheScriptGen implements EditScriptGen {
     private postOrder(rootId: NodeId): NodeId[] {
         const result: NodeId[] = [];
         const visit = (id: NodeId) => {
-            for (const child of this.getCpyNode(id).childrenIds) visit(child);
+            const children = allChildIds(this.cpyOldAst, this.getCpyNode(id));
+            for (const child of children) visit(child);
             result.push(id);
         };
         visit(rootId);
