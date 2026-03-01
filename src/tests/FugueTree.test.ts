@@ -1,4 +1,4 @@
-import { emptyFugueTree } from "./mocks.js";
+import { emptyFugueTree } from "./mocks/mocks.js";
 
 describe("Fugue Tree Tests", () => {
     describe("Given a Fugue tree ", () => {

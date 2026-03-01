@@ -97,19 +97,14 @@ export interface ParserContext {
         props.set("type", { type: `'${node.type}'`, optional: false });
         props.set("text", { type: "string", optional: false });
 
-        // Map Fields
+        // Map Fields skipping any field whose name collides with a reserved base property
+        const RESERVED = new Set(["id", "parentId", "type", "text", "childrenIds"]);
         if (node.fields) {
             for (const [fieldName, fieldData] of Object.entries(node.fields)) {
-                let typeString = fieldData.multiple ? "NodeId[]" : "NodeId";
+                if (RESERVED.has(fieldName)) continue;
+                const typeString = fieldData.multiple ? "NodeId[]" : "NodeId";
                 const isOptional = !fieldData.required;
-                if (props.has(fieldName)) {
-                    // Merge types on collision
-                    const existing = props.get(fieldName)!;
-                    existing.type = `${existing.type} | ${typeString}`;
-                    existing.optional = existing.optional && isOptional;
-                } else {
-                    props.set(fieldName, { type: typeString, optional: isOptional });
-                }
+                props.set(fieldName, { type: typeString, optional: isOptional });
             }
         }
 
@@ -139,36 +134,29 @@ export interface ParserContext {
 
 `;
 
-        let fieldExtractionNodes = "";
+        // Unmarshal all namedChildren once into childrenIds.
+        unmarshalersOut += `    n.childrenIds = node.namedChildren.map(child => unmarshalNode(child, ctx, id));\n\n`;
+
+        // Assign field properties by index-lookup into the already-built childrenIds.
         if (node.fields) {
-            for (const [fieldName, fieldData] of Object.entries(node.fields)) {
-                if (fieldData.multiple) {
-                    unmarshalersOut += `n.${fieldName} = node.childrenForFieldName('${fieldName}').map(n => unmarshalNode(n, ctx, id));\n`;
-                    fieldExtractionNodes += `...node.childrenForFieldName('${fieldName}').map(n => n.id), `;
-                } else {
-                    if (fieldData.required) {
-                        unmarshalersOut += `n.${fieldName} = unmarshalNode(node.childForFieldName('${fieldName}')!, ctx, id);\n`;
-                        fieldExtractionNodes += `node.childForFieldName('${fieldName}')!.id, `;
+            const nonReservedFields = Object.entries(node.fields).filter(([fieldName]) => !RESERVED.has(fieldName));
+            if (nonReservedFields.length > 0) {
+                for (const [fieldName, fieldData] of nonReservedFields) {
+                    if (fieldData.multiple) {
+                        unmarshalersOut += `    n.${fieldName} = node.childrenForFieldName('${fieldName}').map(child => n.childrenIds![node.namedChildren.indexOf(child)]);\n`;
                     } else {
-                        unmarshalersOut += `const ${fieldName}Node = node.childForFieldName('${fieldName}');
-n.${fieldName} = ${fieldName}Node ? unmarshalNode(${fieldName}Node, ctx, id) : undefined;
-`;
-                        fieldExtractionNodes += `${fieldName}Node ? ${fieldName}Node.id : undefined, `;
+                        if (fieldData.required) {
+                            unmarshalersOut += `    { const _fc = node.childForFieldName('${fieldName}'); n.${fieldName} = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined; }\n`;
+                        } else {
+                            unmarshalersOut += `    { const _fc = node.childForFieldName('${fieldName}'); n.${fieldName} = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined; }\n`;
+                        }
                     }
                 }
+                unmarshalersOut += `\n`;
             }
         }
 
-        if (fieldExtractionNodes.length > 0) {
-            unmarshalersOut += `
-const fieldNodes = new Set([${fieldExtractionNodes}].filter(id => id !== undefined));
-n.childrenIds = node.namedChildren.filter(n => !fieldNodes.has(n.id)).map(n => unmarshalNode(n, ctx, id));
-`;
-        } else {
-            unmarshalersOut += `n.childrenIds = node.namedChildren.map(n => unmarshalNode(n, ctx, id));\n`;
-        }
-
-        unmarshalersOut += `return id;
+        unmarshalersOut += `    return id;
 }
 
 `;
@@ -204,6 +192,11 @@ export const unmarshalNode = (node: Node, ctx: ParserContext, parentId: NodeId |
      const rootId = unmarshalNode(root, ctx, null);
      return {rootId, nodes: ctx.nodes};
  }
+
+export const allChildIds = (ast: BragiAST, node: AstNode): string[] => {
+    return node.childrenIds;
+};
+
     `;
 
     // Create a generic ASTNode type

@@ -258,7 +258,7 @@ export class FugueTree {
         const msgs = Array.isArray(msg) ? msg : [msg];
         for (const msg of msgs) {
             // Skip messages from this replica
-            if (msg.replicaId == this.replicaId()) continue;
+            if (msg.replicaId === this.replicaId()) continue;
 
             const succ = this.applyToTree(msg);
             if (succ) {
@@ -369,5 +369,15 @@ export class FugueTree {
 
     clear() {
         return this.tree.clear();
+    }
+
+    /**
+     * Get the next non-descendant of a node, i.e. the node corresponding to the next non-deleted character in document order
+     * that is not in the subtree rooted at the given node.
+     * @param node - the node whose next non-descendant to find
+     * @returns the next non-descendant of the given node, or null if there is no such node (i.e. the given node is the last non-deleted character in document order)
+     */
+    nextNonDescendant(node: FNode) {
+        return this.tree.nextNonDescendant(node);
     }
 }

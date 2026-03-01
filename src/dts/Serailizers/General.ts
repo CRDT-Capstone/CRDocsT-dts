@@ -10,7 +10,7 @@ export type Message = BaseFugueMessage[] | BasePresenceMessage[];
 
 export const COMP = true;
 const COMPRESSION_CUTOFF = 1024; // Only compress messages larger than 1KB
-logger.log(`Using compression -> ${COMP}`);
+// logger.log(`Using compression -> ${COMP}`);
 
 function serialize(msgs: BaseMessage | BaseMessage[]): Uint8Array {
     const msgArr = Array.isArray(msgs) ? msgs : [msgs];
