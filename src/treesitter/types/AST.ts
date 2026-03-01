@@ -4492,7 +4492,18 @@ export const parseCST = (root: Node | null): BragiAST => {
     return { rootId, nodes: ctx.nodes };
 };
 
-export const nodeEquals = (nodeA: AstNode | undefined, nodeB: AstNode | undefined): boolean => {
-    if (!nodeA || !nodeB) return false;
-    return nodeA.parentId === nodeB.parentId && nodeA.text === nodeB.text && nodeA.type === nodeB.type;
+export const allChildIds = (ast: BragiAST, node: AstNode): string[] => {
+    const ids: string[] = [];
+    for (const [key, value] of Object.entries(node)) {
+        if (key === "id" || key === "parentId") continue;
+
+        if (typeof value === "string" && ast.nodes.has(value)) {
+            ids.push(value);
+        } else if (Array.isArray(value)) {
+            value.forEach((v) => {
+                if (typeof v === "string" && ast.nodes.has(v)) ids.push(v);
+            });
+        }
+    }
+    return ids;
 };

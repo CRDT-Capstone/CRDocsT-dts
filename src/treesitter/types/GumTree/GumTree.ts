@@ -13,7 +13,7 @@ export class Mapping {
  * Unmapped oldAstNodes are assumed to be deleted
  * Unmapped newAstNodes are assumed to be inserted
  * Mapped nodes with different text are assumed to be updated
- * Mapped nodes in differnt positions are assumed to be moved
+ * Mapped nodes in different positions are assumed to be moved
  */
 export class MappingStore implements Iterable<Mapping> {
     readonly oldAst: BragiAST;

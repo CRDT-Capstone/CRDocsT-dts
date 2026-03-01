@@ -1,6 +1,8 @@
-import { FugueMessage, Operation } from "../../types/FugueTree/Message.js";
-import { randomString } from "../../utils/index.js";
+import { FugueMessage, makeFugueMessage, Operation } from "../../types/FugueTree/Message.js";
+import { MessageType } from "../../types/Message.js";
+import { chunkArray, randomString } from "../../utils/index.js";
 import { FugueMessageSerialzier } from "../Serailizers/FugueTree/index.js";
+import { Serializer } from "../Serailizers/General.js";
 import { FNode, FTree, ID } from "./FTree.js";
 
 /**
@@ -15,7 +17,7 @@ export class FugueTree {
     userIdentity: string;
     pendingMsgs = new Map<string, FugueMessage>();
     // Tentative
-    readonly batchSize = 400;
+    readonly batchSize = 800;
 
     constructor(ws: WebSocket | null, documentID: string, userIdentity: string) {
         this.ws = ws;
@@ -37,12 +39,16 @@ export class FugueTree {
      * Propagates message or messages to replicas
      * @param msg - Message or messages to propagate to replicas
      */
-    private propagate(msg: FugueMessage | FugueMessage[]) {
+    async propagate(msg: FugueMessage | FugueMessage[]) {
+        // Batch send messages in the propagate function,
+        // since some operations (e.g. paste or delete a large chunk of text) can generate a
+        // large number of messages that would be inefficient to send one by one.
         if (!this.ws) return;
 
-        const allMsgs = Array.isArray(msg) ? msg : [msg];
-        const serializedFugueMsg = FugueMessageSerialzier.serialize(allMsgs);
-        this.ws.send(serializedFugueMsg);
+        for (const batch of chunkArray(Array.isArray(msg) ? msg : [msg], this.batchSize)) {
+            const bytes = Serializer.serialize(batch);
+            this.ws.send(bytes);
+        }
     }
 
     /**
@@ -63,6 +69,7 @@ export class FugueTree {
             // leftOrigin has no right children, so the new node becomes
             // a right child of leftOrigin.
             msg = {
+                msgType: MessageType.FUGUE,
                 userIdentity: this.userIdentity,
                 operation: Operation.INSERT,
                 id,
@@ -83,6 +90,7 @@ export class FugueTree {
             // first right child.
             const rightOrigin = this.tree.leftmostDescendant(leftOrigin.rightChildren[0]);
             msg = {
+                msgType: MessageType.FUGUE,
                 userIdentity: this.userIdentity,
                 operation: Operation.INSERT,
                 id,
@@ -105,7 +113,6 @@ export class FugueTree {
      */
     insertMultiple(index: number, values: string) {
         let msgs: FugueMessage[] = [];
-        let returnedMsgs: FugueMessage[] = []; //we need this to return messages whether or not we're online
         for (let i = 0; i < values.length; i++) {
             const val = values[i];
             const idx = index + i;
@@ -113,25 +120,8 @@ export class FugueTree {
 
             this.tree.addNode(msg.id, val, this.tree.getByID(msg.parent!), msg.side, msg.rightOrigin);
             msgs.push(msg);
-            returnedMsgs.push(msg);
-
-            // Propagate this batch
-            if (msgs.length >= this.batchSize) {
-                if (this.ws?.readyState === WebSocket.OPEN) {
-                    this.propagate(msgs);
-                    msgs = [];
-                }
-            }
         }
-
-        // Propagate any remaining messages that didn't fill up the last batch
-        if (msgs.length > 0) {
-            if (this.ws?.readyState === WebSocket.OPEN) {
-                this.propagate(msgs);
-                msgs = [];
-            }
-        }
-        return returnedMsgs;
+        return msgs;
     }
 
     /**
@@ -143,7 +133,7 @@ export class FugueTree {
         const msg = this.insertImpl(index, value);
         this.tree.addNode(msg.id, value, this.tree.getByID(msg.parent!), msg.side, msg.rightOrigin);
 
-        this.propagate(msg);
+        return msg;
     }
 
     /**
@@ -161,6 +151,7 @@ export class FugueTree {
         }
 
         const msg: FugueMessage = {
+            msgType: MessageType.FUGUE,
             operation: Operation.DELETE,
             documentID: this.documentID,
             replicaId: this.replicaID,
@@ -180,30 +171,12 @@ export class FugueTree {
      */
     deleteMultiple(index: number, length: number) {
         let msgs: FugueMessage[] = [];
-        let returnedMsgs: FugueMessage[] = [];
         for (let i = 0; i < length; i++) {
             const msg = this.deleteImpl(index);
             msgs.push(msg);
-            returnedMsgs.push(msg);
-
-            // Propagate this batch
-            if (msgs.length >= this.batchSize) {
-                if (this.ws?.readyState === WebSocket.OPEN) {
-                    this.propagate(msgs);
-                    msgs = [];
-                }
-            }
         }
 
-        // Propagate any remaining messages that didn't fill up the last batch
-        if (msgs.length > 0) {
-            if (this.ws?.readyState === WebSocket.OPEN) {
-                this.propagate(msgs);
-                msgs = [];
-            }
-        }
-
-        return returnedMsgs;
+        return msgs;
     }
 
     /**
@@ -231,6 +204,7 @@ export class FugueTree {
                     this.tree.addNode(id, data, this.tree.getByID(parent), side, rightOrigin);
                     return true;
                 } catch (e) {
+                    //console.log('Error from insert -> ', e);
                     return false;
                 }
             case Operation.DELETE:
@@ -243,6 +217,7 @@ export class FugueTree {
                     }
                     return true;
                 } catch (e) {
+                    //console.log('Error from delete -> ', e);
                     return false;
                 }
             default:
@@ -338,6 +313,10 @@ export class FugueTree {
         return res;
     }
 
+    traverse() {
+        return this.tree.traverse(this.tree.root);
+    }
+
     /**
      * Serializes the tree into a Uint8Array.
      * @returns a Uint8Array representing the serialized tree.
@@ -382,5 +361,17 @@ export class FugueTree {
      */
     getVisibleIndex(node: FNode) {
         return this.tree.getVisibleIndex(node);
+    }
+
+    getState() {
+        return this.tree;
+    }
+
+    clear() {
+        return this.tree.clear();
+    }
+
+        nextNonDescendant(node: FNode) {
+        return this.tree.nextNonDescendant(node);
     }
 }
