@@ -1,13 +1,27 @@
-import { Parser } from "web-tree-sitter";
+import { Parser, Tree } from "web-tree-sitter";
 import { allChildIds, AstNode, BragiAST, parseCST } from "../treesitter/types/AST";
 import { getParser } from "./mocks/BragiAST-mocks.js";
 import { breadthFirstAstTraversalFunc, postorderAstTraversalFunc, preoderAstTraversalFunc } from "../treesitter/utils";
 
 describe("AST Codegen and Parsing", () => {
     let parser: Parser;
+    let tree: Tree | null = null;
 
     beforeAll(async () => {
         parser = await getParser();
+    });
+
+    afterEach(() => {
+        if (tree) {
+            tree.delete();
+            tree = null;
+        }
+    });
+
+    afterAll(() => {
+        if (parser) {
+            parser.delete();
+        }
     });
 
     describe("parseCST", () => {
@@ -19,7 +33,7 @@ describe("AST Codegen and Parsing", () => {
                 \\end{document}
             `;
 
-            const tree = parser.parse(code);
+            tree = parser.parse(code);
 
             if (!tree || !tree.rootNode) {
                 throw new Error("Parser failed to return a valid tree");
@@ -41,7 +55,7 @@ describe("AST Codegen and Parsing", () => {
 
         it("should correctly wire parent-child relationships", () => {
             const code = `\\begin{enumerate} \\item test \\end{enumerate}`;
-            const tree = parser.parse(code);
+            tree = parser.parse(code);
 
             if (!tree?.rootNode) return;
 
@@ -58,7 +72,7 @@ describe("AST Codegen and Parsing", () => {
 
         it("should capture text content for leaf nodes", () => {
             const code = `SpecificTextContent`;
-            const tree = parser.parse(code);
+            tree = parser.parse(code);
 
             if (!tree?.rootNode) return;
 
@@ -76,7 +90,7 @@ describe("AST Codegen and Parsing", () => {
     describe("Node Metadata", () => {
         it("should ensure every node in the map has a valid type and text field", () => {
             const code = `\\section{Title}`;
-            const tree = parser.parse(code);
+            tree = parser.parse(code);
             if (!tree?.rootNode) return;
 
             const ast = parseCST(tree.rootNode);
@@ -94,7 +108,7 @@ describe("AST Codegen and Parsing", () => {
 
         beforeAll(() => {
             const code = `\\section{A} Text \\textbf{B}`;
-            const tree = parser.parse(code);
+            tree = parser.parse(code);
             if (!tree?.rootNode) throw new Error("Parse failed");
             ast = parseCST(tree.rootNode);
         });

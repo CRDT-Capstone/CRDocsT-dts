@@ -1,4 +1,4 @@
-import { Parser } from "web-tree-sitter";
+import { Parser, Tree } from "web-tree-sitter";
 import { AstNode, BragiAST, newParser } from "../treesitter.js";
 import { ActionType, TreeInsert, Delete, Update, Move } from "../treesitter/Actions/Model/index.js";
 import { Ratatoskr } from "../treesitter/COAST/Ratatoskr/index.js";
@@ -20,6 +20,12 @@ describe("Ratatoskr", () => {
     const originalDeleteMultiple = FugueTree.prototype.deleteMultiple;
 
     const dummyId: ID = { counter: 10, sender: "dummy-sender" };
+
+    afterAll(() => {
+        if (parser) {
+            parser.delete();
+        }
+    });
 
     beforeAll(async () => {
         parser = await getParser();
