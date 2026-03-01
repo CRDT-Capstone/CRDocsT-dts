@@ -12,7 +12,6 @@ export const newParser = async (
         try {
             await Parser.init({
                 locateFile: (name: string, dir: string) => {
-                    console.log({ name, dir });
                     // return `/${name}`;
                     return `${treesitterPath}`;
                 },
