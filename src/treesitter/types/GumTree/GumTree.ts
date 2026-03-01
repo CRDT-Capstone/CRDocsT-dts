@@ -1,4 +1,4 @@
-import { type BragiAST, type NodeId } from "../AST";
+import { allChildIds, type BragiAST, type NodeId } from "../AST";
 
 export class Mapping {
     constructor(
@@ -44,8 +44,8 @@ export class MappingStore implements Iterable<Mapping> {
         this.addMapping(srcId, dstId);
         const srcNode = this.oldAst.nodes.get(srcId)!;
         const dstNode = this.newAst.nodes.get(dstId)!;
-        const srcChildren = (srcNode.type  === "text")? srcNode.word : srcNode.childrenIds;
-        const dstChildren = (dstNode.type === "text") ? dstNode.word : dstNode.childrenIds;
+        const srcChildren = allChildIds(this.oldAst, srcNode);
+        const dstChildren = allChildIds(this.newAst, dstNode);
         for (let i = 0; i < srcChildren.length; i++)
             this.addMappingRecursively(srcChildren[i], dstChildren[i]);
     }
@@ -108,13 +108,13 @@ export class MappingStore implements Iterable<Mapping> {
     private getDescendants(nodeId: NodeId, ast: BragiAST): NodeId[] {
         const node = ast.nodes.get(nodeId)!;
         const result: NodeId[] = [];
-        const children = (node.type === "text") ? node.word : node.childrenIds;
+        const children = allChildIds(ast, node);
         const stack = [...children];
         while (stack.length > 0) {
             const id = stack.pop()!;
             result.push(id);
             const child = ast.nodes.get(id)!;
-            const grandChildren = (child.type === "text") ? child.word : child.childrenIds;
+            const grandChildren = allChildIds(ast, child);
             stack.push(...grandChildren);
         }
         return result;

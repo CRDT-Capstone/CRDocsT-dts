@@ -1,4 +1,4 @@
-import { AstNode, BragiAST, NodeId } from "../AST";
+import { allChildIds, AstNode, BragiAST, NodeId } from "../AST";
 import { TreeMetrics } from "./TreeMetrics";
 import hash from "object-hash";
 
@@ -15,13 +15,13 @@ export class TreeMetricComputer {
 
     buildMetrics(tree: BragiAST, node?: AstNode){
         if(!node) return;
-        this.startNode(node);
-        const children = (node.type === "text") ? node.word : node.childrenIds;
+        this.startNode(tree, node);
+        const children = allChildIds(tree, node);
         for(const id of children){
             const newNode = tree.nodes.get(id)!;
             this.buildMetrics(tree, newNode);
         }
-        this.endTree(node);
+        this.endTree(tree, node);
     }
 
     getMetrics(){
@@ -29,18 +29,18 @@ export class TreeMetricComputer {
     }
 
 
-    startNode(node: AstNode) {
-        const children = (node.type === "text") ? node.word : node.childrenIds;
+    startNode(tree: BragiAST, node: AstNode) {
+        const children = allChildIds(tree, node);
         if (children.length === 0)
             this.visitLeaf(node);
         else
             this.startInnerNode(node);
     }
 
-    endTree(node: AstNode) {
-        const children = (node.type === "text") ? node.word : node.childrenIds;
+    endTree(tree: BragiAST, node: AstNode) {
+        const children = allChildIds(tree, node);
         if (children.length > 0)
-            this.endInnerNode(node);
+            this.endInnerNode(tree, node);
     }
 
     startInnerNode(node: AstNode) {
@@ -52,14 +52,14 @@ export class TreeMetricComputer {
         this.currentPosition++;
     }
 
-    endInnerNode(node: AstNode) {
+    endInnerNode(tree: BragiAST, node: AstNode) {
         this.currentDepth--;
         let sumSize = 0;
         let maxHeight = 0;
         let currentHash = 0;
         let currentStructureHash = 0;
 
-        const childrenIds = (node.type === "text") ? node.word : node.childrenIds;
+        const childrenIds = allChildIds(tree, node);
         for (const id of childrenIds) {
             const metrics = this.metrics.get(id)!;
             const exponent = 2 * sumSize + 1;

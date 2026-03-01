@@ -1,4 +1,4 @@
-import type { AstNode, BragiAST } from "../../AST";
+import { allChildIds, type AstNode, type BragiAST } from "../../AST";
 import type { Mapping } from "../GumTree";
 
 export class PositionInParentsSimilarityMappingComparator {
@@ -33,7 +33,7 @@ export class PositionInParentsSimilarityMappingComparator {
         let current: AstNode = src;
         while (current != null && current.parentId != null) {
             const parent: AstNode = tree.nodes.get(current.parentId)!;
-            const children = (parent.type === "text") ? parent.word : parent.childrenIds;
+            const children = allChildIds(tree, src);
             const pos: number = children.indexOf(current.id);
             posVector.push(pos);
             current = parent;

@@ -1,5 +1,5 @@
 import FastPriorityQueue from "fastpriorityqueue";
-import { BragiAST, AstNode, NodeId } from "./types";
+import { BragiAST, AstNode, NodeId, allChildIds } from "./types";
 import { FullMappingComparator } from "./types/GumTree/comparators/FullMappingComparator";
 import { MappingStore, Mapping } from "./types/GumTree/GumTree";
 import { Pair, HashBasedMapper } from "./types/GumTree/HashBasedMapper";
@@ -40,8 +40,8 @@ export class GumTreeTopDown {
         return isIn;
     }
 
-    private AddChildrenToQueue(node: AstNode, PQ: FastPriorityQueue<pqType>, metricComputer: TreeMetricComputer) {
-        const childrenIds = (node.type === "text") ? node.word : node.childrenIds;
+    private AddChildrenToQueue(tree: BragiAST, node: AstNode, PQ: FastPriorityQueue<pqType>, metricComputer: TreeMetricComputer) {
+        const childrenIds = allChildIds(tree, node)
         for (const nodeId of childrenIds) {
             const height = metricComputer.getMetrics().get(nodeId)!.height
 
@@ -98,11 +98,11 @@ export class GumTreeTopDown {
 
             localHashMappings.unmapped().forEach((pair) => {
                 pair.first.forEach((srcNode) => {
-                    this.AddChildrenToQueue(srcNode, this.srcTreePQ, this.srcMetrics);
+                    this.AddChildrenToQueue(this.srcTree, srcNode, this.srcTreePQ, this.srcMetrics);
                 });
 
                 pair.second.forEach((dstNode) => {
-                    this.AddChildrenToQueue(dstNode, this.dstTreePQ, this.dstMetrics);
+                    this.AddChildrenToQueue(this.dstTree, dstNode, this.dstTreePQ, this.dstMetrics);
                 });
             });
         }
@@ -158,12 +158,12 @@ export class GumTreeTopDown {
             const dstTop = this.dstTreePQ.peek()!;
             if (srcTop.height < dstTop.height) {
                 const srcNode = this.srcTree.nodes.get(srcTop.nodeId)!;
-                this.AddChildrenToQueue(srcNode, this.srcTreePQ, this.srcMetrics);
+                this.AddChildrenToQueue(this.srcTree, srcNode, this.srcTreePQ, this.srcMetrics);
 
                 this.srcTreePQ.poll();
             } else {
                 const newNode = this.dstTree.nodes.get(dstTop.nodeId)!;
-                this.AddChildrenToQueue(newNode, this.dstTreePQ, this.dstMetrics);
+                this.AddChildrenToQueue(this.dstTree, newNode, this.dstTreePQ, this.dstMetrics);
                 this.dstTreePQ.poll();
             }
         }

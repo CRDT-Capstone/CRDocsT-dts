@@ -1,4 +1,4 @@
-import { NodeId, AstNode, BragiAST } from "../../AST";
+import { NodeId, AstNode, BragiAST, allChildIds } from "../../AST";
 import { MappingStore, Mapping } from "../GumTree";
 import { getParent, diceCoefficient } from "../utils";
 
@@ -46,7 +46,7 @@ export class SiblingsSimilarityMappingComparator {
     private getDescendants(nodeId: NodeId, tree: BragiAST): AstNode[] {
         const descendants: AstNode[] = [];
         const node = tree.nodes.get(nodeId)!;
-        const children = (node.type === "text") ? node.word : node.childrenIds;
+        const children = allChildIds(tree, node);
         for (const childId of children) {
             const child = tree.nodes.get(childId)!;
             descendants.push(child);
