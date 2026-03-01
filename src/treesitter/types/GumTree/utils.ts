@@ -1,4 +1,5 @@
-import { AstNode, BragiAST, NodeId } from "../AST";
+import { allChildIds, AstNode, BragiAST, NodeId } from "../AST";
+import { Mapping, MappingStore } from "./GumTree";
 
 export function diceCoefficient(commonElementsNb: number, leftElementsNb: number, rightElementsNb: number): number {
     return 2 * commonElementsNb / (leftElementsNb + rightElementsNb);
@@ -41,10 +42,42 @@ export function getParent(nodeId: NodeId, tree: BragiAST) {
 }
 
 export function getParents(tree: BragiAST, parents: AstNode[], nodeId: NodeId | null): AstNode[] {
-        if (!nodeId) return parents;
-        const node = tree.nodes.get(nodeId)!;
-        if (node.parentId === null) return parents;
-        const parent = tree.nodes.get(node.parentId)!;
-        parents.push(parent);
-        return getParents(tree, parents, node.parentId);
+    if (!nodeId) return parents;
+    const node = tree.nodes.get(nodeId)!;
+    if (node.parentId === null) return parents;
+    const parent = tree.nodes.get(node.parentId)!;
+    parents.push(parent);
+    return getParents(tree, parents, node.parentId);
+}
+
+export function getDescendants(nodeId: NodeId, tree: BragiAST): AstNode[] {
+    const descendants: AstNode[] = [];
+    const node = tree.nodes.get(nodeId)!;
+    const children = allChildIds(tree, node);
+    for (const childId of children) {
+        const child = tree.nodes.get(childId)!;
+        descendants.push(child);
+        descendants.push(...getDescendants(childId, tree));
+    }
+    return descendants;
+}
+
+export function diceSimilarity(srcNode: AstNode, dstNode: AstNode, mappings: MappingStore){
+    return diceCoefficient(numberOfMappedDescendants(srcNode, dstNode, mappings), 
+    getDescendants(srcNode.id, mappings.oldAst).length, getDescendants(dstNode.id, mappings.newAst).length);
+}
+
+function numberOfMappedDescendants(srcNode: AstNode, dstNode: AstNode, mappings: MappingStore){
+    const dstDescendants = new Set(getDescendants(dstNode.id, mappings.newAst).map((node)=> node.id));
+    let mappedDescendants = 0;
+    
+    for(const srcDescendant of getDescendants(srcNode.id, mappings.oldAst)){
+        if(mappings.isSrcMapped(srcDescendant.id)){
+            const dstForSrcDescendant = mappings.getDstForSrc(srcDescendant.id)!;
+            if(dstDescendants.has(dstForSrcDescendant)){
+                mappedDescendants++;
+            }
+        }
+    }
+    return mappedDescendants
 }

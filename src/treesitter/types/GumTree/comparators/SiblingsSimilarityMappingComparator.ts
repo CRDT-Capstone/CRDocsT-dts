@@ -1,6 +1,6 @@
 import { NodeId, AstNode, BragiAST, allChildIds } from "../../AST";
 import { MappingStore, Mapping } from "../GumTree";
-import { getParent, diceCoefficient } from "../utils";
+import { getParent, diceCoefficient, getDescendants } from "../utils";
 
 
 export class SiblingsSimilarityMappingComparator {
@@ -43,25 +43,15 @@ export class SiblingsSimilarityMappingComparator {
         return this.cachedSimilarities.get(m2)! - this.cachedSimilarities.get(m1)!;
     }
 
-    private getDescendants(nodeId: NodeId, tree: BragiAST): AstNode[] {
-        const descendants: AstNode[] = [];
-        const node = tree.nodes.get(nodeId)!;
-        const children = allChildIds(tree, node);
-        for (const childId of children) {
-            const child = tree.nodes.get(childId)!;
-            descendants.push(child);
-            descendants.push(...this.getDescendants(childId, tree));
-        }
-        return descendants;
-    }
+   
 
     private putIfAbsent(map: Map<NodeId, AstNode[]>, key: NodeId, value: AstNode[]) {
         if (!map.has(key)) map.set(key, value);
     }
 
     private commonDescendantsNb(src: NodeId, dst: NodeId): number {
-        this.putIfAbsent(this.srcDescendants, src, this.getDescendants(src, this.srcTree));
-        this.putIfAbsent(this.dstDescendants, dst, this.getDescendants(dst, this.dstTree));
+        this.putIfAbsent(this.srcDescendants, src, getDescendants(src, this.srcTree));
+        this.putIfAbsent(this.dstDescendants, dst, getDescendants(dst, this.dstTree));
 
         let common = 0;
         for (const t of this.srcDescendants.get(src)!) {
