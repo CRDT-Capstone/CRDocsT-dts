@@ -1,15 +1,17 @@
 import FastPriorityQueue from "fastpriorityqueue";
 import type { AstNode, BragiAST, NodeId } from "./types";
-import { MappingStore } from "./types/GumTree/GumTree";
+import { Mapping, MappingStore } from "./types/GumTree/GumTree";
 import { HashBasedMapper, Pair } from "./types/GumTree/HashBasedMapper";
 import { TreeMetricComputer } from "./types/GumTree/TreeMetricComputer";
+import { FullMappingComparator } from "./types/GumTree/FullMappingComparator";
+import { TreeMetrics } from "./types/GumTree/TreeMetrics";
 
 export type pqType = {
     nodeId: string,
     height: number
 };
 
-export class GumTreeTopDown{
+export class GumTreeTopDown {
 
     private srcTree: BragiAST;
     private dstTree: BragiAST;
@@ -17,16 +19,16 @@ export class GumTreeTopDown{
     private dstTreePQ = new FastPriorityQueue((a: pqType, b: pqType) => a.height > b.height);
     private srcMetrics: TreeMetricComputer = new TreeMetricComputer();
     private dstMetrics: TreeMetricComputer = new TreeMetricComputer();
-    private mapping: MappingStore;
+    private mappings: MappingStore;
 
-    constructor(srcTree: BragiAST, dstTree: BragiAST){
+    constructor(srcTree: BragiAST, dstTree: BragiAST) {
         this.srcTree = srcTree;
         this.dstTree = dstTree;
-        this.mapping = new MappingStore(srcTree, dstTree);
+        this.mappings = new MappingStore(srcTree, dstTree);
         this.srcMetrics.buildMetrics(this.srcTree, this.srcTree.nodes.get(this.srcTree.rootId));
         this.dstMetrics.buildMetrics(this.dstTree, this.dstTree.nodes.get(this.dstTree.rootId));
-    } 
-    
+    }
+
     private IsInQueue(entry: pqType, pq: FastPriorityQueue<pqType>) {
         let isIn = false;
         pq.forEach((node) => {
@@ -64,9 +66,9 @@ export class GumTreeTopDown{
         }
     }
 
-    private addNodeToPQ(PQ: FastPriorityQueue<pqType>, tree: BragiAST, metricComputer: TreeMetricComputer, nodeId: NodeId){
+    private addNodeToPQ(PQ: FastPriorityQueue<pqType>, tree: BragiAST, metricComputer: TreeMetricComputer, nodeId: NodeId) {
         const node = tree.nodes.get(nodeId);
-        if(!node) return;
+        if (!node) return;
 
         const height = metricComputer.getMetrics().get(nodeId)!.height;
         PQ.add({
@@ -84,68 +86,104 @@ export class GumTreeTopDown{
 
         const ambiguousMappings: Pair<Set<AstNode>>[] = [];
 
-        while(this.synchronize()){
+        while (this.synchronize()) {
             let localHashMappings = new HashBasedMapper(this.srcTree, this.dstTree, this.srcMetrics, this.dstMetrics);
             this.srcTreePQ.poll();
             this.dstTreePQ.poll();
             localHashMappings.addSrcNodesFromQueue(this.srcTreePQ);
             localHashMappings.addDstNodesFromQueue(this.dstTreePQ);
 
-            localHashMappings.unique().forEach((pair)=>{
-                
-                this.mapping.addMappingRecursively(
+            localHashMappings.unique().forEach((pair) => {
+
+                this.mappings.addMappingRecursively(
                     pair.first.values().next().value!.id,
                     pair.second.values().next().value!.id
                 );
             });
 
-            localHashMappings.ambiguous().forEach((pair)=> {ambiguousMappings.push(pair)});
+            localHashMappings.ambiguous().forEach((pair) => { ambiguousMappings.push(pair) });
 
-            localHashMappings.unmapped().forEach((pair)=>{
-                pair.first.forEach((srcNode)=>{
+            localHashMappings.unmapped().forEach((pair) => {
+                pair.first.forEach((srcNode) => {
                     this.AddChildrenToQueue(srcNode, this.srcTreePQ, this.srcMetrics);
                 });
 
-                pair.second.forEach((dstNode)=>{
+                pair.second.forEach((dstNode) => {
                     this.AddChildrenToQueue(dstNode, this.dstTreePQ, this.dstMetrics);
                 });
-            })
+            });
         }
 
-        return this.mapping;
+        this.handleAmbiguousMappings(ambiguousMappings);
+
+        return this.mappings;
 
     }
 
+    handleAmbiguousMappings(ambiguousMappings: Pair<Set<AstNode>>[]) {
+        const comparator: FullMappingComparator = new FullMappingComparator(this.mappings, this.srcTree, this.dstTree, this.srcMetrics, this.dstMetrics);
+        ambiguousMappings.sort((m1, m2) => this.ambiguousMappingsComparator(m1, m2, this.srcMetrics.getMetrics()));
+        ambiguousMappings.forEach((pair) => {
+            const candidates: Mapping[] = this.convertToMappings(pair);
+            candidates.sort((m1,m2)=> comparator.compare(m1, m2));
+            candidates.forEach((mapping)=>{
+                if(this.mappings.areBothUnmapped(mapping.f, mapping.s)){
+                    this.mappings.addMappingRecursively(mapping.f, mapping.s);
+                }
+            })
+        })
+    }
 
-    private synchronize(){
+    convertToMappings(ambiguousMappings: Pair<Set<AstNode>>){
+        const mappings: Mapping[] = [];
+        for(const srcNode of ambiguousMappings.first){
+            for(const dstNode of ambiguousMappings.second){
+                mappings.push(new Mapping(srcNode.id, dstNode.id));
+            }
+        }
+        return mappings;
+    }
+
+    ambiguousMappingsComparator(
+        m1: Pair<Set<AstNode>>,
+        m2: Pair<Set<AstNode>>,
+        metrics: Map<NodeId, TreeMetrics>
+    ): number {
+        const s1 = Math.max(...[...m1.first].map(node => metrics.get(node.id)!.size));
+        const s2 = Math.max(...[...m2.first].map(node => metrics.get(node.id)!.size));
+        return s2 - s1;
+    }
+
+
+    private synchronize() {
         while (
             (!this.srcTreePQ.isEmpty() && !this.dstTreePQ.isEmpty()) &&
             this.srcTreePQ.peek()?.height !== this.dstTreePQ.peek()?.height
-        
+
         ) {
             const srcTop = this.srcTreePQ.peek()!;
             const dstTop = this.dstTreePQ.peek()!;
-                if (srcTop.height < dstTop.height) {
-                    const srcNode = this.srcTree.nodes.get(srcTop.nodeId)!;
-                    this.AddChildrenToQueue(srcNode, this.srcTreePQ, this.srcMetrics);
+            if (srcTop.height < dstTop.height) {
+                const srcNode = this.srcTree.nodes.get(srcTop.nodeId)!;
+                this.AddChildrenToQueue(srcNode, this.srcTreePQ, this.srcMetrics);
 
-                    this.srcTreePQ.poll();
-                } else {
-                    const newNode = this.dstTree.nodes.get(dstTop.nodeId)!;
-                    this.AddChildrenToQueue(newNode, this.dstTreePQ, this.srcMetrics);
-                    this.dstTreePQ.poll();
-                }
+                this.srcTreePQ.poll();
+            } else {
+                const newNode = this.dstTree.nodes.get(dstTop.nodeId)!;
+                this.AddChildrenToQueue(newNode, this.dstTreePQ, this.dstMetrics);
+                this.dstTreePQ.poll();
             }
-        if(this.srcTreePQ.isEmpty() || this.dstTreePQ.isEmpty()){
+        }
+        if (this.srcTreePQ.isEmpty() || this.dstTreePQ.isEmpty()) {
             this.dstTreePQ = new FastPriorityQueue<pqType>();
             this.srcTreePQ = new FastPriorityQueue<pqType>();
             return false;
         }
         return true;
 
-        
 
-        }
-    
+
+    }
+
 
 }

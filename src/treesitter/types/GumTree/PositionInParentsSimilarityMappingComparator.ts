@@ -1,7 +1,7 @@
 import { AstNode, BragiAST } from "../AST";
 import { Mapping } from "./GumTree";
 
-export class PositionInParentsSimilarityMappingConstructor {
+export class PositionInParentsSimilarityMappingComparator {
 
     private srcTree: BragiAST;
     private dstTree: BragiAST;
