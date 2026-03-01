@@ -383,4 +383,8 @@ export class FugueTree {
     getVisibleIndex(node: FNode) {
         return this.tree.getVisibleIndex(node);
     }
+
+    nextNonDescendant(node: FNode) {
+        return this.tree.nextNonDescendant(node);
+    }
 }

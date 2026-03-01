@@ -3,7 +3,6 @@ import type { AstNode, BragiAST, NodeId } from "../../treesitter";
 
 // ---- SRC ----
 
-
 export const MORE_COMPLEX_AST: BragiAST = {
     rootId: "a1b2c3d4-0000-4000-8000-000000000001",
     nodes: new Map([
@@ -14,10 +13,7 @@ export const MORE_COMPLEX_AST: BragiAST = {
                 parentId: null,
                 type: "source_file",
                 text: "The quick brown fox jumped over the lazy dog. A slow red cat crept under the sleepy log.",
-                childrenIds: [
-                    "a1b2c3d4-0000-4000-8000-000000000002",
-                    "a1b2c3d4-0000-4000-8000-000000000003",
-                ],
+                childrenIds: ["a1b2c3d4-0000-4000-8000-000000000002", "a1b2c3d4-0000-4000-8000-000000000003"],
             },
         ],
 
@@ -43,15 +39,96 @@ export const MORE_COMPLEX_AST: BragiAST = {
                 childrenIds: [],
             },
         ],
-        ["a1b2c3d4-0000-4000-8000-000000000010", { id: "a1b2c3d4-0000-4000-8000-000000000010", parentId: "a1b2c3d4-0000-4000-8000-000000000002", type: "word", text: "The", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000011", { id: "a1b2c3d4-0000-4000-8000-000000000011", parentId: "a1b2c3d4-0000-4000-8000-000000000002", type: "word", text: "quick", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000012", { id: "a1b2c3d4-0000-4000-8000-000000000012", parentId: "a1b2c3d4-0000-4000-8000-000000000002", type: "word", text: "brown", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000013", { id: "a1b2c3d4-0000-4000-8000-000000000013", parentId: "a1b2c3d4-0000-4000-8000-000000000002", type: "word", text: "fox", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000014", { id: "a1b2c3d4-0000-4000-8000-000000000014", parentId: "a1b2c3d4-0000-4000-8000-000000000002", type: "word", text: "jumped", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000015", { id: "a1b2c3d4-0000-4000-8000-000000000015", parentId: "a1b2c3d4-0000-4000-8000-000000000002", type: "word", text: "over", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000016", { id: "a1b2c3d4-0000-4000-8000-000000000016", parentId: "a1b2c3d4-0000-4000-8000-000000000002", type: "word", text: "the", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000017", { id: "a1b2c3d4-0000-4000-8000-000000000017", parentId: "a1b2c3d4-0000-4000-8000-000000000002", type: "word", text: "lazy", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000018", { id: "a1b2c3d4-0000-4000-8000-000000000018", parentId: "a1b2c3d4-0000-4000-8000-000000000002", type: "word", text: "dog.", childrenIds: [] }],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000010",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000010",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000002",
+                type: "word",
+                text: "The",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000011",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000011",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000002",
+                type: "word",
+                text: "quick",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000012",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000012",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000002",
+                type: "word",
+                text: "brown",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000013",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000013",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000002",
+                type: "word",
+                text: "fox",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000014",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000014",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000002",
+                type: "word",
+                text: "jumped",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000015",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000015",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000002",
+                type: "word",
+                text: "over",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000016",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000016",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000002",
+                type: "word",
+                text: "the",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000017",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000017",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000002",
+                type: "word",
+                text: "lazy",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000018",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000018",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000002",
+                type: "word",
+                text: "dog.",
+                childrenIds: [],
+            },
+        ],
 
         // --- Sentence 2 ---
         [
@@ -75,15 +152,96 @@ export const MORE_COMPLEX_AST: BragiAST = {
                 childrenIds: [],
             },
         ],
-        ["a1b2c3d4-0000-4000-8000-000000000020", { id: "a1b2c3d4-0000-4000-8000-000000000020", parentId: "a1b2c3d4-0000-4000-8000-000000000003", type: "word", text: "A", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000021", { id: "a1b2c3d4-0000-4000-8000-000000000021", parentId: "a1b2c3d4-0000-4000-8000-000000000003", type: "word", text: "slow", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000022", { id: "a1b2c3d4-0000-4000-8000-000000000022", parentId: "a1b2c3d4-0000-4000-8000-000000000003", type: "word", text: "red", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000023", { id: "a1b2c3d4-0000-4000-8000-000000000023", parentId: "a1b2c3d4-0000-4000-8000-000000000003", type: "word", text: "cat", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000024", { id: "a1b2c3d4-0000-4000-8000-000000000024", parentId: "a1b2c3d4-0000-4000-8000-000000000003", type: "word", text: "crept", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000025", { id: "a1b2c3d4-0000-4000-8000-000000000025", parentId: "a1b2c3d4-0000-4000-8000-000000000003", type: "word", text: "under", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000026", { id: "a1b2c3d4-0000-4000-8000-000000000026", parentId: "a1b2c3d4-0000-4000-8000-000000000003", type: "word", text: "the", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000027", { id: "a1b2c3d4-0000-4000-8000-000000000027", parentId: "a1b2c3d4-0000-4000-8000-000000000003", type: "word", text: "sleepy", childrenIds: [] }],
-        ["a1b2c3d4-0000-4000-8000-000000000028", { id: "a1b2c3d4-0000-4000-8000-000000000028", parentId: "a1b2c3d4-0000-4000-8000-000000000003", type: "word", text: "log.", childrenIds: [] }],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000020",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000020",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000003",
+                type: "word",
+                text: "A",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000021",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000021",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000003",
+                type: "word",
+                text: "slow",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000022",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000022",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000003",
+                type: "word",
+                text: "red",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000023",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000023",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000003",
+                type: "word",
+                text: "cat",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000024",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000024",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000003",
+                type: "word",
+                text: "crept",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000025",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000025",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000003",
+                type: "word",
+                text: "under",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000026",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000026",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000003",
+                type: "word",
+                text: "the",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000027",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000027",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000003",
+                type: "word",
+                text: "sleepy",
+                childrenIds: [],
+            },
+        ],
+        [
+            "a1b2c3d4-0000-4000-8000-000000000028",
+            {
+                id: "a1b2c3d4-0000-4000-8000-000000000028",
+                parentId: "a1b2c3d4-0000-4000-8000-000000000003",
+                type: "word",
+                text: "log.",
+                childrenIds: [],
+            },
+        ],
     ]),
 };
 
@@ -118,9 +276,7 @@ export const AST: BragiAST = {
                     "26df82fd-534d-4a44-84bf-957cbd1d12df",
                     "788be876-fef8-4cef-a602-eecf60d84694",
                 ],
-                childrenIds: [
-
-                ],
+                childrenIds: [],
             },
         ],
         [
@@ -216,9 +372,7 @@ export const AST: BragiAST = {
     ]),
 };
 
-
 export function doDeletion(ast: BragiAST, index: number): BragiAST {
-
     const newAST = structuredClone(ast);
     const keys = Array.from(newAST.nodes.keys());
     const deletedKey = keys[index];
@@ -243,7 +397,7 @@ export function doDeletion(ast: BragiAST, index: number): BragiAST {
             const wordTexts = node.word.map((id) => newAST.nodes.get(id)!.text);
             node.text = wordTexts.join(" ");
         }
-        if(node.childrenIds.length > 0){
+        if (node.childrenIds.length > 0) {
             const wordTexts = node.childrenIds.map((id) => newAST.nodes.get(id)!.text);
             node.text = wordTexts.join(" ");
         }
@@ -252,8 +406,7 @@ export function doDeletion(ast: BragiAST, index: number): BragiAST {
     return newAST;
 }
 
-export function doInsertion(ast: BragiAST, index: number, id:string = v4()): BragiAST {
-
+export function doInsertion(ast: BragiAST, index: number, id: string = v4()): BragiAST {
     const newAST = structuredClone(ast);
 
     const newNode: AstNode = {
@@ -291,7 +444,6 @@ export function getFirstTextNode(ast: BragiAST) {
 }
 
 export function doInsertionToTextNode(ast: BragiAST, id: string = v4()): BragiAST {
-
     const newAST = structuredClone(ast);
 
     const TextNode = getFirstTextNode(newAST);
@@ -311,12 +463,10 @@ export function doInsertionToTextNode(ast: BragiAST, id: string = v4()): BragiAS
 
     newAST.nodes.set(id, newNode);
 
-
     return newAST;
 }
 
 export function doDeletionFromTextNode(ast: BragiAST): BragiAST {
-
     const newAST = structuredClone(ast);
 
     const TextNode = getFirstTextNode(newAST);
@@ -346,12 +496,11 @@ export function doDeletionFromTextNode(ast: BragiAST): BragiAST {
         if (node.type === "text") {
             const wordTexts = node.word.map((id) => newAST.nodes.get(id)!.text);
             node.text = wordTexts.join(" ");
-        }else{
+        } else {
             const wordTexts = node.childrenIds.map((id) => newAST.nodes.get(id)!.text);
             node.text = wordTexts.join(" ");
         }
     }
-
 
     return newAST;
 }
@@ -385,15 +534,11 @@ export function createNewAST(ast: BragiAST): BragiAST {
         const oldChildrenIds = node.childrenIds;
         const newChildrenIds: string[] = [];
         for (const oldId of oldChildrenIds) {
-
             const childNode = newAST.nodes.get(oldId);
             dfs(childNode, newId);
             if (childNode) newChildrenIds.push(childNode.id);
         }
         node.childrenIds = newChildrenIds;
-
-
-
     }
 
     const root = newAST.nodes.get(newAST.rootId);
@@ -402,6 +547,4 @@ export function createNewAST(ast: BragiAST): BragiAST {
     newAST.rootId = root!.id;
     newAST.nodes = newNodes;
     return newAST;
-
 }
-

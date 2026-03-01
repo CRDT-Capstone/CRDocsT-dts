@@ -2,7 +2,11 @@ import { Language, Parser, Query } from "web-tree-sitter";
 
 let initPromise: Promise<{ parser: Parser; query: Query }> | null = null;
 
-export const newParser = async (treeSitterLatexPath: string, queryFilePath: string) => {
+export const newParser = async (
+    treeSitterLatexPath: string,
+    queryFilePath: string,
+    treesitterPath: string = "/tree-sitter.wasm",
+) => {
     if (initPromise) return initPromise;
     initPromise = (async () => {
         try {
@@ -10,7 +14,7 @@ export const newParser = async (treeSitterLatexPath: string, queryFilePath: stri
                 locateFile: (name: string, dir: string) => {
                     console.log({ name, dir });
                     // return `/${name}`;
-                    return "/tree-sitter.wasm";
+                    return `${treesitterPath}`;
                 },
             });
             const parser = new Parser();

@@ -44,6 +44,10 @@ export interface FugueMessage extends BaseFugueMessage<Operation.INSERT | Operat
     side: NodeSide;
     parent?: ID;
     rightOrigin?: ID;
+    coastTxId?: string;
+    coastNodeKey?: string;
+    coastOpType?: string;
+    coastOpPart?: string;
 }
 
 export interface FugueJoinMessage extends BaseFugueMessage<Operation.INITIAL_SYNC> {
