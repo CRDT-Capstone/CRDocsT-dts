@@ -1,4 +1,5 @@
 import { ID, NodeSide } from "../../dts/FugueTree/FTree.js";
+import { OperationPart, OperationType } from "../../treesitter.js";
 import { BaseMessage, MessageType } from "../Message.js";
 
 export enum Operation {
@@ -45,8 +46,10 @@ export interface FugueMessage extends BaseFugueMessage<Operation.INSERT | Operat
     rightOrigin?: ID;
     coastTxId?: string;
     coastNodeKey?: string;
-    coastOpType?: string;
-    coastOpPart?: string;
+    coastOpType?: OperationType;
+    coastOpPart?: OperationPart;
+    coastExpectedInsertCount?: number;
+    coastExpectedDeleteCount?: number;
 }
 
 export interface FugueJoinMessage extends BaseFugueMessage<Operation.INITIAL_SYNC> {

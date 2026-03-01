@@ -1,12 +1,27 @@
 import { FNode, FugueTree } from "../../../dts/index.js";
 import { FugueMessage } from "../../../types/index.js";
 import { EditScript } from "../../Actions/EditScript/EditScriptGen.js";
-import { Action, Actions, ActionType, Delete, Move, TreeInsert, Update } from "../../Actions/Model/Action.js";
+import {
+    Action,
+    Actions,
+    ActionType,
+    Delete,
+    Move,
+    OperationPart,
+    OperationType,
+    TreeInsert,
+    Update,
+} from "../../Actions/Model/Action.js";
 import { AstNode, BragiAST } from "../../types/index.js";
 import { Anchor, Registry } from "../Registry/index.js";
 
 /**
- *  Translates the EditScript tree level actions into FugueTree operations, i.e. some combination of insert and deletion operations.
+ * Translates the EditScript tree level actions into FugueTree operations, i.e. some combination of insert and deletion operations.
+ * The name Ratatoskr is inspired by the mythological Norse squirrel who runs up and down the world tree Yggdrasil, carrying messages
+ * between the eagle at the top and the serpent Niðhoggr at the bottom.
+ * In our case, Ratatoskr is responsible for carrying/translating the messages of changes represented by the EditScript actions down
+ * to Nidhoggr, fugue operation effector, which will apply the recevied translated operations to remote replicas, i.e. gnawing at the
+ * proverbial roots of the tree.
  */
 export class Ratatoskr {
     registry: Registry = new Registry();
@@ -119,14 +134,24 @@ export class Ratatoskr {
             );
 
         // Find the index of the first node being moved, and delete the span being moved from its original location
-        const sourceIdx = this.fugue.getVisibleIndex(this.fugue.getById(anchor.startId));
-        const delMsgs = this.fugue.deleteMultiple(sourceIdx, anchor.length);
+        const srcTdx = this.fugue.getVisibleIndex(this.fugue.getById(anchor.startId));
+        const delMsgs = this.fugue.deleteMultiple(srcTdx, anchor.length);
         this.tag(delMsgs, txId, action.node.id, "MOVE", "DELETE");
+
+        // Determine the expected number of insert and delete messages to be generated for this move operation, used
+        // by remote replicas to verify that they have received all the messages for this operation before applying them
+        const expectedInsert = insMsgs.length;
+        const expectedDelete = delMsgs.length;
+        const all = [...insMsgs, ...delMsgs];
+        all.forEach((m) => {
+            m.coastExpectedInsertCount = expectedInsert;
+            m.coastExpectedDeleteCount = expectedDelete;
+        });
 
         // Update Registry to new anchor
         this.registry.update(action.node.id, { startId: insMsgs[0].id });
 
-        return [...insMsgs, ...delMsgs];
+        return all;
     }
 
     /**
@@ -177,10 +202,18 @@ export class Ratatoskr {
         );
         this.tag(insMsgs, txId, action.node.id, "UPDATE", "INSERT");
 
+        const expectedInsert = insMsgs.length;
+        const expectedDelete = delMsgs.length;
+        const all = [...insMsgs, ...delMsgs];
+        all.forEach((m) => {
+            m.coastExpectedInsertCount = expectedInsert;
+            m.coastExpectedDeleteCount = expectedDelete;
+        });
+
         // Update registry to new anchor and length
         this.registry.update(action.node.id, { startId: insMsgs[0].id, length: action.value.length });
 
-        return [...delMsgs, ...insMsgs];
+        return all;
     }
 
     /**
@@ -193,7 +226,7 @@ export class Ratatoskr {
      * @param part - An optional parameter to specify the part of the operation this message is related to,
         for example for a move operation, whether this message is part of the "INSERT" or "DELETE" phase of the move
      */
-    private tag(msgs: FugueMessage[], txId: string, key: string, type: string, part?: string) {
+    private tag(msgs: FugueMessage[], txId: string, key: string, type: OperationType, part?: OperationPart) {
         msgs.forEach((m) => {
             m.coastTxId = txId;
             m.coastNodeKey = key;

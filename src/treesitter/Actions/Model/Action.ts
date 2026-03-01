@@ -9,6 +9,9 @@ export enum ActionType {
     TREE_INSERT,
 }
 
+export type OperationType = "ADD" | "DELETE" | "MOVE" | "UPDATE";
+export type OperationPart = "INSERT" | "DELETE";
+
 export abstract class Action<T extends ActionType = ActionType> {
     type: T;
     node: AstNode;
