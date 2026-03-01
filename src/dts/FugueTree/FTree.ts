@@ -150,9 +150,10 @@ export class FTree {
             let i = 0;
             for (; i < right.length; i++) {
                 const sib = right[i];
-                const isLessThanSib = this.isLess(node.rightOrigin ?? null, sib.rightOrigin ?? null);
+                const isLessThanSib = this.isLess(sib.rightOrigin ?? null, node.rightOrigin ?? null);
                 const isEqualRightOrigin = node.rightOrigin === sib.rightOrigin;
-                const isGreaterSender = node.id.sender > sib.id.sender;
+                const senderCmp = node.id.sender.localeCompare(sib.id.sender);
+                const isGreaterSender = senderCmp > 0 || (senderCmp === 0 && node.id.counter > sib.id.counter);
                 if (!(isLessThanSib || (isEqualRightOrigin && isGreaterSender))) break;
             }
             right.splice(i, 0, node);
@@ -176,8 +177,8 @@ export class FTree {
      */
     private isLess(a: FNode | null, b: FNode | null): boolean {
         if (a === b) return false;
-        if (a === null) return false;
-        if (b === null) return true;
+        if (a === null) return true;
+        if (b === null) return false;
 
         // Walk one node up the tree until they are both the same depth.
         const aDepth = this.depth(a);

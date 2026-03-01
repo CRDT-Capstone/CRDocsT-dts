@@ -368,6 +368,7 @@ export class FugueTree {
     }
 
     clear() {
+        this.counter = 0;
         return this.tree.clear();
     }
 
