@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "@jest/globals";
-import { GumTreeTopDown } from "../treesitter/GumTreeTopDown.js";
-import { MappingStore, Mapping } from "../treesitter/types/GumTree.js";
-import { AstNode, Pair, TreeMetrics } from "../treesitter/index.js";
+import { GumTreeTopDown } from "../../treesitter/GumTreeTopDown.js";
+import { MappingStore, Mapping } from "../../treesitter/types/GumTree.js";
+import { AstNode, Pair, TreeMetrics } from "../../treesitter/index.js";
 import {
     makeSingleNodeTree,
     makeParentChildTree,

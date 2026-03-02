@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "@jest/globals";
-import { ChawatheScriptGen } from "../treesitter/Actions/EditScript/ChawatheScriptGen.js";
-import { ActionType, Delete, Insert, Move, Update } from "../treesitter/Actions/Model/index.js";
+import { ChawatheScriptGen } from "../../treesitter/Actions/EditScript/ChawatheScriptGen.js";
+import { ActionType, Delete, Insert, Move, Update } from "../../treesitter/Actions/Model/index.js";
 import {
     singleNodeTrees,
     identicalTwoLevelTrees,
@@ -11,7 +11,7 @@ import {
     reparentTree,
     combinedActionsTree,
 } from "./mocks/ChawatheScriptGen-mocks.js";
-import { MappingStore } from "../treesitter/types/GumTree.js";
+import { MappingStore } from "../../treesitter/types/GumTree.js";
 
 // ---------------------------------------------------------------------------
 // Helpers

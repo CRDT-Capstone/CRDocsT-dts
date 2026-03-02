@@ -1,9 +1,9 @@
 import { Parser, Tree } from "web-tree-sitter";
-import { AstNode, BragiAST, newParser } from "../treesitter.js";
-import { ActionType, TreeInsert, Delete, Update, Move } from "../treesitter/Actions/Model/index.js";
-import { Ratatoskr } from "../treesitter/COAST/Ratatoskr/index.js";
+import { AstNode, BragiAST, newParser } from "../../treesitter.js";
+import { ActionType, TreeInsert, Delete, Update, Move } from "../../treesitter/Actions/Model/index.js";
+import { Ratatoskr } from "../../treesitter/COAST/Ratatoskr/index.js";
 import { getParser } from "./mocks/BragiAST-mocks.js";
-import { FugueTree, ID } from "../dts/index.js";
+import { FugueTree, ID } from "../../dts/index.js";
 import { bragiAstFromFugueTree, fugueTreeWithContent } from "./mocks/Ratatoskr-mocks.js";
 import { describe, expect, it, beforeAll, beforeEach, afterEach, jest } from "@jest/globals";
 

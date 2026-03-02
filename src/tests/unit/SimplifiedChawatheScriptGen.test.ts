@@ -1,7 +1,15 @@
 import { describe, it, expect, jest, beforeEach } from "@jest/globals";
-import { SimplifiedChawatheScriptGen } from "../treesitter/Actions/EditScript/SimplifiedChawatheScriptGen.js";
-import { ChawatheScriptGen } from "../treesitter/Actions/EditScript/ChawatheScriptGen.js";
-import { ActionType, Delete, Insert, Move, TreeDelete, TreeInsert, Update } from "../treesitter/Actions/Model/index.js";
+import { SimplifiedChawatheScriptGen } from "../../treesitter/Actions/EditScript/SimplifiedChawatheScriptGen.js";
+import { ChawatheScriptGen } from "../../treesitter/Actions/EditScript/ChawatheScriptGen.js";
+import {
+    ActionType,
+    Delete,
+    Insert,
+    Move,
+    TreeDelete,
+    TreeInsert,
+    Update,
+} from "../../treesitter/Actions/Model/index.js";
 import {
     makeNode,
     buildActions,
@@ -17,7 +25,7 @@ import {
     makeDeepSubtreeDeleteScenario,
 } from "./mocks/SimplifiedChawatheScriptGen-mocks.js";
 import { makeAst } from "./mocks/ChawatheScriptGen-mocks.js";
-import { MappingStore } from "../treesitter/types/GumTree.js";
+import { MappingStore } from "../../treesitter/types/GumTree.js";
 
 // ---------------------------------------------------------------------------
 // Helpers

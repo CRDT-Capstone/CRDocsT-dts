@@ -1,7 +1,7 @@
-import { AstNode, BragiAST, NodeId } from "../../treesitter/types/AST.js";
-import { Delete, Insert, Move, TreeDelete, TreeInsert, Update } from "../../treesitter/Actions/Model/index.js";
+import { AstNode, BragiAST, NodeId } from "../../../treesitter/types/AST.js";
+import { Delete, Insert, Move, TreeDelete, TreeInsert, Update } from "../../../treesitter/Actions/Model/index.js";
 import { makeAst } from "./ChawatheScriptGen-mocks.js";
-import { MappingStore } from "../../treesitter/types/GumTree.js";
+import { MappingStore } from "../../../treesitter/types/GumTree.js";
 
 export function makeNode(
     id: NodeId,

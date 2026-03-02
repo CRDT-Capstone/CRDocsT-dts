@@ -1,7 +1,7 @@
 import { Parser, Tree } from "web-tree-sitter";
-import { allChildIds, AstNode, BragiAST, parseCST } from "../treesitter/types/AST";
+import { allChildIds, AstNode, BragiAST, parseCST } from "../../treesitter/types/AST";
 import { getParser } from "./mocks/BragiAST-mocks.js";
-import { breadthFirstAstTraversalFunc, postorderAstTraversalFunc, preoderAstTraversalFunc } from "../treesitter/utils";
+import { breadthFirstAstTraversalFunc, postorderAstTraversalFunc, preoderAstTraversalFunc } from "../../treesitter/utils";
 
 describe("AST Codegen and Parsing", () => {
     let parser: Parser;

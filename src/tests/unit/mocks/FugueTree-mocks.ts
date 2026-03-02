@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
-import { FugueList, FugueTree, StringTotalOrder } from "../../dts/index.js";
-import { FugueMessage, Operation, MessageType } from "../../types/index.js";
+import { FugueList, FugueTree, StringTotalOrder } from "../../../dts/index.js";
+import { FugueMessage, Operation, MessageType } from "../../../types/index.js";
 
 export const DOC_ID = "test-doc";
 export const USER_ID = "test-user";

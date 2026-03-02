@@ -1,5 +1,5 @@
-import { AstNode, BragiAST } from "../../treesitter/index.js";
-import { MappingStore } from "../../treesitter/types/GumTree.js";
+import { AstNode, BragiAST } from "../../../treesitter/index.js";
+import { MappingStore } from "../../../treesitter/types/GumTree.js";
 
 export function makeNode(
     id: string,

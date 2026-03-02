@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
-import { FugueTree } from "../../dts/index.js";
+import { FugueTree } from "../../../dts/index.js";
 import { Parser } from "web-tree-sitter";
-import { parseCST } from "../../treesitter.js";
+import { parseCST } from "../../../treesitter.js";
 
 export const emptyFugueTree = () => new FugueTree(null, crypto.randomBytes(24).toString("hex"), "test-tree");
 

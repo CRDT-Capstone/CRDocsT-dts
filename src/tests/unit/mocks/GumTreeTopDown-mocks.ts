@@ -1,6 +1,6 @@
-import { BragiAST, AstNode, NodeId } from "../../treesitter/types/AST.js";
-import { TreeMetricComputer } from "../../treesitter/GumTree/TreeMetricComputer.js";
-import { TreeMetrics } from "../../treesitter/GumTree/TreeMetrics.js";
+import { BragiAST, AstNode, NodeId } from "../../../treesitter/types/AST.js";
+import { TreeMetricComputer } from "../../../treesitter/GumTree/TreeMetricComputer.js";
+import { TreeMetrics } from "../../../treesitter/GumTree/TreeMetrics.js";
 
 // ---------------------------------------------------------------------------
 // Minimal AstNode factory

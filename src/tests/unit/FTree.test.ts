@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "@jest/globals";
-import { FTree, FNode } from "../dts/index.js";
+import { FTree } from "../../dts/index.js";
 import { ID_A0, ID_A1, ID_A2, ID_B0, ID_B1, ID_C0, buildHelloTree } from "./mocks/FTree-mocks.js";
 
 // ---------------------------------------------------------------------------

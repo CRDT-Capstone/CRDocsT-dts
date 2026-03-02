@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, jest } from "@jest/globals";
-import { Nidhoggr } from "../treesitter/COAST/Nidhoggr/index.js";
-import { ConflictType } from "../treesitter/COAST/Nidhoggr/types.js";
+import { Nidhoggr } from "../../treesitter/COAST/Nidhoggr/index.js";
+import { ConflictType } from "../../treesitter/COAST/Nidhoggr/types.js";
 import {
     makeMockFugue,
     makeMockRegistry,
@@ -10,7 +10,7 @@ import {
     resetCounter,
     mockConflictHandler,
 } from "./mocks/Nidhoggr-mocks.js";
-import { FugueMessage } from "../types/index.js";
+import { FugueMessage } from "../../types/index.js";
 
 const LOCAL = "local-replica";
 const REMOTE = "remote-replica";

@@ -1,4 +1,4 @@
-import type { FNode, ID, FTree } from "../../dts/index.js";
+import type { FNode, ID, FTree } from "../../../dts/index.js";
 
 export const ROOT_ID: ID = { sender: "", counter: 0 };
 

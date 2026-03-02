@@ -1,8 +1,8 @@
 import { jest } from "@jest/globals";
-import { FugueMessage } from "../../types/FugueTree/index.js";
-import { ConflictHandler } from "../../treesitter/COAST/Nidhoggr/types.js";
-import { Registry } from "../../treesitter/COAST/Registry/index.js";
-import { FugueTree } from "../../dts/index.js";
+import { FugueMessage } from "../../../types/FugueTree/index.js";
+import { ConflictHandler } from "../../../treesitter/COAST/Nidhoggr/types.js";
+import { Registry } from "../../../treesitter/COAST/Registry/index.js";
+import { FugueTree } from "../../../dts/index.js";
 
 // ---------------------------------------------------------------------------
 // ID / message factory helpers
