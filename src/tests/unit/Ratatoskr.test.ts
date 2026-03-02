@@ -1,16 +1,18 @@
 import { Parser, Tree } from "web-tree-sitter";
-import { AstNode, BragiAST, newParser } from "../../treesitter.js";
+import { AstNode, BragiAST, newParser, Registry } from "../../treesitter.js";
 import { ActionType, TreeInsert, Delete, Update, Move } from "../../treesitter/Actions/Model/index.js";
 import { Ratatoskr } from "../../treesitter/COAST/Ratatoskr/index.js";
 import { getParser } from "./mocks/BragiAST-mocks.js";
 import { FugueTree, ID } from "../../dts/index.js";
 import { bragiAstFromFugueTree, fugueTreeWithContent } from "./mocks/Ratatoskr-mocks.js";
+import { makeMockRegistry } from "./mocks/Nidhoggr-mocks.js";
 import { describe, expect, it, beforeAll, beforeEach, afterEach, jest } from "@jest/globals";
 
 describe("Ratatoskr", () => {
     let fugue: FugueTree;
     let ast: BragiAST;
     let ratatoskr: Ratatoskr;
+    let registry: Registry;
     let parser: Parser;
 
     let insertSpy: jest.SpiedFunction<FugueTree["insertMultiple"]>;
@@ -39,7 +41,8 @@ describe("Ratatoskr", () => {
 `);
 
         ast = bragiAstFromFugueTree(fugue, parser);
-        ratatoskr = new Ratatoskr(fugue, ast);
+        registry = new Registry();
+        ratatoskr = new Ratatoskr(fugue, ast, registry);
 
         insertSpy = jest.spyOn(fugue, "insertMultiple");
         deleteSpy = jest.spyOn(fugue, "deleteMultiple");

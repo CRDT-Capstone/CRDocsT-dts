@@ -24,14 +24,15 @@ import { Anchor, Registry } from "../Registry/index.js";
  * proverbial roots of the tree.
  */
 export class Ratatoskr {
-    registry: Registry = new Registry();
+    registry: Registry;
     fugue: FugueTree;
     pastActions: { timestamp: number; editScript: EditScript }[] = [];
     newAst: BragiAST;
 
-    constructor(fugue: FugueTree, newAst: BragiAST) {
+    constructor(fugue: FugueTree, newAst: BragiAST, registry: Registry) {
         this.fugue = fugue;
         this.newAst = newAst;
+        this.registry = registry;
     }
 
     /**
