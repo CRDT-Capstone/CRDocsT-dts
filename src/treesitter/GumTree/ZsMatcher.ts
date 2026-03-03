@@ -100,12 +100,18 @@ export class ZsMatcher {
         mappings: MappingStore,
         srcMetrics: TreeMetricComputer,
         dstMetrics: TreeMetricComputer,
+        srcRoot?: AstNode,
+        dstRoot?: AstNode,
     ) {
         this.srcTree = srcTree;
         this.dstTree = dstTree;
         this.mappings = mappings;
-        this.zsSrc = new ZsTree(srcTree, srcTree.nodes.get(srcTree.rootId)!, srcMetrics);
-        this.zsDst = new ZsTree(dstTree, dstTree.nodes.get(dstTree.rootId)!, dstMetrics);
+
+        const realSrcRoot = srcRoot ?? srcTree.nodes.get(srcTree.rootId)!;
+        const realDstRoot = dstRoot ?? dstTree.nodes.get(dstTree.rootId)!;
+
+        this.zsSrc = new ZsTree(srcTree, realSrcRoot, srcMetrics);
+        this.zsDst = new ZsTree(dstTree, realDstRoot, dstMetrics);
         this.treeDist = [];
         this.forestDist = [];
     }

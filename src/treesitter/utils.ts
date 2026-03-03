@@ -57,7 +57,7 @@ export const preoderAstTraversal = (ast: BragiAST): AstNode[] => {
     return result;
 };
 
-export const postorderAstTraversal = (ast: BragiAST, p0: (node: any) => void): AstNode[] => {
+export const postorderAstTraversal = (ast: BragiAST): AstNode[] => {
     const result: AstNode[] = [];
     postorderAstTraversalFunc(ast, (node) => result.push(node));
     return result;

@@ -32,10 +32,7 @@ export class GumTreeBottomUp {
     }
 
     match(srcNode: AstNode, dstNode: AstNode, mappings: MappingStore) {
-        const postOrder: AstNode[] = [];
-        postorderAstTraversal(this.srcTree, (node) => {
-            postOrder.push(node);
-        });
+        const postOrder: AstNode[] = postorderAstTraversal(this.srcTree);
         for (const node of postOrder) {
             const children = allChildIds(this.srcTree, node);
             if (node.parentId === null) {
@@ -96,7 +93,15 @@ export class GumTreeBottomUp {
             const dstMetricComputer = new TreeMetricComputer();
             srcMetricComputer.buildMetrics(this.srcTree, srcNode);
             dstMetricComputer.buildMetrics(this.dstTree, dstNode);
-            const m = new ZsMatcher(this.srcTree, this.dstTree, zsMappings, srcMetricComputer, dstMetricComputer);
+            const m = new ZsMatcher(
+                this.srcTree,
+                this.dstTree,
+                zsMappings,
+                srcMetricComputer,
+                dstMetricComputer,
+                srcNode,
+                dstNode,
+            );
             m.match();
             for (const mapping of zsMappings) {
                 if (mappings.isMappingAllowed(mapping.f, mapping.s)) mappings.addMapping(mapping.f, mapping.s);
