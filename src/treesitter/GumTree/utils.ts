@@ -1,4 +1,5 @@
-import { AstNode, BragiAST, NodeId } from "../types/AST.js";
+import { AstNode, BragiAST, NodeId, allChildIds } from "../types/AST.js";
+import { Mapping, MappingStore } from "../types/GumTree.js";
 
 export function diceCoefficient(commonElementsNb: number, leftElementsNb: number, rightElementsNb: number): number {
     return (2 * commonElementsNb) / (leftElementsNb + rightElementsNb);
@@ -49,3 +50,37 @@ export function getParents(tree: BragiAST, parents: AstNode[], nodeId: NodeId | 
     return getParents(tree, parents, node.parentId);
 }
 
+export function getDescendants(nodeId: NodeId, tree: BragiAST): AstNode[] {
+    const descendants: AstNode[] = [];
+    const node = tree.nodes.get(nodeId)!;
+    const children = allChildIds(tree, node);
+    for (const childId of children) {
+        const child = tree.nodes.get(childId)!;
+        descendants.push(child);
+        descendants.push(...getDescendants(childId, tree));
+    }
+    return descendants;
+}
+
+export function diceSimilarity(srcNode: AstNode, dstNode: AstNode, mappings: MappingStore) {
+    return diceCoefficient(
+        numberOfMappedDescendants(srcNode, dstNode, mappings),
+        getDescendants(srcNode.id, mappings.oldAst).length,
+        getDescendants(dstNode.id, mappings.newAst).length,
+    );
+}
+
+function numberOfMappedDescendants(srcNode: AstNode, dstNode: AstNode, mappings: MappingStore) {
+    const dstDescendants = new Set(getDescendants(dstNode.id, mappings.newAst).map((node) => node.id));
+    let mappedDescendants = 0;
+
+    for (const srcDescendant of getDescendants(srcNode.id, mappings.oldAst)) {
+        if (mappings.isSrcMapped(srcDescendant.id)) {
+            const dstForSrcDescendant = mappings.getDstForSrc(srcDescendant.id)!;
+            if (dstDescendants.has(dstForSrcDescendant)) {
+                mappedDescendants++;
+            }
+        }
+    }
+    return mappedDescendants;
+}
