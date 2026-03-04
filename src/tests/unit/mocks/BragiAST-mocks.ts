@@ -5,30 +5,38 @@ import { Language, Parser } from "web-tree-sitter";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export const getParser = async () => {
-    const latexWasm = join(__dirname, "tree-sitter-latex.wasm");
+// Parser.init() loads the WASM module binary into the WASM heap — it is expensive
+// and must only happen once per process. Caching the promise here prevents multiple
+// callers from triggering redundant WASM loads that accumulate and OOM the Zone heap.
+// The Parser instance itself is NOT cached here — each caller owns and must delete theirs.
+let initPromise: Promise<void> | null = null;
+let latexLanguage: Language | null = null;
+
+const ensureInit = async (): Promise<void> => {
+    if (initPromise) return initPromise;
+
     const treeSitterWasm = join(__dirname, "tree-sitter.wasm");
-    try {
+    const latexWasm = join(__dirname, "tree-sitter-latex.wasm");
+
+    initPromise = (async () => {
         await Parser.init({
-            locateFile: (name: string, dir: string) => {
-                // If it's looking for the main tree-sitter.wasm,
-                // give it the specific path provided.
-                if (name === "tree-sitter.wasm") {
-                    return resolve(treeSitterWasm);
-                }
-                return join(dir, name);
+            locateFile: (name: string) => {
+                if (name === "tree-sitter.wasm") return resolve(treeSitterWasm);
+                return resolve(join(__dirname, name));
             },
         });
+        // Language.load is also a WASM allocation — cache it for the same reason.
+        latexLanguage = await Language.load(resolve(latexWasm));
+    })();
 
-        const parser = new Parser();
+    return initPromise;
+};
 
-        // Load the language WASM from the absolute path
-        const Latex = await Language.load(resolve(latexWasm));
-        parser.setLanguage(Latex);
+export const getParser = async (): Promise<Parser> => {
+    await ensureInit();
 
-        return parser;
-    } catch (error) {
-        console.error("Error initializing Tree-sitter:", error);
-        throw error;
-    }
+    const parser = new Parser();
+    // latexLanguage is guaranteed non-null after ensureInit resolves
+    parser.setLanguage(latexLanguage!);
+    return parser;
 };
