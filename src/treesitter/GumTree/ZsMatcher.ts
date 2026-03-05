@@ -29,6 +29,10 @@ class ZsTree {
             idx++;
         }
 
+        this.nodeCount = idx - 1;
+        this.labels.length = this.nodeCount;
+        this.llds.length = this.nodeCount;
+
         this.setKeyRoots();
     }
 

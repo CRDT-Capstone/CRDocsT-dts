@@ -147,7 +147,7 @@ export interface ParserContext {
             if (nonReservedFields.length > 0) {
                 for (const [fieldName, fieldData] of nonReservedFields) {
                     if (fieldData.multiple) {
-                        unmarshalersOut += `    n.${fieldName} = node.childrenForFieldName('${fieldName}').map(child => n.childrenIds![node.namedChildren.indexOf(child)]);\n`;
+                        unmarshalersOut += `    n.${fieldName} = node.childrenForFieldName('${fieldName}').map(child => n.childrenIds![node.namedChildren.indexOf(child)]).filter((id) => id !== undefined);\n`;
                     } else {
                         if (fieldData.required) {
                             unmarshalersOut += `    { const _fc = node.childForFieldName('${fieldName}'); n.${fieldName} = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined; }\n`;

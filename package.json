@@ -9,7 +9,7 @@
         "build": "tsc",
         "prebuild": "pnpm run gen-types",
         "prepublishOnly": "pnpm run test",
-        "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+        "test": "NODE_OPTIONS='--experimental-vm-modules --expose-gc' jest",
         "test:ci": "NODE_OPTIONS=--experimental-vm-modules jest --ci --passWithNoTests",
         "ci": "pnpm install --frozen-lockfile && pnpm run test:ci",
         "pretest": "pnpm run build",

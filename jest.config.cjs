@@ -19,4 +19,7 @@ module.exports = {
     },
     extensionsToTreatAsEsm: [".ts"],
     modulePathIgnorePatterns: ["<rootDir>/dist/"],
+    workerIdleMemoryLimit: "200MB",
+
+    maxWorkers: "50%",
 };
