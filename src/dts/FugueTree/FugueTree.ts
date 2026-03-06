@@ -381,4 +381,48 @@ export class FugueTree {
     nextNonDescendant(node: FNode) {
         return this.tree.nextNonDescendant(node);
     }
+
+    undo(msgs: FugueMessage[]) {
+        for (const msg of msgs) {
+            const { id, operation, replicaId } = msg;
+            if (replicaId !== this.replicaId()) continue;
+
+            const node = this.tree.getByID(id);
+            if (operation === Operation.INSERT) {
+                if (!node.isDeleted) {
+                    node.value = null;
+                    node.isDeleted = true;
+                    this.tree.updateSize(node, -1);
+                }
+            } else if (operation === Operation.DELETE) {
+                if (node.isDeleted) {
+                    node.isDeleted = false;
+                    node.value = msg.data!;
+                    this.tree.updateSize(node, 1);
+                }
+            }
+        }
+    }
+
+    redo(msgs: FugueMessage[]) {
+        for (const msg of msgs) {
+            const { id, operation, replicaId } = msg;
+            if (replicaId !== this.replicaId()) continue;
+
+            const node = this.tree.getByID(id);
+            if (operation === Operation.INSERT) {
+                if (node.isDeleted) {
+                    node.isDeleted = false;
+                    node.value = node.value ?? msg.data!;
+                    this.tree.updateSize(node, 1);
+                }
+            } else if (operation === Operation.DELETE) {
+                if (!node.isDeleted) {
+                    node.value = null;
+                    node.isDeleted = true;
+                    this.tree.updateSize(node, -1);
+                }
+            }
+        }
+    }
 }

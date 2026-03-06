@@ -1,6 +1,6 @@
 import { NodeId, AstNode, BragiAST } from "../../types/AST.js";
 import { Mapping } from "../../types/GumTree.js";
-import { diceCoefficient, getParent, getParents, longestCommonSubsequenceWithType } from "../utils";
+import { diceCoefficient, getParent, getParents, longestCommonSubsequenceWithType } from "../utils.js";
 
 export class ParentsSimilarityMappingComparator {
     private srcAncestors: Map<NodeId, AstNode[]> = new Map();
@@ -55,4 +55,3 @@ export class ParentsSimilarityMappingComparator {
         return longestCommonSubsequenceWithType(this.srcAncestors.get(src)!, this.dstAncestors.get(dst)!).length;
     }
 }
-

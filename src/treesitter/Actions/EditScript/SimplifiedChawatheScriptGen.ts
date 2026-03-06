@@ -1,8 +1,8 @@
-import type { BragiAST, NodeId } from "../../types";
-import { MappingStore } from "../../types/GumTree";
-import { type Action, Delete, Insert, TreeDelete, TreeInsert } from "../Model/index.js";
-import { ChawatheScriptGen } from "./ChawatheScriptGen";
-import { type EditScript, type EditScriptGen, lastIndexOf } from "./EditScriptGen";
+import type { BragiAST, NodeId } from "../../types/index.js";
+import { MappingStore } from "../../types/GumTree.js";
+import { type Action, Delete, Insert, TreeDelete, TreeInsert, Update, Move } from "../Model/index.js";
+import { ChawatheScriptGen } from "./ChawatheScriptGen.js";
+import { type EditScript, type EditScriptGen, lastIndexOf } from "./EditScriptGen.js";
 
 export class SimplifiedChawatheScriptGen implements EditScriptGen {
     computeActions(ms: MappingStore): EditScript {
@@ -81,7 +81,13 @@ export class SimplifiedChawatheScriptGen implements EditScriptGen {
         applyReplacements(insertReplacements);
         applyReplacements(deleteReplacements);
 
-        return actions;
+        const priority = (a: Action): number => {
+            if (a instanceof Update || a instanceof Move) return 0;
+            if (a instanceof Insert || a instanceof TreeInsert) return 1;
+            return 2; // Delete / TreeDelete
+        };
+
+        return actions.sort((a, b) => priority(a) - priority(b));
     }
 
     /**

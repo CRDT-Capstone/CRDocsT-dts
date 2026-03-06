@@ -1,11 +1,11 @@
 import type { BragiAST } from "../../types/AST.js";
 import type { Mapping, MappingStore } from "../../types/GumTree.js";
-import { ParentsSimilarityMappingComparator } from "../comparators/ParentsSimilarityMappingComparator";
-import { TextualPositionDistanceMappingComparator } from "../comparators/TexttualPositionDistanceMappingComparator";
-import type { TreeMetricComputer } from "../TreeMetricComputer";
-import { AbsolutePositionDistanceMappingComparator } from "./AbsolutePositionDistanceMappingComparator";
-import { PositionInParentsSimilarityMappingComparator } from "./PositionInParentsSimilarityMappingComparator";
-import { SiblingsSimilarityMappingComparator } from "./SiblingsSimilarityMappingComparator";
+import { ParentsSimilarityMappingComparator } from "../comparators/ParentsSimilarityMappingComparator.js";
+import { TextualPositionDistanceMappingComparator } from "../comparators/TexttualPositionDistanceMappingComparator.js";
+import type { TreeMetricComputer } from "../TreeMetricComputer.js";
+import { AbsolutePositionDistanceMappingComparator } from "./AbsolutePositionDistanceMappingComparator.js";
+import { PositionInParentsSimilarityMappingComparator } from "./PositionInParentsSimilarityMappingComparator.js";
+import { SiblingsSimilarityMappingComparator } from "./SiblingsSimilarityMappingComparator.js";
 
 export class FullMappingComparator {
     private siblingsComparator: SiblingsSimilarityMappingComparator;

@@ -139,7 +139,10 @@ export interface ParserContext {
 `;
 
         // Unmarshal all namedChildren once into childrenIds.
-        unmarshalersOut += `    n.childrenIds = node.namedChildren.map(child => unmarshalNode(child, ctx, id));\n\n`;
+        unmarshalersOut += `    const namedChildren = node.namedChildren;
+        n.childrenIds = namedChildren.map(child => unmarshalNode(child, ctx, id));
+
+        `;
 
         // Assign field properties by index-lookup into the already-built childrenIds.
         if (node.fields) {
@@ -150,9 +153,9 @@ export interface ParserContext {
                         unmarshalersOut += `    n.${fieldName} = node.childrenForFieldName('${fieldName}').map(child => n.childrenIds![node.namedChildren.indexOf(child)]).filter((id) => id !== undefined);\n`;
                     } else {
                         if (fieldData.required) {
-                            unmarshalersOut += `    { const _fc = node.childForFieldName('${fieldName}'); n.${fieldName} = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined; }\n`;
+                            unmarshalersOut += `    { const _fc = node.childForFieldName('${fieldName}'); n.${fieldName} = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined; }\n`;
                         } else {
-                            unmarshalersOut += `    { const _fc = node.childForFieldName('${fieldName}'); n.${fieldName} = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined; }\n`;
+                            unmarshalersOut += `    { const _fc = node.childForFieldName('${fieldName}'); n.${fieldName} = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined; }\n`;
                         }
                     }
                 }

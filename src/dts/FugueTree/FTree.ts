@@ -373,11 +373,7 @@ export class FTree {
         return null;
     }
 
-    /**
-     * Traverse the subtree rooted at a node in document order, yielding the value of each non-deleted node.
-     * @param node - the node to traverse from
-     */
-    *traverse(node: FNode): IterableIterator<string> {
+    *traverseNodes(node: FNode): IterableIterator<FNode> {
         let current = node;
         // Stack based inorder traversal
         const S: { side: NodeSide; childIndex: number }[] = [{ side: "L", childIndex: 0 }];
@@ -388,7 +384,7 @@ export class FTree {
                 // We are done with the children on top.side.
                 if (top.side === "L") {
                     // Visit current, then move to right children.
-                    if (!current.isDeleted) yield current.value!;
+                    if (!current.isDeleted) yield current;
                     top.side = "R";
                     top.childIndex = 0;
                 } else {
@@ -407,6 +403,17 @@ export class FTree {
                     S.push({ side: "L", childIndex: 0 });
                 }
             }
+        }
+    }
+
+    /**
+     * Traverse the subtree rooted at a node in document order, yielding the value of each non-deleted node.
+     * @param node - the node to traverse from
+     */
+    *traverse(node: FNode): IterableIterator<string> {
+        let current = node;
+        for (const n of this.traverseNodes(node)) {
+            if (!n.isDeleted && n.value !== null) yield n.value;
         }
     }
 

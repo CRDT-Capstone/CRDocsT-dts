@@ -1,5 +1,5 @@
 import FastPriorityQueue from "fastpriorityqueue";
-import { BragiAST, AstNode, NodeId, allChildIds } from "./types";
+import { BragiAST, AstNode, NodeId, allChildIds } from "./types/index.js";
 import { FullMappingComparator } from "./GumTree/comparators/FullMappingComparator.js";
 import { MappingStore, Mapping } from "./types/GumTree.js";
 import { Pair, HashBasedMapper } from "./GumTree/HashBasedMapper.js";
@@ -183,4 +183,3 @@ export class GumTreeTopDown {
         return true;
     }
 }
-

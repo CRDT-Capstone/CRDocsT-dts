@@ -1526,27 +1526,28 @@ function unmarshalerAcronymDefinitionNode(node: Node, ctx: ParserContext, parent
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("long");
-        n.long = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.long = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("short");
-        n.short = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.short = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1564,19 +1565,20 @@ function unmarshalerAcronymReferenceNode(node: Node, ctx: ParserContext, parentI
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1594,19 +1596,20 @@ function unmarshalerAsyEnvironmentNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("code");
-        n.code = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1624,19 +1627,20 @@ function unmarshalerAsydefEnvironmentNode(node: Node, ctx: ParserContext, parent
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("code");
-        n.code = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1654,7 +1658,8 @@ function unmarshalerAuthorNode(node: Node, ctx: ParserContext, parentId: NodeId 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -1671,19 +1676,20 @@ function unmarshalerAuthorDeclarationNode(node: Node, ctx: ParserContext, parent
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("authors");
-        n.authors = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.authors = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1701,23 +1707,24 @@ function unmarshalerBeginNode(node: Node, ctx: ParserContext, parentId: NodeId |
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("language");
-        n.language = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.language = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1735,15 +1742,16 @@ function unmarshalerBiblatexIncludeNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("glob");
-        n.glob = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.glob = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1761,15 +1769,16 @@ function unmarshalerBibstyleIncludeNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("path");
-        n.path = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1787,15 +1796,16 @@ function unmarshalerBibtexIncludeNode(node: Node, ctx: ParserContext, parentId: 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("paths");
-        n.paths = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.paths = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1813,19 +1823,20 @@ function unmarshalerBlockCommentNode(node: Node, ctx: ParserContext, parentId: N
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("comment");
-        n.comment = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.comment = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1843,7 +1854,8 @@ function unmarshalerBrackGroupNode(node: Node, ctx: ParserContext, parentId: Nod
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -1860,11 +1872,12 @@ function unmarshalerBrackGroupArgcNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("value");
-        n.value = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.value = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1882,7 +1895,8 @@ function unmarshalerBrackGroupKeyValueNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.pair = node
         .childrenForFieldName("pair")
@@ -1904,7 +1918,8 @@ function unmarshalerBrackGroupTextNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -1921,11 +1936,12 @@ function unmarshalerBrackGroupWordNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("word");
-        n.word = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.word = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1943,19 +1959,20 @@ function unmarshalerCaptionNode(node: Node, ctx: ParserContext, parentId: NodeId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("long");
-        n.long = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.long = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("short");
-        n.short = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.short = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -1973,19 +1990,20 @@ function unmarshalerChangesReplacedNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("text_added");
-        n.text_added = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.text_added = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("text_deleted");
-        n.text_deleted = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.text_deleted = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2003,15 +2021,16 @@ function unmarshalerChapterNode(node: Node, ctx: ParserContext, parentId: NodeId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("toc");
-        n.toc = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2029,23 +2048,24 @@ function unmarshalerCitationNode(node: Node, ctx: ParserContext, parentId: NodeI
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("keys");
-        n.keys = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.keys = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("postnote");
-        n.postnote = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.postnote = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("prenote");
-        n.prenote = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.prenote = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2063,19 +2083,20 @@ function unmarshalerClassIncludeNode(node: Node, ctx: ParserContext, parentId: N
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("path");
-        n.path = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2093,23 +2114,24 @@ function unmarshalerColorDefinitionNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("model");
-        n.model = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.model = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("spec");
-        n.spec = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.spec = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2127,23 +2149,24 @@ function unmarshalerColorReferenceNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("model");
-        n.model = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.model = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("spec");
-        n.spec = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.spec = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2161,31 +2184,32 @@ function unmarshalerColorSetDefinitionNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("head");
-        n.head = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.head = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("model");
-        n.model = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.model = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("spec");
-        n.spec = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.spec = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("tail");
-        n.tail = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.tail = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("ty");
-        n.ty = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.ty = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2203,19 +2227,20 @@ function unmarshalerCommentEnvironmentNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("comment");
-        n.comment = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.comment = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2233,15 +2258,16 @@ function unmarshalerCounterAdditionNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("counter");
-        n.counter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     n.value = node
         .childrenForFieldName("value")
@@ -2263,19 +2289,20 @@ function unmarshalerCounterDeclarationNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("counter");
-        n.counter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("supercounter");
-        n.supercounter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.supercounter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2293,15 +2320,16 @@ function unmarshalerCounterDefinitionNode(node: Node, ctx: ParserContext, parent
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("counter");
-        n.counter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     n.value = node
         .childrenForFieldName("value")
@@ -2323,15 +2351,16 @@ function unmarshalerCounterIncrementNode(node: Node, ctx: ParserContext, parentI
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("counter");
-        n.counter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2349,15 +2378,16 @@ function unmarshalerCounterTypesettingNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("counter");
-        n.counter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2375,15 +2405,16 @@ function unmarshalerCounterValueNode(node: Node, ctx: ParserContext, parentId: N
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("counter");
-        n.counter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2401,19 +2432,20 @@ function unmarshalerCounterWithinDeclarationNode(node: Node, ctx: ParserContext,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("counter");
-        n.counter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("supercounter");
-        n.supercounter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.supercounter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2431,19 +2463,20 @@ function unmarshalerCounterWithoutDeclarationNode(node: Node, ctx: ParserContext
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("counter");
-        n.counter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("supercounter");
-        n.supercounter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.supercounter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2461,7 +2494,8 @@ function unmarshalerCurlyGroupNode(node: Node, ctx: ParserContext, parentId: Nod
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -2478,7 +2512,8 @@ function unmarshalerCurlyGroupAuthorListNode(node: Node, ctx: ParserContext, par
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -2495,11 +2530,12 @@ function unmarshalerCurlyGroupCommandNameNode(node: Node, ctx: ParserContext, pa
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2517,11 +2553,12 @@ function unmarshalerCurlyGroupGlobPatternNode(node: Node, ctx: ParserContext, pa
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("pattern");
-        n.pattern = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.pattern = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2539,7 +2576,8 @@ function unmarshalerCurlyGroupImplNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -2556,7 +2594,8 @@ function unmarshalerCurlyGroupKeyValueNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.pair = node
         .childrenForFieldName("pair")
@@ -2578,11 +2617,12 @@ function unmarshalerCurlyGroupLabelNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("label");
-        n.label = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.label = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2600,7 +2640,8 @@ function unmarshalerCurlyGroupLabelListNode(node: Node, ctx: ParserContext, pare
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.label = node
         .childrenForFieldName("label")
@@ -2622,11 +2663,12 @@ function unmarshalerCurlyGroupPathNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("path");
-        n.path = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2644,7 +2686,8 @@ function unmarshalerCurlyGroupPathListNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.path = node
         .childrenForFieldName("path")
@@ -2666,7 +2709,8 @@ function unmarshalerCurlyGroupSpecNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -2683,7 +2727,8 @@ function unmarshalerCurlyGroupTextNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -2700,7 +2745,8 @@ function unmarshalerCurlyGroupTextListNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -2717,11 +2763,12 @@ function unmarshalerCurlyGroupUriNode(node: Node, ctx: ParserContext, parentId: 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("uri");
-        n.uri = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.uri = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2739,11 +2786,12 @@ function unmarshalerCurlyGroupValueNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("value");
-        n.value = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.value = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2761,11 +2809,12 @@ function unmarshalerCurlyGroupWordNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("word");
-        n.word = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.word = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2783,7 +2832,8 @@ function unmarshalerDisplayedEquationNode(node: Node, ctx: ParserContext, parent
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -2800,15 +2850,16 @@ function unmarshalerEndNode(node: Node, ctx: ParserContext, parentId: NodeId | n
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2826,15 +2877,16 @@ function unmarshalerEnumItemNode(node: Node, ctx: ParserContext, parentId: NodeI
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("label");
-        n.label = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.label = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2852,23 +2904,24 @@ function unmarshalerEnvironmentDefinitionNode(node: Node, ctx: ParserContext, pa
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("argc");
-        n.argc = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.argc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     n.name = node
         .childrenForFieldName("name")
@@ -2876,7 +2929,7 @@ function unmarshalerEnvironmentDefinitionNode(node: Node, ctx: ParserContext, pa
         .filter((id) => id !== undefined);
     {
         const _fc = node.childForFieldName("spec");
-        n.spec = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.spec = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2894,7 +2947,8 @@ function unmarshalerGenericCommandNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.arg = node
         .childrenForFieldName("arg")
@@ -2902,7 +2956,7 @@ function unmarshalerGenericCommandNode(node: Node, ctx: ParserContext, parentId:
         .filter((id) => id !== undefined);
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2920,15 +2974,16 @@ function unmarshalerGenericEnvironmentNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2946,7 +3001,8 @@ function unmarshalerGlobPatternNode(node: Node, ctx: ParserContext, parentId: No
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -2963,19 +3019,20 @@ function unmarshalerGlossaryEntryDefinitionNode(node: Node, ctx: ParserContext, 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -2993,19 +3050,20 @@ function unmarshalerGlossaryEntryReferenceNode(node: Node, ctx: ParserContext, p
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3023,19 +3081,20 @@ function unmarshalerGraphicsIncludeNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("path");
-        n.path = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3053,19 +3112,20 @@ function unmarshalerHyperlinkNode(node: Node, ctx: ParserContext, parentId: Node
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("label");
-        n.label = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.label = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("uri");
-        n.uri = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.uri = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3083,19 +3143,20 @@ function unmarshalerImportIncludeNode(node: Node, ctx: ParserContext, parentId: 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("directory");
-        n.directory = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.directory = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("file");
-        n.file = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.file = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3113,19 +3174,20 @@ function unmarshalerInkscapeIncludeNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("path");
-        n.path = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3143,7 +3205,8 @@ function unmarshalerInlineFormulaNode(node: Node, ctx: ParserContext, parentId: 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -3160,15 +3223,16 @@ function unmarshalerKeyValuePairNode(node: Node, ctx: ParserContext, parentId: N
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("key");
-        n.key = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.key = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("value");
-        n.value = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.value = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3186,15 +3250,16 @@ function unmarshalerLabelDefinitionNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3212,19 +3277,20 @@ function unmarshalerLabelNumberNode(node: Node, ctx: ParserContext, parentId: No
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("number");
-        n.number = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.number = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3242,15 +3308,16 @@ function unmarshalerLabelReferenceNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("names");
-        n.names = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.names = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3268,19 +3335,20 @@ function unmarshalerLabelReferenceRangeNode(node: Node, ctx: ParserContext, pare
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("from");
-        n.from = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.from = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("to");
-        n.to = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.to = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3298,15 +3366,16 @@ function unmarshalerLatexIncludeNode(node: Node, ctx: ParserContext, parentId: N
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("path");
-        n.path = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3324,19 +3393,20 @@ function unmarshalerLetCommandDefinitionNode(node: Node, ctx: ParserContext, par
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("declaration");
-        n.declaration = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.declaration = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("implementation");
-        n.implementation = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.implementation = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3354,19 +3424,20 @@ function unmarshalerListingEnvironmentNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("code");
-        n.code = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3384,19 +3455,20 @@ function unmarshalerLuacodeEnvironmentNode(node: Node, ctx: ParserContext, paren
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("code");
-        n.code = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3414,23 +3486,24 @@ function unmarshalerMathDelimiterNode(node: Node, ctx: ParserContext, parentId: 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("left_command");
-        n.left_command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.left_command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("left_delimiter");
-        n.left_delimiter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.left_delimiter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("right_command");
-        n.right_command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.right_command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("right_delimiter");
-        n.right_delimiter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.right_delimiter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3448,15 +3521,16 @@ function unmarshalerMathEnvironmentNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3474,19 +3548,20 @@ function unmarshalerMintedEnvironmentNode(node: Node, ctx: ParserContext, parent
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("code");
-        n.code = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3504,31 +3579,32 @@ function unmarshalerNewCommandDefinitionNode(node: Node, ctx: ParserContext, par
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("argc");
-        n.argc = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.argc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("declaration");
-        n.declaration = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.declaration = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("default");
-        n.default = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.default = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("implementation");
-        n.implementation = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.implementation = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("spec");
-        n.spec = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.spec = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3546,15 +3622,16 @@ function unmarshalerOldCommandDefinitionNode(node: Node, ctx: ParserContext, par
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("declaration");
-        n.declaration = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.declaration = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3572,7 +3649,8 @@ function unmarshalerOperatorNode(node: Node, ctx: ParserContext, parentId: NodeI
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -3589,19 +3667,20 @@ function unmarshalerPackageIncludeNode(node: Node, ctx: ParserContext, parentId:
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("paths");
-        n.paths = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.paths = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3619,31 +3698,32 @@ function unmarshalerPairedDelimiterDefinitionNode(node: Node, ctx: ParserContext
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("argc");
-        n.argc = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.argc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("body");
-        n.body = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.body = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("declaration");
-        n.declaration = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.declaration = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("left");
-        n.left = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.left = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("right");
-        n.right = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.right = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3661,15 +3741,16 @@ function unmarshalerParagraphNode(node: Node, ctx: ParserContext, parentId: Node
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("toc");
-        n.toc = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3687,15 +3768,16 @@ function unmarshalerPartNode(node: Node, ctx: ParserContext, parentId: NodeId | 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("toc");
-        n.toc = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3713,19 +3795,20 @@ function unmarshalerPycodeEnvironmentNode(node: Node, ctx: ParserContext, parent
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("code");
-        n.code = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3743,19 +3826,20 @@ function unmarshalerSageblockEnvironmentNode(node: Node, ctx: ParserContext, par
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("code");
-        n.code = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3773,19 +3857,20 @@ function unmarshalerSagesilentEnvironmentNode(node: Node, ctx: ParserContext, pa
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("code");
-        n.code = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3803,15 +3888,16 @@ function unmarshalerSectionNode(node: Node, ctx: ParserContext, parentId: NodeId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("toc");
-        n.toc = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3829,7 +3915,8 @@ function unmarshalerSourceFileNode(node: Node, ctx: ParserContext, parentId: Nod
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -3846,15 +3933,16 @@ function unmarshalerSubparagraphNode(node: Node, ctx: ParserContext, parentId: N
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("toc");
-        n.toc = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3872,11 +3960,12 @@ function unmarshalerSubscriptNode(node: Node, ctx: ParserContext, parentId: Node
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("subscript");
-        n.subscript = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.subscript = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3894,15 +3983,16 @@ function unmarshalerSubsectionNode(node: Node, ctx: ParserContext, parentId: Nod
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("toc");
-        n.toc = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3920,15 +4010,16 @@ function unmarshalerSubsubsectionNode(node: Node, ctx: ParserContext, parentId: 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("toc");
-        n.toc = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3946,11 +4037,12 @@ function unmarshalerSuperscriptNode(node: Node, ctx: ParserContext, parentId: No
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("superscript");
-        n.superscript = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.superscript = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3968,19 +4060,20 @@ function unmarshalerSvgIncludeNode(node: Node, ctx: ParserContext, parentId: Nod
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("path");
-        n.path = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -3998,7 +4091,8 @@ function unmarshalerTextNode(node: Node, ctx: ParserContext, parentId: NodeId | 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.word = node
         .childrenForFieldName("word")
@@ -4020,15 +4114,16 @@ function unmarshalerTextModeNode(node: Node, ctx: ParserContext, parentId: NodeI
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("content");
-        n.content = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.content = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -4046,27 +4141,28 @@ function unmarshalerTheoremDefinitionNode(node: Node, ctx: ParserContext, parent
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("counter");
-        n.counter = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("name");
-        n.name = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("title");
-        n.title = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.title = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -4084,15 +4180,16 @@ function unmarshalerTikzLibraryImportNode(node: Node, ctx: ParserContext, parent
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("paths");
-        n.paths = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.paths = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -4110,15 +4207,16 @@ function unmarshalerTitleDeclarationNode(node: Node, ctx: ParserContext, parentI
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -4136,19 +4234,20 @@ function unmarshalerTodoNode(node: Node, ctx: ParserContext, parentId: NodeId | 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("arg");
-        n.arg = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.arg = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("options");
-        n.options = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -4166,7 +4265,8 @@ function unmarshalerValueNode(node: Node, ctx: ParserContext, parentId: NodeId |
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4183,19 +4283,20 @@ function unmarshalerVerbatimEnvironmentNode(node: Node, ctx: ParserContext, pare
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("begin");
-        n.begin = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("end");
-        n.end = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("verbatim");
-        n.verbatim = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.verbatim = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -4213,15 +4314,16 @@ function unmarshalerVerbatimIncludeNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
         const _fc = node.childForFieldName("command");
-        n.command = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
     {
         const _fc = node.childForFieldName("path");
-        n.path = _fc ? n.childrenIds![node.namedChildren.indexOf(_fc)] : undefined;
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
     }
 
     return id;
@@ -4239,7 +4341,8 @@ function unmarshalerArgcNode(node: Node, ctx: ParserContext, parentId: NodeId | 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4256,7 +4359,8 @@ function unmarshalerCommandNameNode(node: Node, ctx: ParserContext, parentId: No
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4273,7 +4377,8 @@ function unmarshalerCommentNode(node: Node, ctx: ParserContext, parentId: NodeId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4290,7 +4395,8 @@ function unmarshalerDelimiterNode(node: Node, ctx: ParserContext, parentId: Node
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4307,7 +4413,8 @@ function unmarshalerLabelNode(node: Node, ctx: ParserContext, parentId: NodeId |
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4324,7 +4431,8 @@ function unmarshalerLetterNode(node: Node, ctx: ParserContext, parentId: NodeId 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4341,7 +4449,8 @@ function unmarshalerLineCommentNode(node: Node, ctx: ParserContext, parentId: No
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4358,7 +4467,8 @@ function unmarshalerPathNode(node: Node, ctx: ParserContext, parentId: NodeId | 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4375,7 +4485,8 @@ function unmarshalerPlaceholderNode(node: Node, ctx: ParserContext, parentId: No
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4392,7 +4503,8 @@ function unmarshalerSourceCodeNode(node: Node, ctx: ParserContext, parentId: Nod
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4409,7 +4521,8 @@ function unmarshalerTodoCommandNameNode(node: Node, ctx: ParserContext, parentId
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4426,7 +4539,8 @@ function unmarshalerUriNode(node: Node, ctx: ParserContext, parentId: NodeId | n
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4443,7 +4557,8 @@ function unmarshalerValueLiteralNode(node: Node, ctx: ParserContext, parentId: N
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }
@@ -4460,7 +4575,8 @@ function unmarshalerWordNode(node: Node, ctx: ParserContext, parentId: NodeId | 
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((child) => unmarshalNode(child, ctx, id));
+    const namedChildren = node.namedChildren;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
 }

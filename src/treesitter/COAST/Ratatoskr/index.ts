@@ -1,5 +1,7 @@
+import { Tree } from "web-tree-sitter";
 import { FNode, FugueTree } from "../../../dts/index.js";
 import { FugueMessage } from "../../../types/index.js";
+import { logger } from "../../../utils/logging.js";
 import { EditScript } from "../../Actions/EditScript/EditScriptGen.js";
 import {
     Action,
@@ -27,12 +29,12 @@ export class Ratatoskr {
     registry: Registry;
     fugue: FugueTree;
     pastActions: { timestamp: number; editScript: EditScript }[] = [];
-    newAst: BragiAST;
+    newAst?: BragiAST;
 
-    constructor(fugue: FugueTree, newAst: BragiAST, registry: Registry) {
+    constructor(fugue: FugueTree, registry: Registry, newAst?: BragiAST) {
         this.fugue = fugue;
-        this.newAst = newAst;
         this.registry = registry;
+        this.newAst = newAst;
     }
 
     /**
@@ -43,6 +45,7 @@ export class Ratatoskr {
      * the CST again with treesitter and check for errors before applying the change to the FugueTree
      */
     translate(editScript: EditScript): FugueMessage[] {
+        if (!this.newAst) return [];
         // Log the edit script with a timestamp for debugging and potential future use, i.e. rollback or conflict resolution
         this.pastActions.push({ timestamp: Date.now(), editScript });
         const msgs: FugueMessage[] = [];
@@ -92,6 +95,7 @@ export class Ratatoskr {
         // Get the text content of the node being inserted, and perform an insertion opertion on the FugueTree
         const text = this.serializeNode(action.node);
         const msgs = this.fugue.insertMultiple(action.pos, text);
+        logger.debug({ text, state: this.fugue.observe() }, "Handling insert for node", action.node.id);
 
         this.tag(msgs, txId, action.node.id, "ADD");
 
@@ -100,6 +104,7 @@ export class Ratatoskr {
             startId: msgs[0].id,
             length: text.length,
         });
+        logger.debug({ registry: this.registry }, "Registry after insert for node", action.node.id);
 
         return msgs;
     }
@@ -181,11 +186,15 @@ export class Ratatoskr {
      * @returns  An array of FugueMessages resulting from the translation of the Update action
      */
     private handleUpdate(action: Update, txId: string): FugueMessage[] {
+        logger.debug({ registry: this.registry }, "Registry before update for node", action.node.id);
+
         // An update is treated as a deletion of the old content and an insertion of the new content.
         // This bypasses the problems of move operation because we are not trying to preserve the deleted content, so we can
         // perform the delete, without worrying about the lost content, then the insert operation
         const anchor = this.registry.get(action.node.id);
-        if (!anchor) throw new Error("Update target not in registry");
+        if (!anchor) {
+            throw new Error(`Update target ${action.node.id} not in registry, state`);
+        }
 
         const content = this.getSpanText(anchor);
         const msgs: FugueMessage[] = [];
@@ -244,29 +253,17 @@ export class Ratatoskr {
     private serializeNode(node: AstNode): string {
         let result = "";
 
-        if (node.text) {
-            if (Array.isArray(node.text)) {
-                result += node.text.join("");
-            } else {
-                result += node.text;
+        if (!node.childrenIds || node.childrenIds.length === 0) {
+            if (node.text) {
+                result += Array.isArray(node.text) ? node.text.join("") : node.text;
             }
+            return result;
         }
 
-        if (node.childrenIds && node.childrenIds.length > 0) {
-            for (const childId of node.childrenIds) {
-                const childNode = this.newAst.nodes.get(childId);
-                if (childNode) {
-                    result += this.serializeNode(childNode);
-                }
-            }
-        }
-
-        if (node.type === "text" && node.word) {
-            for (const wordId of node.word) {
-                const wordNode = this.newAst.nodes.get(wordId);
-                if (wordNode) {
-                    result += this.serializeNode(wordNode);
-                }
+        for (const childId of node.childrenIds) {
+            const childNode = this.newAst!.nodes.get(childId);
+            if (childNode) {
+                result += this.serializeNode(childNode);
             }
         }
 

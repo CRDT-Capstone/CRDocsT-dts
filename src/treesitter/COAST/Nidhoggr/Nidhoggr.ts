@@ -1,17 +1,23 @@
-import { FugueTree } from "../../../dts";
+import { FugueTree } from "../../../dts/index.js";
 import { FugueMessage } from "../../../types/index.js";
 import { logger } from "../../../utils/logging.js";
 import { OperationType } from "../../Actions/index.js";
-import { Registry } from "../Registry";
-import { logicalTimeOf } from "./CausalOrder";
-import { classifyConflict } from "./ConflictClassifier";
-import { ConflictHandler, ConflictType, NidhoggrOptions, NodeHistoryEntry, TxnSnapshot } from "./types";
+import { Registry } from "../Registry/index.js";
+import { logicalTimeOf } from "./CausalOrder.js";
+import { classifyConflict } from "./ConflictClassifier.js";
+import { ConflictHandler, ConflictType, NidhoggrOptions, NodeHistoryEntry, TxnSnapshot } from "./types.js";
 
 interface PendingTxn {
     txnId: string;
     opType: OperationType;
     msgs: FugueMessage[];
     arrivedAt: number;
+}
+
+interface AppliedTxn {
+    txn: PendingTxn;
+    registryStateBefore: ReturnType<Registry["save"]>;
+    appliedAt: number;
 }
 
 /**
@@ -25,6 +31,7 @@ export class Nidhoggr {
     private pendingTxns: Map<string, PendingTxn> = new Map();
     // History of the most recent operation observed on each node, used for conflict detection. Accessed by nodeKey.
     private nodeHistory: Map<string, NodeHistoryEntry> = new Map();
+    private history: AppliedTxn[] = [];
     // The time to live (milliseconds) for pending txns before we consider them stale and apply whatever we have.
     // This is to prevent indefinitely buffering incomplete txns if some messages are lost.
     private readonly txnTtlMs: number;
@@ -155,9 +162,54 @@ export class Nidhoggr {
      * @return An array of FugueMessages that were the result of applying this txn.
      */
     private applyTxn(txn: PendingTxn): FugueMessage[] {
+        const incomingTime = logicalTimeOf(txn.msgs);
+
+        let msgs: FugueMessage[] = [];
+        const laterTxns = this.history.filter(
+            (h) => h.txn.txnId !== txn.txnId && logicalTimeOf(h.txn.msgs) > incomingTime,
+        );
+
+        if (laterTxns.length > 0) {
+            logger.debug(
+                `[Nidhoggr] Received out-of-order txn ${txn.opType} ${txn.txnId} with logical time ${incomingTime}. Reverting and re-applying ${laterTxns.length} later txns.`,
+            );
+            for (const later of laterTxns.reverse()) {
+                logger.debug(
+                    `[Nidhoggr] Reverting ${later.txn.opType} txn ${later.txn.txnId} to apply earlier txn ${txn.opType} ${txn.txnId}`,
+                );
+                this.fugue.undo(later.txn.msgs);
+            }
+
+            msgs = this.executeTxn(txn);
+
+            for (const later of laterTxns) {
+                logger.debug(
+                    `[Nidhoggr] Re-applying ${later.txn.opType} txn ${later.txn.txnId} after applying earlier txn ${txn.opType} ${txn.txnId}`,
+                );
+                msgs.push(...this.executeTxn(later.txn));
+            }
+        } else {
+            logger.debug(
+                `[Nidhoggr] Applying in-order txn ${txn.opType} ${txn.txnId} with logical time ${incomingTime}`,
+            );
+            msgs = this.executeTxn(txn);
+        }
+
+        this.history.push({
+            txn,
+            registryStateBefore: this.registry.save(),
+            appliedAt: Date.now(),
+        });
+        this.history.sort((a, b) => logicalTimeOf(a.txn.msgs) - logicalTimeOf(b.txn.msgs));
+
+        return msgs;
+    }
+
+    private executeTxn(txn: PendingTxn): FugueMessage[] {
         // Before applying the txn, we perform conflict detection to see if this txn conflicts with
         // any prior operations we've seen on the same node.
         this.detectConflicts(txn);
+        logger.debug(`Pending txns -> ${[...this.pendingTxns.keys()].join(", ")}`);
 
         switch (txn.opType) {
             case "ADD":

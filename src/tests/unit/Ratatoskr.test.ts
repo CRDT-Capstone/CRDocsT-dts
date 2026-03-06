@@ -42,7 +42,7 @@ describe("Ratatoskr", () => {
 
         ast = bragiAstFromFugueTree(fugue, parser);
         registry = new Registry();
-        ratatoskr = new Ratatoskr(fugue, ast, registry);
+        ratatoskr = new Ratatoskr(fugue, registry, ast);
 
         insertSpy = jest.spyOn(fugue, "insertMultiple");
         deleteSpy = jest.spyOn(fugue, "deleteMultiple");

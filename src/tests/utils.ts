@@ -5,6 +5,7 @@ import { Language, Parser } from "web-tree-sitter";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const __cwd = process.cwd();
 
 // Parser.init() loads the WASM module binary into the WASM heap — it is expensive
 // and must only happen once per process. Caching the promise here prevents multiple
@@ -16,8 +17,8 @@ let latexLanguage: Language | null = null;
 const ensureInit = async (): Promise<void> => {
     if (initPromise) return initPromise;
 
-    const treeSitterWasm = join(__dirname, "web-tree-sitter.wasm");
-    const latexWasm = join(__dirname, "tree-sitter-latex.wasm");
+    const treeSitterWasm = join(__cwd, "src", "wasm", "web-tree-sitter.wasm");
+    const latexWasm = join(__cwd, "src", "wasm", "tree-sitter-latex.wasm");
 
     initPromise = (async () => {
         await Parser.init({

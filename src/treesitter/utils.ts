@@ -1,4 +1,4 @@
-import { allChildIds, AstNode, BragiAST } from "./types";
+import { allChildIds, AstNode, BragiAST } from "./types/index.js";
 
 export const preoderAstTraversalFunc = (ast: BragiAST, callback: (node: AstNode) => void) => {
     const stack: AstNode[] = [ast.nodes.get(ast.rootId)!];

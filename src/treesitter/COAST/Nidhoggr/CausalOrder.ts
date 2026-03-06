@@ -1,4 +1,4 @@
-import { FugueMessage } from "../../../types";
+import { FugueMessage } from "../../../types/index.js";
 
 export type Txn = {
     msgs: FugueMessage[];

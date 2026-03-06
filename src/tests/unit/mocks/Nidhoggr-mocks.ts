@@ -61,6 +61,7 @@ export function makeMockFugue(ownReplicaId = "local-replica"): jest.Mocked<Fugue
     return {
         replicaId: jest.fn<() => string>().mockReturnValue(ownReplicaId),
         effect: jest.fn<(msgs: FugueMessage | FugueMessage[]) => FugueMessage[]>().mockReturnValue([]),
+        undo: jest.fn<(msgs: FugueMessage | FugueMessage[]) => FugueMessage[]>().mockReturnValue([]),
     } as unknown as jest.Mocked<FugueTree>;
 }
 
@@ -70,6 +71,9 @@ export function makeMockRegistry(): jest.Mocked<Registry> {
         register: jest.fn<(key: string, entry: unknown) => void>(),
         update: jest.fn<(key: string, patch: unknown) => void>(),
         delete: jest.fn<(key: string) => void>(),
+        save: jest.fn<() => unknown>().mockReturnValue(new Map()),
+        load: jest.fn<(saved: unknown) => void>(),
+        populate: jest.fn<(ast: unknown, tree: unknown) => void>(),
     } as unknown as jest.Mocked<Registry>;
 }
 

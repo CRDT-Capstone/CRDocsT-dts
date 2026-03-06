@@ -8,8 +8,8 @@ export const USER_ID = "test-user";
 /**
  * A fresh FugueTree with no WebSocket and stable IDs for deterministic tests.
  */
-export function makeFugueTree(): FugueTree {
-    return new FugueTree(null, DOC_ID, USER_ID);
+export function makeFugueTree(docId?: string, userId?: string): FugueTree {
+    return new FugueTree(null, docId ? docId : DOC_ID, userId ? userId : USER_ID);
 }
 
 export const emptyFugueTree = makeFugueTree();

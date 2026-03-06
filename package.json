@@ -8,7 +8,9 @@
     "scripts": {
         "build": "tsc",
         "prebuild": "pnpm run gen-types",
+        "wasm": "cp -r ./src/wasm ./dist",
         "prepublishOnly": "pnpm run test",
+        "postbuild": "pnpm run wasm",
         "test": "NODE_OPTIONS='--experimental-vm-modules --expose-gc' jest",
         "test:ci": "NODE_OPTIONS=--experimental-vm-modules jest --ci --passWithNoTests",
         "ci": "pnpm install --frozen-lockfile && pnpm run test:ci",

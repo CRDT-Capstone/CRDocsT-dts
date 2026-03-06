@@ -1,5 +1,5 @@
-import { ID } from "../../../dts/index.js";
-import { NodeId } from "../../types/AST.js";
+import { FNode, FTree, ID } from "../../../dts/index.js";
+import { BragiAST, NodeId } from "../../types/AST.js";
 
 /**
  * An Anchor represents the position of an AST node in the FugueTree.
@@ -44,7 +44,30 @@ export class Registry {
         this.anchors.delete(key);
     }
 
+    save(): Map<NodeId, Anchor> {
+        return new Map(this.anchors);
+    }
+
+    load(saved: Map<NodeId, Anchor>): void {
+        this.anchors = new Map(saved);
+    }
+
     clear() {
         this.anchors.clear();
+    }
+
+    populate(ast: BragiAST, tree: FTree): void {
+        const visibleIds: ID[] = [];
+        for (const node of tree.traverseNodes(tree.root)) {
+            visibleIds.push(node.id);
+        }
+
+        for (const [nodeId, astNode] of ast.nodes) {
+            const startId = visibleIds[astNode.startIndex] ?? { sender: "", counter: 0 };
+            this.register(nodeId, {
+                startId,
+                length: astNode.endIndex - astNode.startIndex,
+            });
+        }
     }
 }
