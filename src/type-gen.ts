@@ -126,11 +126,12 @@ export interface ParserContext {
 
         unmarshalersOut += `function ${funcName}(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
             const id = v4();
+            const namedChildren = node.namedChildren;
             const n: Partial<${interfaceName}> = {
                 id,
                 parentId,
                 type: '${node.type}',
-                text: node.text,
+                text: namedChildren.length === 0 ? node.text : '',
                 startIndex: node.startIndex, 
                 endIndex: node.endIndex
             };
@@ -139,8 +140,7 @@ export interface ParserContext {
 `;
 
         // Unmarshal all namedChildren once into childrenIds.
-        unmarshalersOut += `    const namedChildren = node.namedChildren;
-        n.childrenIds = namedChildren.map(child => unmarshalNode(child, ctx, id));
+        unmarshalersOut += ` n.childrenIds = namedChildren.map(child => unmarshalNode(child, ctx, id));
 
         `;
 
@@ -176,11 +176,12 @@ export const unmarshalNode = (node: Node, ctx: ParserContext, parentId: NodeId |
         ${switches}
         default: {
             const id = v4();
+            const namedChildren = node.namedChildren;
             const n = {
                 id,
                 parentId,
                 type: node.type as any,
-                text: node.text,
+                text: namedChildren.length === 0 ? node.text : "",
                 childrenIds: [] as NodeId[],
             };
             ctx.nodes.set(id, n as AstNode);

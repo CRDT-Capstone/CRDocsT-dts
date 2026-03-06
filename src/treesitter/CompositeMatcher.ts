@@ -7,23 +7,23 @@ import { BragiAST } from "./types/index.js";
 
 export class CompositeMatcher {
     private editScriptGen: EditScriptGen;
-    private oldAstMetricsComp: TreeMetricComputer = new TreeMetricComputer();
-    private newAstMetricsComp: TreeMetricComputer = new TreeMetricComputer();
 
     constructor(editScriptGen: EditScriptGen = new SimplifiedChawatheScriptGen()) {
         this.editScriptGen = editScriptGen;
     }
 
     match(oldAst: BragiAST, newAst: BragiAST) {
-        this.oldAstMetricsComp.buildMetrics(oldAst, oldAst.nodes.get(oldAst.rootId)!);
-        this.newAstMetricsComp.buildMetrics(newAst, newAst.nodes.get(newAst.rootId)!);
+        const oldAstMetricsComp = new TreeMetricComputer();
+        const newAstMetricsComp = new TreeMetricComputer();
+        oldAstMetricsComp.buildMetrics(oldAst, oldAst.nodes.get(oldAst.rootId)!);
+        newAstMetricsComp.buildMetrics(newAst, newAst.nodes.get(newAst.rootId)!);
         logger.debug("AST metrics", {
-            oldAstMetricsComp: this.oldAstMetricsComp,
-            newAstMetricsComp: this.newAstMetricsComp,
+            oldAstMetricsComp: oldAstMetricsComp,
+            newAstMetricsComp: newAstMetricsComp,
         });
 
         const topDown = new GumTreeTopDown(oldAst, newAst);
-        const bottomUp = new GumTreeBottomUp(oldAst, newAst, this.oldAstMetricsComp, this.newAstMetricsComp);
+        const bottomUp = new GumTreeBottomUp(oldAst, newAst, oldAstMetricsComp, newAstMetricsComp);
         let mappings = topDown.topDown();
         mappings = bottomUp.match(oldAst.nodes.get(oldAst.rootId)!, newAst.nodes.get(newAst.rootId)!, mappings);
         logger.debug("Mappings", { mappings });

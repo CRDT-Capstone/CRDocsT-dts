@@ -104,9 +104,39 @@ export class Ratatoskr {
             startId: msgs[0].id,
             length: text.length,
         });
-        logger.debug({ registry: this.registry }, "Registry after insert for node", action.node.id);
+
+        this.registerSubtree(action.node, msgs, 0);
 
         return msgs;
+    }
+
+    private registerSubtree(node: AstNode, msgs: FugueMessage[], offset: number): number {
+        if (!node.childrenIds || node.childrenIds.length === 0) {
+            const len = node.text?.length ?? 0;
+            if (len > 0 && !this.registry.has(node.id)) {
+                this.registry.register(node.id, {
+                    startId: msgs[offset].id,
+                    length: len,
+                });
+            }
+            return len;
+        }
+
+        const startOffset = offset;
+        let currentOffset = offset;
+        for (const childId of node.childrenIds) {
+            const child = this.newAst!.nodes.get(childId)!;
+            currentOffset += this.registerSubtree(child, msgs, currentOffset);
+        }
+
+        if (!this.registry.has(node.id) && currentOffset > startOffset) {
+            this.registry.register(node.id, {
+                startId: msgs[startOffset].id,
+                length: currentOffset - startOffset,
+            });
+        }
+
+        return currentOffset - startOffset;
     }
 
     /**
@@ -116,6 +146,7 @@ export class Ratatoskr {
      * @returns An array of FugueMessages resulting from the translation of the Move action
      */
     private handleMove(action: Move, txId: string): FugueMessage[] {
+        logger.debug("Handling move for node", action.node.id, { registry: this.registry });
         // Retrieve the current anchor for the node being moved, and the text content of the span being moved.
         // this assumes that the span being moved exists in the registry.
         const anchor = this.registry.get(action.node.id);
@@ -167,8 +198,9 @@ export class Ratatoskr {
      * @returns An array of FugueMessages resulting from the translation of the Delete action
      */
     private handleDelete(action: Delete, txId: string): FugueMessage[] {
+        logger.debug("Handling delete for node", action.node.id, { registry: this.registry });
         const anchor = this.registry.get(action.node.id);
-        if (!anchor) return [];
+        if (!anchor) throw new Error(`Delete target ${action.node.id} not in registry`);
 
         const idx = this.fugue.getVisibleIndex(this.fugue.getById(anchor.startId));
         const msgs = this.fugue.deleteMultiple(idx, anchor.length);
@@ -193,7 +225,7 @@ export class Ratatoskr {
         // perform the delete, without worrying about the lost content, then the insert operation
         const anchor = this.registry.get(action.node.id);
         if (!anchor) {
-            throw new Error(`Update target ${action.node.id} not in registry, state`);
+            throw new Error(`Update target ${action.node.id} not in registry`);
         }
 
         const content = this.getSpanText(anchor);

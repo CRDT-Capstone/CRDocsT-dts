@@ -24,8 +24,7 @@ class ZsTree {
             this.setITree(idx, node);
             const firstLeaf = ZsTree.getFirstLeaf(tree, node);
             this.setLld(idx, tmpData.get(firstLeaf.id)!);
-            const children = node.type === "text" ? node.word : node.childrenIds;
-            if (children.length === 0) this.leafCount++;
+            if (node.childrenIds.length === 0) this.leafCount++;
             idx++;
         }
 
@@ -39,15 +38,13 @@ class ZsTree {
     static getFirstLeaf(tree: BragiAST, node: AstNode): AstNode {
         let current = node;
         while (true) {
-            const children = current.type === "text" ? current.word : current.childrenIds;
-            if (children.length === 0) return current;
-            current = tree.nodes.get(children[0])!;
+            if (current.childrenIds.length === 0) return current;
+            current = tree.nodes.get(current.childrenIds[0])!;
         }
     }
 
     static *postOrder(tree: BragiAST, node: AstNode): Generator<AstNode> {
-        const children = node.type === "text" ? node.word : node.childrenIds;
-        for (const childId of children) {
+        for (const childId of node.childrenIds) {
             yield* ZsTree.postOrder(tree, tree.nodes.get(childId)!);
         }
         yield node;
@@ -125,10 +122,10 @@ export class ZsMatcher {
 
         let rootNodePair = true;
         const treePairs: [number, number][] = [];
-        treePairs.unshift([this.zsSrc.nodeCount, this.zsDst.nodeCount]);
+        treePairs.push([this.zsSrc.nodeCount, this.zsDst.nodeCount]);
 
         while (treePairs.length > 0) {
-            const [lastRow, lastCol] = treePairs.shift()!;
+            const [lastRow, lastCol] = treePairs.pop()!;
 
             if (!rootNodePair) this.forestDistFn(lastRow, lastCol);
 
@@ -156,7 +153,7 @@ export class ZsMatcher {
                         row--;
                         col--;
                     } else {
-                        treePairs.unshift([row, col]);
+                        treePairs.push([row, col]);
                         row = this.zsSrc.lld(row) - 1;
                         col = this.zsDst.lld(col) - 1;
                     }

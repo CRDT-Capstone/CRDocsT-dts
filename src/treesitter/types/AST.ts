@@ -1516,17 +1516,17 @@ export type AstNode =
 
 function unmarshalerAcronymDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AcronymDefinitionNode> = {
         id,
         parentId,
         type: "acronym_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1555,17 +1555,17 @@ function unmarshalerAcronymDefinitionNode(node: Node, ctx: ParserContext, parent
 
 function unmarshalerAcronymReferenceNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AcronymReferenceNode> = {
         id,
         parentId,
         type: "acronym_reference",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1586,17 +1586,17 @@ function unmarshalerAcronymReferenceNode(node: Node, ctx: ParserContext, parentI
 
 function unmarshalerAsyEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AsyEnvironmentNode> = {
         id,
         parentId,
         type: "asy_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1617,17 +1617,17 @@ function unmarshalerAsyEnvironmentNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerAsydefEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AsydefEnvironmentNode> = {
         id,
         parentId,
         type: "asydef_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1648,17 +1648,17 @@ function unmarshalerAsydefEnvironmentNode(node: Node, ctx: ParserContext, parent
 
 function unmarshalerAuthorNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AuthorNode> = {
         id,
         parentId,
         type: "author",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -1666,17 +1666,17 @@ function unmarshalerAuthorNode(node: Node, ctx: ParserContext, parentId: NodeId 
 
 function unmarshalerAuthorDeclarationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AuthorDeclarationNode> = {
         id,
         parentId,
         type: "author_declaration",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1697,17 +1697,17 @@ function unmarshalerAuthorDeclarationNode(node: Node, ctx: ParserContext, parent
 
 function unmarshalerBeginNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BeginNode> = {
         id,
         parentId,
         type: "begin",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1732,17 +1732,17 @@ function unmarshalerBeginNode(node: Node, ctx: ParserContext, parentId: NodeId |
 
 function unmarshalerBiblatexIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BiblatexIncludeNode> = {
         id,
         parentId,
         type: "biblatex_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1759,17 +1759,17 @@ function unmarshalerBiblatexIncludeNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerBibstyleIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BibstyleIncludeNode> = {
         id,
         parentId,
         type: "bibstyle_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1786,17 +1786,17 @@ function unmarshalerBibstyleIncludeNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerBibtexIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BibtexIncludeNode> = {
         id,
         parentId,
         type: "bibtex_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1813,17 +1813,17 @@ function unmarshalerBibtexIncludeNode(node: Node, ctx: ParserContext, parentId: 
 
 function unmarshalerBlockCommentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BlockCommentNode> = {
         id,
         parentId,
         type: "block_comment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1844,17 +1844,17 @@ function unmarshalerBlockCommentNode(node: Node, ctx: ParserContext, parentId: N
 
 function unmarshalerBrackGroupNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BrackGroupNode> = {
         id,
         parentId,
         type: "brack_group",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -1862,17 +1862,17 @@ function unmarshalerBrackGroupNode(node: Node, ctx: ParserContext, parentId: Nod
 
 function unmarshalerBrackGroupArgcNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BrackGroupArgcNode> = {
         id,
         parentId,
         type: "brack_group_argc",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1885,17 +1885,17 @@ function unmarshalerBrackGroupArgcNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerBrackGroupKeyValueNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BrackGroupKeyValueNode> = {
         id,
         parentId,
         type: "brack_group_key_value",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.pair = node
@@ -1908,17 +1908,17 @@ function unmarshalerBrackGroupKeyValueNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerBrackGroupTextNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BrackGroupTextNode> = {
         id,
         parentId,
         type: "brack_group_text",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -1926,17 +1926,17 @@ function unmarshalerBrackGroupTextNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerBrackGroupWordNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BrackGroupWordNode> = {
         id,
         parentId,
         type: "brack_group_word",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1949,17 +1949,17 @@ function unmarshalerBrackGroupWordNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerCaptionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CaptionNode> = {
         id,
         parentId,
         type: "caption",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -1980,17 +1980,17 @@ function unmarshalerCaptionNode(node: Node, ctx: ParserContext, parentId: NodeId
 
 function unmarshalerChangesReplacedNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ChangesReplacedNode> = {
         id,
         parentId,
         type: "changes_replaced",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2011,17 +2011,17 @@ function unmarshalerChangesReplacedNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerChapterNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ChapterNode> = {
         id,
         parentId,
         type: "chapter",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2038,17 +2038,17 @@ function unmarshalerChapterNode(node: Node, ctx: ParserContext, parentId: NodeId
 
 function unmarshalerCitationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CitationNode> = {
         id,
         parentId,
         type: "citation",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2073,17 +2073,17 @@ function unmarshalerCitationNode(node: Node, ctx: ParserContext, parentId: NodeI
 
 function unmarshalerClassIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ClassIncludeNode> = {
         id,
         parentId,
         type: "class_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2104,17 +2104,17 @@ function unmarshalerClassIncludeNode(node: Node, ctx: ParserContext, parentId: N
 
 function unmarshalerColorDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ColorDefinitionNode> = {
         id,
         parentId,
         type: "color_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2139,17 +2139,17 @@ function unmarshalerColorDefinitionNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerColorReferenceNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ColorReferenceNode> = {
         id,
         parentId,
         type: "color_reference",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2174,17 +2174,17 @@ function unmarshalerColorReferenceNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerColorSetDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ColorSetDefinitionNode> = {
         id,
         parentId,
         type: "color_set_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2217,17 +2217,17 @@ function unmarshalerColorSetDefinitionNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerCommentEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CommentEnvironmentNode> = {
         id,
         parentId,
         type: "comment_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2248,17 +2248,17 @@ function unmarshalerCommentEnvironmentNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerCounterAdditionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterAdditionNode> = {
         id,
         parentId,
         type: "counter_addition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2279,17 +2279,17 @@ function unmarshalerCounterAdditionNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerCounterDeclarationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterDeclarationNode> = {
         id,
         parentId,
         type: "counter_declaration",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2310,17 +2310,17 @@ function unmarshalerCounterDeclarationNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerCounterDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterDefinitionNode> = {
         id,
         parentId,
         type: "counter_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2341,17 +2341,17 @@ function unmarshalerCounterDefinitionNode(node: Node, ctx: ParserContext, parent
 
 function unmarshalerCounterIncrementNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterIncrementNode> = {
         id,
         parentId,
         type: "counter_increment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2368,17 +2368,17 @@ function unmarshalerCounterIncrementNode(node: Node, ctx: ParserContext, parentI
 
 function unmarshalerCounterTypesettingNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterTypesettingNode> = {
         id,
         parentId,
         type: "counter_typesetting",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2395,17 +2395,17 @@ function unmarshalerCounterTypesettingNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerCounterValueNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterValueNode> = {
         id,
         parentId,
         type: "counter_value",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2422,17 +2422,17 @@ function unmarshalerCounterValueNode(node: Node, ctx: ParserContext, parentId: N
 
 function unmarshalerCounterWithinDeclarationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterWithinDeclarationNode> = {
         id,
         parentId,
         type: "counter_within_declaration",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2453,17 +2453,17 @@ function unmarshalerCounterWithinDeclarationNode(node: Node, ctx: ParserContext,
 
 function unmarshalerCounterWithoutDeclarationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterWithoutDeclarationNode> = {
         id,
         parentId,
         type: "counter_without_declaration",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2484,17 +2484,17 @@ function unmarshalerCounterWithoutDeclarationNode(node: Node, ctx: ParserContext
 
 function unmarshalerCurlyGroupNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupNode> = {
         id,
         parentId,
         type: "curly_group",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -2502,17 +2502,17 @@ function unmarshalerCurlyGroupNode(node: Node, ctx: ParserContext, parentId: Nod
 
 function unmarshalerCurlyGroupAuthorListNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupAuthorListNode> = {
         id,
         parentId,
         type: "curly_group_author_list",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -2520,17 +2520,17 @@ function unmarshalerCurlyGroupAuthorListNode(node: Node, ctx: ParserContext, par
 
 function unmarshalerCurlyGroupCommandNameNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupCommandNameNode> = {
         id,
         parentId,
         type: "curly_group_command_name",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2543,17 +2543,17 @@ function unmarshalerCurlyGroupCommandNameNode(node: Node, ctx: ParserContext, pa
 
 function unmarshalerCurlyGroupGlobPatternNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupGlobPatternNode> = {
         id,
         parentId,
         type: "curly_group_glob_pattern",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2566,17 +2566,17 @@ function unmarshalerCurlyGroupGlobPatternNode(node: Node, ctx: ParserContext, pa
 
 function unmarshalerCurlyGroupImplNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupImplNode> = {
         id,
         parentId,
         type: "curly_group_impl",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -2584,17 +2584,17 @@ function unmarshalerCurlyGroupImplNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerCurlyGroupKeyValueNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupKeyValueNode> = {
         id,
         parentId,
         type: "curly_group_key_value",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.pair = node
@@ -2607,17 +2607,17 @@ function unmarshalerCurlyGroupKeyValueNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerCurlyGroupLabelNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupLabelNode> = {
         id,
         parentId,
         type: "curly_group_label",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2630,17 +2630,17 @@ function unmarshalerCurlyGroupLabelNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerCurlyGroupLabelListNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupLabelListNode> = {
         id,
         parentId,
         type: "curly_group_label_list",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.label = node
@@ -2653,17 +2653,17 @@ function unmarshalerCurlyGroupLabelListNode(node: Node, ctx: ParserContext, pare
 
 function unmarshalerCurlyGroupPathNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupPathNode> = {
         id,
         parentId,
         type: "curly_group_path",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2676,17 +2676,17 @@ function unmarshalerCurlyGroupPathNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerCurlyGroupPathListNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupPathListNode> = {
         id,
         parentId,
         type: "curly_group_path_list",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.path = node
@@ -2699,17 +2699,17 @@ function unmarshalerCurlyGroupPathListNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerCurlyGroupSpecNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupSpecNode> = {
         id,
         parentId,
         type: "curly_group_spec",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -2717,17 +2717,17 @@ function unmarshalerCurlyGroupSpecNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerCurlyGroupTextNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupTextNode> = {
         id,
         parentId,
         type: "curly_group_text",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -2735,17 +2735,17 @@ function unmarshalerCurlyGroupTextNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerCurlyGroupTextListNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupTextListNode> = {
         id,
         parentId,
         type: "curly_group_text_list",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -2753,17 +2753,17 @@ function unmarshalerCurlyGroupTextListNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerCurlyGroupUriNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupUriNode> = {
         id,
         parentId,
         type: "curly_group_uri",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2776,17 +2776,17 @@ function unmarshalerCurlyGroupUriNode(node: Node, ctx: ParserContext, parentId: 
 
 function unmarshalerCurlyGroupValueNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupValueNode> = {
         id,
         parentId,
         type: "curly_group_value",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2799,17 +2799,17 @@ function unmarshalerCurlyGroupValueNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerCurlyGroupWordNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupWordNode> = {
         id,
         parentId,
         type: "curly_group_word",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2822,17 +2822,17 @@ function unmarshalerCurlyGroupWordNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerDisplayedEquationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<DisplayedEquationNode> = {
         id,
         parentId,
         type: "displayed_equation",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -2840,17 +2840,17 @@ function unmarshalerDisplayedEquationNode(node: Node, ctx: ParserContext, parent
 
 function unmarshalerEndNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<EndNode> = {
         id,
         parentId,
         type: "end",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2867,17 +2867,17 @@ function unmarshalerEndNode(node: Node, ctx: ParserContext, parentId: NodeId | n
 
 function unmarshalerEnumItemNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<EnumItemNode> = {
         id,
         parentId,
         type: "enum_item",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2894,17 +2894,17 @@ function unmarshalerEnumItemNode(node: Node, ctx: ParserContext, parentId: NodeI
 
 function unmarshalerEnvironmentDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<EnvironmentDefinitionNode> = {
         id,
         parentId,
         type: "environment_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2937,17 +2937,17 @@ function unmarshalerEnvironmentDefinitionNode(node: Node, ctx: ParserContext, pa
 
 function unmarshalerGenericCommandNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GenericCommandNode> = {
         id,
         parentId,
         type: "generic_command",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.arg = node
@@ -2964,17 +2964,17 @@ function unmarshalerGenericCommandNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerGenericEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GenericEnvironmentNode> = {
         id,
         parentId,
         type: "generic_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -2991,17 +2991,17 @@ function unmarshalerGenericEnvironmentNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerGlobPatternNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GlobPatternNode> = {
         id,
         parentId,
         type: "glob_pattern",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -3009,17 +3009,17 @@ function unmarshalerGlobPatternNode(node: Node, ctx: ParserContext, parentId: No
 
 function unmarshalerGlossaryEntryDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GlossaryEntryDefinitionNode> = {
         id,
         parentId,
         type: "glossary_entry_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3040,17 +3040,17 @@ function unmarshalerGlossaryEntryDefinitionNode(node: Node, ctx: ParserContext, 
 
 function unmarshalerGlossaryEntryReferenceNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GlossaryEntryReferenceNode> = {
         id,
         parentId,
         type: "glossary_entry_reference",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3071,17 +3071,17 @@ function unmarshalerGlossaryEntryReferenceNode(node: Node, ctx: ParserContext, p
 
 function unmarshalerGraphicsIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GraphicsIncludeNode> = {
         id,
         parentId,
         type: "graphics_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3102,17 +3102,17 @@ function unmarshalerGraphicsIncludeNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerHyperlinkNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<HyperlinkNode> = {
         id,
         parentId,
         type: "hyperlink",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3133,17 +3133,17 @@ function unmarshalerHyperlinkNode(node: Node, ctx: ParserContext, parentId: Node
 
 function unmarshalerImportIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ImportIncludeNode> = {
         id,
         parentId,
         type: "import_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3164,17 +3164,17 @@ function unmarshalerImportIncludeNode(node: Node, ctx: ParserContext, parentId: 
 
 function unmarshalerInkscapeIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<InkscapeIncludeNode> = {
         id,
         parentId,
         type: "inkscape_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3195,17 +3195,17 @@ function unmarshalerInkscapeIncludeNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerInlineFormulaNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<InlineFormulaNode> = {
         id,
         parentId,
         type: "inline_formula",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -3213,17 +3213,17 @@ function unmarshalerInlineFormulaNode(node: Node, ctx: ParserContext, parentId: 
 
 function unmarshalerKeyValuePairNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<KeyValuePairNode> = {
         id,
         parentId,
         type: "key_value_pair",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3240,17 +3240,17 @@ function unmarshalerKeyValuePairNode(node: Node, ctx: ParserContext, parentId: N
 
 function unmarshalerLabelDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LabelDefinitionNode> = {
         id,
         parentId,
         type: "label_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3267,17 +3267,17 @@ function unmarshalerLabelDefinitionNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerLabelNumberNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LabelNumberNode> = {
         id,
         parentId,
         type: "label_number",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3298,17 +3298,17 @@ function unmarshalerLabelNumberNode(node: Node, ctx: ParserContext, parentId: No
 
 function unmarshalerLabelReferenceNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LabelReferenceNode> = {
         id,
         parentId,
         type: "label_reference",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3325,17 +3325,17 @@ function unmarshalerLabelReferenceNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerLabelReferenceRangeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LabelReferenceRangeNode> = {
         id,
         parentId,
         type: "label_reference_range",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3356,17 +3356,17 @@ function unmarshalerLabelReferenceRangeNode(node: Node, ctx: ParserContext, pare
 
 function unmarshalerLatexIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LatexIncludeNode> = {
         id,
         parentId,
         type: "latex_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3383,17 +3383,17 @@ function unmarshalerLatexIncludeNode(node: Node, ctx: ParserContext, parentId: N
 
 function unmarshalerLetCommandDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LetCommandDefinitionNode> = {
         id,
         parentId,
         type: "let_command_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3414,17 +3414,17 @@ function unmarshalerLetCommandDefinitionNode(node: Node, ctx: ParserContext, par
 
 function unmarshalerListingEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ListingEnvironmentNode> = {
         id,
         parentId,
         type: "listing_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3445,17 +3445,17 @@ function unmarshalerListingEnvironmentNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerLuacodeEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LuacodeEnvironmentNode> = {
         id,
         parentId,
         type: "luacode_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3476,17 +3476,17 @@ function unmarshalerLuacodeEnvironmentNode(node: Node, ctx: ParserContext, paren
 
 function unmarshalerMathDelimiterNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<MathDelimiterNode> = {
         id,
         parentId,
         type: "math_delimiter",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3511,17 +3511,17 @@ function unmarshalerMathDelimiterNode(node: Node, ctx: ParserContext, parentId: 
 
 function unmarshalerMathEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<MathEnvironmentNode> = {
         id,
         parentId,
         type: "math_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3538,17 +3538,17 @@ function unmarshalerMathEnvironmentNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerMintedEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<MintedEnvironmentNode> = {
         id,
         parentId,
         type: "minted_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3569,17 +3569,17 @@ function unmarshalerMintedEnvironmentNode(node: Node, ctx: ParserContext, parent
 
 function unmarshalerNewCommandDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<NewCommandDefinitionNode> = {
         id,
         parentId,
         type: "new_command_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3612,17 +3612,17 @@ function unmarshalerNewCommandDefinitionNode(node: Node, ctx: ParserContext, par
 
 function unmarshalerOldCommandDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<OldCommandDefinitionNode> = {
         id,
         parentId,
         type: "old_command_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3639,17 +3639,17 @@ function unmarshalerOldCommandDefinitionNode(node: Node, ctx: ParserContext, par
 
 function unmarshalerOperatorNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<OperatorNode> = {
         id,
         parentId,
         type: "operator",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -3657,17 +3657,17 @@ function unmarshalerOperatorNode(node: Node, ctx: ParserContext, parentId: NodeI
 
 function unmarshalerPackageIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PackageIncludeNode> = {
         id,
         parentId,
         type: "package_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3688,17 +3688,17 @@ function unmarshalerPackageIncludeNode(node: Node, ctx: ParserContext, parentId:
 
 function unmarshalerPairedDelimiterDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PairedDelimiterDefinitionNode> = {
         id,
         parentId,
         type: "paired_delimiter_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3731,17 +3731,17 @@ function unmarshalerPairedDelimiterDefinitionNode(node: Node, ctx: ParserContext
 
 function unmarshalerParagraphNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ParagraphNode> = {
         id,
         parentId,
         type: "paragraph",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3758,17 +3758,17 @@ function unmarshalerParagraphNode(node: Node, ctx: ParserContext, parentId: Node
 
 function unmarshalerPartNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PartNode> = {
         id,
         parentId,
         type: "part",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3785,17 +3785,17 @@ function unmarshalerPartNode(node: Node, ctx: ParserContext, parentId: NodeId | 
 
 function unmarshalerPycodeEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PycodeEnvironmentNode> = {
         id,
         parentId,
         type: "pycode_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3816,17 +3816,17 @@ function unmarshalerPycodeEnvironmentNode(node: Node, ctx: ParserContext, parent
 
 function unmarshalerSageblockEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SageblockEnvironmentNode> = {
         id,
         parentId,
         type: "sageblock_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3847,17 +3847,17 @@ function unmarshalerSageblockEnvironmentNode(node: Node, ctx: ParserContext, par
 
 function unmarshalerSagesilentEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SagesilentEnvironmentNode> = {
         id,
         parentId,
         type: "sagesilent_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3878,17 +3878,17 @@ function unmarshalerSagesilentEnvironmentNode(node: Node, ctx: ParserContext, pa
 
 function unmarshalerSectionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SectionNode> = {
         id,
         parentId,
         type: "section",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3905,17 +3905,17 @@ function unmarshalerSectionNode(node: Node, ctx: ParserContext, parentId: NodeId
 
 function unmarshalerSourceFileNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SourceFileNode> = {
         id,
         parentId,
         type: "source_file",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -3923,17 +3923,17 @@ function unmarshalerSourceFileNode(node: Node, ctx: ParserContext, parentId: Nod
 
 function unmarshalerSubparagraphNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SubparagraphNode> = {
         id,
         parentId,
         type: "subparagraph",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3950,17 +3950,17 @@ function unmarshalerSubparagraphNode(node: Node, ctx: ParserContext, parentId: N
 
 function unmarshalerSubscriptNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SubscriptNode> = {
         id,
         parentId,
         type: "subscript",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -3973,17 +3973,17 @@ function unmarshalerSubscriptNode(node: Node, ctx: ParserContext, parentId: Node
 
 function unmarshalerSubsectionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SubsectionNode> = {
         id,
         parentId,
         type: "subsection",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4000,17 +4000,17 @@ function unmarshalerSubsectionNode(node: Node, ctx: ParserContext, parentId: Nod
 
 function unmarshalerSubsubsectionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SubsubsectionNode> = {
         id,
         parentId,
         type: "subsubsection",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4027,17 +4027,17 @@ function unmarshalerSubsubsectionNode(node: Node, ctx: ParserContext, parentId: 
 
 function unmarshalerSuperscriptNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SuperscriptNode> = {
         id,
         parentId,
         type: "superscript",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4050,17 +4050,17 @@ function unmarshalerSuperscriptNode(node: Node, ctx: ParserContext, parentId: No
 
 function unmarshalerSvgIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SvgIncludeNode> = {
         id,
         parentId,
         type: "svg_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4081,17 +4081,17 @@ function unmarshalerSvgIncludeNode(node: Node, ctx: ParserContext, parentId: Nod
 
 function unmarshalerTextNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TextNode> = {
         id,
         parentId,
         type: "text",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     n.word = node
@@ -4104,17 +4104,17 @@ function unmarshalerTextNode(node: Node, ctx: ParserContext, parentId: NodeId | 
 
 function unmarshalerTextModeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TextModeNode> = {
         id,
         parentId,
         type: "text_mode",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4131,17 +4131,17 @@ function unmarshalerTextModeNode(node: Node, ctx: ParserContext, parentId: NodeI
 
 function unmarshalerTheoremDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TheoremDefinitionNode> = {
         id,
         parentId,
         type: "theorem_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4170,17 +4170,17 @@ function unmarshalerTheoremDefinitionNode(node: Node, ctx: ParserContext, parent
 
 function unmarshalerTikzLibraryImportNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TikzLibraryImportNode> = {
         id,
         parentId,
         type: "tikz_library_import",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4197,17 +4197,17 @@ function unmarshalerTikzLibraryImportNode(node: Node, ctx: ParserContext, parent
 
 function unmarshalerTitleDeclarationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TitleDeclarationNode> = {
         id,
         parentId,
         type: "title_declaration",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4224,17 +4224,17 @@ function unmarshalerTitleDeclarationNode(node: Node, ctx: ParserContext, parentI
 
 function unmarshalerTodoNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TodoNode> = {
         id,
         parentId,
         type: "todo",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4255,17 +4255,17 @@ function unmarshalerTodoNode(node: Node, ctx: ParserContext, parentId: NodeId | 
 
 function unmarshalerValueNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ValueNode> = {
         id,
         parentId,
         type: "value",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4273,17 +4273,17 @@ function unmarshalerValueNode(node: Node, ctx: ParserContext, parentId: NodeId |
 
 function unmarshalerVerbatimEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<VerbatimEnvironmentNode> = {
         id,
         parentId,
         type: "verbatim_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4304,17 +4304,17 @@ function unmarshalerVerbatimEnvironmentNode(node: Node, ctx: ParserContext, pare
 
 function unmarshalerVerbatimIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<VerbatimIncludeNode> = {
         id,
         parentId,
         type: "verbatim_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     {
@@ -4331,17 +4331,17 @@ function unmarshalerVerbatimIncludeNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerArgcNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ArgcNode> = {
         id,
         parentId,
         type: "argc",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4349,17 +4349,17 @@ function unmarshalerArgcNode(node: Node, ctx: ParserContext, parentId: NodeId | 
 
 function unmarshalerCommandNameNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CommandNameNode> = {
         id,
         parentId,
         type: "command_name",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4367,17 +4367,17 @@ function unmarshalerCommandNameNode(node: Node, ctx: ParserContext, parentId: No
 
 function unmarshalerCommentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CommentNode> = {
         id,
         parentId,
         type: "comment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4385,17 +4385,17 @@ function unmarshalerCommentNode(node: Node, ctx: ParserContext, parentId: NodeId
 
 function unmarshalerDelimiterNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<DelimiterNode> = {
         id,
         parentId,
         type: "delimiter",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4403,17 +4403,17 @@ function unmarshalerDelimiterNode(node: Node, ctx: ParserContext, parentId: Node
 
 function unmarshalerLabelNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LabelNode> = {
         id,
         parentId,
         type: "label",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4421,17 +4421,17 @@ function unmarshalerLabelNode(node: Node, ctx: ParserContext, parentId: NodeId |
 
 function unmarshalerLetterNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LetterNode> = {
         id,
         parentId,
         type: "letter",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4439,17 +4439,17 @@ function unmarshalerLetterNode(node: Node, ctx: ParserContext, parentId: NodeId 
 
 function unmarshalerLineCommentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LineCommentNode> = {
         id,
         parentId,
         type: "line_comment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4457,17 +4457,17 @@ function unmarshalerLineCommentNode(node: Node, ctx: ParserContext, parentId: No
 
 function unmarshalerPathNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PathNode> = {
         id,
         parentId,
         type: "path",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4475,17 +4475,17 @@ function unmarshalerPathNode(node: Node, ctx: ParserContext, parentId: NodeId | 
 
 function unmarshalerPlaceholderNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PlaceholderNode> = {
         id,
         parentId,
         type: "placeholder",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4493,17 +4493,17 @@ function unmarshalerPlaceholderNode(node: Node, ctx: ParserContext, parentId: No
 
 function unmarshalerSourceCodeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SourceCodeNode> = {
         id,
         parentId,
         type: "source_code",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4511,17 +4511,17 @@ function unmarshalerSourceCodeNode(node: Node, ctx: ParserContext, parentId: Nod
 
 function unmarshalerTodoCommandNameNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TodoCommandNameNode> = {
         id,
         parentId,
         type: "todo_command_name",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4529,17 +4529,17 @@ function unmarshalerTodoCommandNameNode(node: Node, ctx: ParserContext, parentId
 
 function unmarshalerUriNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<UriNode> = {
         id,
         parentId,
         type: "uri",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4547,17 +4547,17 @@ function unmarshalerUriNode(node: Node, ctx: ParserContext, parentId: NodeId | n
 
 function unmarshalerValueLiteralNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ValueLiteralNode> = {
         id,
         parentId,
         type: "value_literal",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4565,17 +4565,17 @@ function unmarshalerValueLiteralNode(node: Node, ctx: ParserContext, parentId: N
 
 function unmarshalerWordNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<WordNode> = {
         id,
         parentId,
         type: "word",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
         startIndex: node.startIndex,
         endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const namedChildren = node.namedChildren;
     n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
     return id;
@@ -4820,11 +4820,12 @@ export const unmarshalNode = (node: Node, ctx: ParserContext, parentId: NodeId |
 
         default: {
             const id = v4();
+            const namedChildren = node.namedChildren;
             const n = {
                 id,
                 parentId,
                 type: node.type as any,
-                text: node.text,
+                text: namedChildren.length === 0 ? node.text : "",
                 childrenIds: [] as NodeId[],
             };
             ctx.nodes.set(id, n as AstNode);
