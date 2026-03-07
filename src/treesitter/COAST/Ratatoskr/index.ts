@@ -252,8 +252,14 @@ export class Ratatoskr {
             m.coastExpectedDeleteCount = expectedDelete;
         });
 
-        // Update registry to new anchor and length
         this.registry.update(action.node.id, { startId: insMsgs[0].id, length: action.value.length });
+
+        if (action.newNode.id !== action.node.id) {
+            this.registry.register(action.newNode.id, {
+                startId: insMsgs[0].id,
+                length: typeof action.value === "string" ? action.value.length : action.value.join("").length,
+            });
+        }
 
         return all;
     }

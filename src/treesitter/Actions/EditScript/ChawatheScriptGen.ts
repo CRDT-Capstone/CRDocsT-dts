@@ -130,7 +130,7 @@ export class ChawatheScriptGen implements EditScriptGen {
                     // text in the copy of the old AST to reflect the change, ensuring that subsequent move actions will have the correct text.
                     if (wNode.text !== xNode.text) {
                         const origWId = this.cpyToOgIdMap.get(wId) ?? wId;
-                        this.actions.push(new Update(this.resolveOrigNode(origWId), xNode.text));
+                        this.actions.push(new Update(this.resolveOrigNode(origWId), xNode.text, xNode));
                         wNode.text = xNode.text;
                     }
 

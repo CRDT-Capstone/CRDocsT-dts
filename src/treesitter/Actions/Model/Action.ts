@@ -119,6 +119,7 @@ export class Update extends Action<ActionType.UPDATE> {
     constructor(
         public node: AstNode,
         public value: string | string[],
+        public newNode: AstNode,
     ) {
         super(node, ActionType.UPDATE);
     }
