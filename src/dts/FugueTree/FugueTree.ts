@@ -1,3 +1,4 @@
+import { BragiAST, NodeId } from "../../treesitter.js";
 import { FugueMessage, makeFugueMessage, Operation } from "../../types/FugueTree/Message.js";
 import { MessageType } from "../../types/Message.js";
 import { chunkArray, randomString } from "../../utils/index.js";
@@ -18,6 +19,7 @@ export class FugueTree {
     pendingMsgs = new Map<string, FugueMessage>();
     // Tentative
     readonly batchSize = 800;
+    astIdx = new Map<NodeId, FNode>();
 
     constructor(ws: WebSocket | null, documentID: string, userIdentity: string) {
         this.ws = ws;
@@ -332,6 +334,7 @@ export class FugueTree {
      */
     load(data: Uint8Array | null) {
         if (!data) return;
+        this.astIdx.clear();
         this.tree.load(data);
     }
 
@@ -368,6 +371,7 @@ export class FugueTree {
     }
 
     clear() {
+        this.astIdx.clear();
         this.counter = 0;
         return this.tree.clear();
     }
@@ -424,5 +428,48 @@ export class FugueTree {
                 }
             }
         }
+    }
+
+    stampAstNode(nodeId: NodeId, startIdx: number): ID {
+        const sn = this.tree.getByIndex(this.tree.root, startIdx);
+
+        if (sn.astNodeId !== undefined && sn.astNodeId !== nodeId) {
+            this.astIdx.delete(sn.astNodeId);
+        }
+
+        sn.astNodeId = nodeId;
+        this.astIdx.set(nodeId, sn);
+        return sn.id;
+    }
+
+    stampAll(ast: BragiAST) {
+        for (const fnode of this.astIdx.values()) {
+            fnode.astNodeId = undefined;
+        }
+
+        this.astIdx.clear();
+        for (const [nodeId, astNode] of ast.nodes) {
+            if (astNode.startIndex < astNode.endIndex) {
+                this.stampAstNode(nodeId, astNode.startIndex);
+            }
+        }
+    }
+
+    updateAstIdx(nodeId: NodeId, fnode: FNode) {
+        const old = this.astIdx.get(nodeId);
+        if (old) old.astNodeId = undefined;
+
+        fnode.astNodeId = nodeId;
+        this.astIdx.set(nodeId, fnode);
+    }
+
+    removeAstIdx(nodeId: NodeId) {
+        const fnode = this.astIdx.get(nodeId);
+        if (fnode) fnode.astNodeId = undefined;
+        this.astIdx.delete(nodeId);
+    }
+
+    findAstStart(nodeId: NodeId): FNode | undefined {
+        return this.astIdx.get(nodeId);
     }
 }

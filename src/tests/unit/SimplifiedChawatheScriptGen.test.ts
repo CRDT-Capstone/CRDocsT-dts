@@ -101,9 +101,10 @@ describe("SimplifiedChawatheScriptGen", () => {
         it("does not add or remove actions when no Insert or Delete is present", () => {
             const root = makeNode("root", null, []);
             const parent = makeNode("parent", null, []);
+            const newNode = makeNode("new", null, []);
             const actions = buildActions([
                 { kind: "move", node: root, parent, pos: 0 },
-                { kind: "update", node: root, value: "new" },
+                { kind: "update", node: root, value: "new", newNode: newNode },
             ]);
             const { ms } = makeIdenticalSingleNodeScenario();
             spyOnChawathe(actions);

@@ -1,18 +1,22 @@
-import { Parser, Tree } from "web-tree-sitter";
-import { AstNode, BragiAST, newParser, Registry } from "../../treesitter.js";
+import { Parser } from "web-tree-sitter";
+import { AstNode, BragiAST } from "../../treesitter.js";
 import { ActionType, TreeInsert, Delete, Update, Move } from "../../treesitter/Actions/Model/index.js";
 import { Ratatoskr } from "../../treesitter/COAST/Ratatoskr/index.js";
 import { getParser } from "./mocks/BragiAST-mocks.js";
 import { FugueTree, ID } from "../../dts/index.js";
 import { bragiAstFromFugueTree, fugueTreeWithContent } from "./mocks/Ratatoskr-mocks.js";
-import { makeMockRegistry } from "./mocks/Nidhoggr-mocks.js";
-import { describe, expect, it, beforeAll, beforeEach, afterEach, jest } from "@jest/globals";
+import { describe, expect, it, beforeAll, beforeEach, afterEach, afterAll, jest } from "@jest/globals";
+
+const DOC_CONTENT = `\\documentclass{article}
+\\begin{document}
+Hello, World!
+\\end{document}
+`;
 
 describe("Ratatoskr", () => {
     let fugue: FugueTree;
     let ast: BragiAST;
     let ratatoskr: Ratatoskr;
-    let registry: Registry;
     let parser: Parser;
 
     let insertSpy: jest.SpiedFunction<FugueTree["insertMultiple"]>;
@@ -21,12 +25,8 @@ describe("Ratatoskr", () => {
     const originalInsertMultiple = FugueTree.prototype.insertMultiple;
     const originalDeleteMultiple = FugueTree.prototype.deleteMultiple;
 
-    const dummyId: ID = { counter: 10, sender: "dummy-sender" };
-
     afterAll(() => {
-        if (parser) {
-            parser.delete();
-        }
+        if (parser) parser.delete();
     });
 
     beforeAll(async () => {
@@ -34,15 +34,14 @@ describe("Ratatoskr", () => {
     });
 
     beforeEach(() => {
-        fugue = fugueTreeWithContent(`\\documentclass{article}
-                \\begin{document}
-                Hello, World!
-                \\end{document}
-`);
-
+        fugue = fugueTreeWithContent(DOC_CONTENT);
         ast = bragiAstFromFugueTree(fugue, parser);
-        registry = new Registry();
-        ratatoskr = new Ratatoskr(fugue, registry, ast);
+
+        // Stamp the real AST onto the real FugueTree — this makes findAstStart
+        // work without any mocking for nodes that exist in the document
+        fugue.stampAll(ast);
+
+        ratatoskr = new Ratatoskr(fugue, ast);
 
         insertSpy = jest.spyOn(fugue, "insertMultiple");
         deleteSpy = jest.spyOn(fugue, "deleteMultiple");
@@ -52,154 +51,197 @@ describe("Ratatoskr", () => {
         jest.clearAllMocks();
     });
 
+    // Helper: find a real AST node whose text contains a substring
+    const findNode = (substring: string): AstNode => {
+        const node = Array.from(ast.nodes.values()).find((n) => n.text?.includes(substring));
+        if (!node) throw new Error(`Could not find AST node containing "${substring}"`);
+        return node;
+    };
+
+    // Helper: find the parent of a node in the AST
+    const findParent = (node: AstNode): AstNode => {
+        if (!node.parentId) throw new Error(`Node ${node.id} has no parent`);
+        const parent = ast.nodes.get(node.parentId);
+        if (!parent) throw new Error(`Parent ${node.parentId} not found in AST`);
+        return parent;
+    };
+
     describe("TREE_INSERT", () => {
-        it("should insert text into the FugueTree and register the new node", () => {
+        it("inserts text into the FugueTree at the position resolved from the parent and child ordinal", () => {
             const newNode: AstNode = {
                 id: "new-node-id",
                 type: "text",
-                text: " Brand New Text!",
+                text: "Brand New Text!",
                 childrenIds: [],
+                startIndex: 0,
+                endIndex: 15,
             } as any;
 
-            const editScript = [
+            // Use the document root as parent so resolveCharPos has a real stamped parent
+            const rootNode = ast.nodes.get(ast.rootId)!;
+
+            const editScript: TreeInsert[] = [
                 {
                     type: ActionType.TREE_INSERT,
-                    pos: 40,
+                    pos: 0,
                     node: newNode,
-                } as TreeInsert,
+                    parent: rootNode,
+                } as any,
             ];
 
             const msgs = ratatoskr.translate(editScript);
 
-            expect(insertSpy).toHaveBeenCalledWith(40, " Brand New Text!");
-
-            const anchor = ratatoskr.registry.get("new-node-id");
-            expect(anchor).toBeDefined();
-            expect(anchor?.length).toBe(16);
-
+            expect(insertSpy).toHaveBeenCalled();
             expect(msgs[0].coastOpType).toBe("ADD");
+            expect(msgs[0].coastNodeKey).toBe("new-node-id");
+        });
+
+        it("stamps the inserted FNode so findAstStart returns it after insertion", () => {
+            const newNode: AstNode = {
+                id: "stamp-check-id",
+                type: "text",
+                text: "XY",
+                childrenIds: [],
+                startIndex: 0,
+                endIndex: 2,
+            } as any;
+
+            const rootNode = ast.nodes.get(ast.rootId)!;
+
+            ratatoskr.translate([
+                {
+                    type: ActionType.TREE_INSERT,
+                    pos: 0,
+                    node: newNode,
+                    parent: rootNode,
+                } as any,
+            ]);
+
+            // After insertion the new node should be findable via the real astIdx
+            expect(fugue.findAstStart("stamp-check-id")).toBeDefined();
         });
     });
 
     describe("DELETE", () => {
-        it("should delete text from the FugueTree and remove it from the registry", () => {
-            const textNode = Array.from(ast.nodes.values()).find((n) => n.text.includes("Hello"));
-            if (!textNode) throw new Error("Could not find text node in AST");
+        it("deletes the correct number of characters using endIndex - startIndex from the AST node", () => {
+            const textNode = findNode("Hello");
+            const expectedLength = textNode.endIndex - textNode.startIndex;
 
-            ratatoskr.registry.register(textNode.id, { startId: dummyId, length: 13 });
+            // Node is stamped via stampAll in beforeEach — no manual setup needed
+            ratatoskr.translate([{ type: ActionType.DELETE, node: textNode } as Delete]);
 
-            jest.spyOn(fugue, "getById").mockReturnValue({ id: dummyId, value: "H", isDeleted: false } as any);
-            jest.spyOn(fugue, "getVisibleIndex").mockReturnValue(40);
-
-            const editScript = [
-                {
-                    type: ActionType.DELETE,
-                    node: textNode,
-                } as Delete,
-            ];
-
-            ratatoskr.translate(editScript);
-
-            expect(deleteSpy).toHaveBeenCalledWith(40, 13);
-            expect(ratatoskr.registry.get(textNode.id)).toBeUndefined();
+            expect(deleteSpy).toHaveBeenCalledWith(expect.any(Number), expectedLength);
         });
 
-        it("should return [] and not throw when deleting an unregistered node", () => {
-            const unregisteredNode = { id: "ghost-id", type: "text", text: "x", childrenIds: [] } as any;
+        it("calls deleteMultiple at the visible index of the stamped FNode", () => {
+            const textNode = findNode("Hello");
+            const startFNode = fugue.findAstStart(textNode.id)!;
+            const expectedIdx = fugue.getVisibleIndex(startFNode);
+
+            ratatoskr.translate([{ type: ActionType.DELETE, node: textNode } as Delete]);
+
+            expect(deleteSpy).toHaveBeenCalledWith(expectedIdx, expect.any(Number));
+        });
+
+        it("clears the stamp from astIdx after deletion", () => {
+            const textNode = findNode("Hello");
+            const clearSpy = jest.spyOn(fugue, "removeAstIdx");
+
+            ratatoskr.translate([{ type: ActionType.DELETE, node: textNode } as Delete]);
+
+            expect(clearSpy).toHaveBeenCalledWith(textNode.id);
+        });
+
+        it("returns [] and does not call deleteMultiple when the node is not stamped", () => {
+            const unregisteredNode: AstNode = {
+                id: "ghost-id",
+                type: "text",
+                text: "x",
+                childrenIds: [],
+                startIndex: 0,
+                endIndex: 1,
+            } as any;
+
+            // ghost-id was never stamped — findAstStart returns undefined naturally
             const msgs = ratatoskr.translate([{ type: ActionType.DELETE, node: unregisteredNode } as Delete]);
+
             expect(msgs).toEqual([]);
             expect(deleteSpy).not.toHaveBeenCalled();
         });
     });
 
     describe("UPDATE", () => {
-        it("should replace old content with new content in the FugueTree", () => {
-            const textNode = Array.from(ast.nodes.values()).find((n) => n.text.includes("Hello"));
-            if (!textNode) throw new Error("Could not find text node in AST");
+        it("replaces old content with new content and re-stamps the FNode", () => {
+            const textNode = findNode("Hello");
+            const expectedLength = textNode.endIndex - textNode.startIndex;
+            const expectedIdx = fugue.getVisibleIndex(fugue.findAstStart(textNode.id)!);
 
-            ratatoskr.registry.register(textNode.id, { startId: dummyId, length: 13 });
-
-            jest.spyOn(fugue, "getById").mockReturnValue({ id: dummyId, value: "H", isDeleted: false } as any);
-            jest.spyOn(fugue, "getVisibleIndex").mockReturnValue(40);
+            // Mock getSpanText so the "same value" guard doesn't skip the operation
             jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
+            const updateAstIdxSpy = jest.spyOn(fugue, "updateAstIdx");
 
-            const editScript = [
+            const msgs = ratatoskr.translate([
                 {
                     type: ActionType.UPDATE,
                     node: textNode,
                     value: "Goodbye, World!",
+                    newNode: textNode,
                 } as Update,
-            ];
+            ]);
 
-            const msgs = ratatoskr.translate(editScript);
-
-            expect(deleteSpy).toHaveBeenCalledWith(40, 13);
-            expect(insertSpy).toHaveBeenCalledWith(40, "Goodbye, World!");
-
-            const anchor = ratatoskr.registry.get(textNode.id);
-            expect(anchor?.length).toBe(15);
-
+            expect(deleteSpy).toHaveBeenCalledWith(expectedIdx, expectedLength);
+            expect(insertSpy).toHaveBeenCalledWith(expectedIdx, "Goodbye, World!");
+            expect(updateAstIdxSpy).toHaveBeenCalledWith(textNode.id, expect.any(Object));
             expect(msgs.some((m) => m.coastOpPart === "DELETE")).toBe(true);
             expect(msgs.some((m) => m.coastOpPart === "INSERT")).toBe(true);
         });
 
-        it("should skip UPDATE when new value equals current content", () => {
-            const textNode = Array.from(ast.nodes.values()).find((n) => n.text.includes("Hello"))!;
-            ratatoskr.registry.register(textNode.id, { startId: dummyId, length: 13 });
+        it("skips UPDATE when the new value equals the current span content", () => {
+            const textNode = findNode("Hello");
+
+            // Return the exact same value as what we pass to UPDATE
             jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
 
             const msgs = ratatoskr.translate([
-                { type: ActionType.UPDATE, node: textNode, value: "Hello, World!" } as Update,
+                {
+                    type: ActionType.UPDATE,
+                    node: textNode,
+                    value: "Hello, World!",
+                    newNode: textNode,
+                } as Update,
             ]);
 
             expect(deleteSpy).not.toHaveBeenCalled();
             expect(insertSpy).not.toHaveBeenCalled();
             expect(msgs).toHaveLength(0);
         });
+
+        it("also stamps newNode.id when it differs from the original node id", () => {
+            const textNode = findNode("Hello");
+            const newNode = { ...textNode, id: "updated-node-id" };
+
+            jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
+            const updateAstIdxSpy = jest.spyOn(fugue, "updateAstIdx");
+
+            ratatoskr.translate([
+                {
+                    type: ActionType.UPDATE,
+                    node: textNode,
+                    value: "New Text",
+                    newNode,
+                } as Update,
+            ]);
+
+            expect(updateAstIdxSpy).toHaveBeenCalledWith("updated-node-id", expect.any(Object));
+        });
     });
 
     describe("MOVE", () => {
-        it("should insert at the new position and delete from the old position", () => {
-            const textNode = Array.from(ast.nodes.values()).find((n) => n.text.includes("Hello"));
-            if (!textNode) throw new Error("Could not find text node in AST");
+        it("inserts content at the destination before deleting from the source", () => {
+            const textNode = findNode("Hello");
+            const parent = findParent(textNode);
 
-            ratatoskr.registry.register(textNode.id, { startId: dummyId, length: 13 });
-
-            jest.spyOn(fugue, "getById").mockReturnValue({ id: dummyId, value: "H", isDeleted: false } as any);
-            jest.spyOn(fugue, "getVisibleIndex").mockReturnValue(40);
-            jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
-
-            const editScript = [
-                {
-                    type: ActionType.MOVE,
-                    node: textNode,
-                    pos: 10,
-                } as Move,
-            ];
-
-            ratatoskr.translate(editScript);
-
-            expect(insertSpy).toHaveBeenCalledWith(10, "Hello, World!");
-            expect(deleteSpy).toHaveBeenCalledWith(40, 13);
-        });
-
-        it("should throw when moving an unregistered node", () => {
-            const unregisteredNode = { id: "ghost-id", type: "text", text: "x", childrenIds: [] } as any;
-            expect(() =>
-                ratatoskr.translate([{ type: ActionType.MOVE, node: unregisteredNode, pos: 0 } as Move]),
-            ).toThrow("Move target not in registry");
-        });
-
-        it("should call insertMultiple before deleteMultiple in MOVE", () => {
-            const textNode = Array.from(ast.nodes.values()).find((n) => n.text.includes("Hello"));
-            if (!textNode) throw new Error("Could not find text node in AST");
-
-            ratatoskr.registry.register(textNode.id, { startId: dummyId, length: 13 });
-
-            jest.spyOn(fugue, "getById").mockReturnValue({ id: dummyId, value: "H", isDeleted: false } as any);
-            jest.spyOn(fugue, "getVisibleIndex").mockReturnValue(40);
-            jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
-
+            // Spy so we can verify insert happens before delete
             const callOrder: string[] = [];
             insertSpy.mockImplementation(function (...args) {
                 callOrder.push("insert");
@@ -210,44 +252,143 @@ describe("Ratatoskr", () => {
                 return originalDeleteMultiple.apply(fugue, args);
             });
 
-            const editScript = [
+            jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
+
+            ratatoskr.translate([
                 {
                     type: ActionType.MOVE,
                     node: textNode,
-                    pos: 10,
-                } as Move,
-            ];
-
-            ratatoskr.translate(editScript);
+                    parent,
+                    pos: 0,
+                } as any,
+            ]);
 
             expect(callOrder).toEqual(["insert", "delete"]);
+        });
+
+        it("deletes the correct number of characters using endIndex - startIndex", () => {
+            const textNode = findNode("Hello");
+            const parent = findParent(textNode);
+            const expectedLength = textNode.endIndex - textNode.startIndex;
+
+            jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
+
+            ratatoskr.translate([
+                {
+                    type: ActionType.MOVE,
+                    node: textNode,
+                    parent,
+                    pos: 0,
+                } as any,
+            ]);
+
+            expect(deleteSpy).toHaveBeenCalledWith(expect.any(Number), expectedLength);
+        });
+
+        it("re-stamps the node with the first inserted FNode after a move", () => {
+            const textNode = findNode("Hello");
+            const parent = findParent(textNode);
+            const updateAstIdxSpy = jest.spyOn(fugue, "updateAstIdx");
+
+            jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
+
+            ratatoskr.translate([
+                {
+                    type: ActionType.MOVE,
+                    node: textNode,
+                    parent,
+                    pos: 0,
+                } as any,
+            ]);
+
+            expect(updateAstIdxSpy).toHaveBeenCalledWith(textNode.id, expect.any(Object));
+        });
+
+        it("throws when moving a node that is not stamped in astIdx", () => {
+            const unregisteredNode: AstNode = {
+                id: "ghost-id",
+                type: "text",
+                text: "x",
+                childrenIds: [],
+                startIndex: 0,
+                endIndex: 1,
+            } as any;
+
+            const rootNode = ast.nodes.get(ast.rootId)!;
+
+            expect(() =>
+                ratatoskr.translate([
+                    {
+                        type: ActionType.MOVE,
+                        node: unregisteredNode,
+                        parent: rootNode,
+                        pos: 0,
+                    } as any,
+                ]),
+            ).toThrow("Move target not stamped");
         });
     });
 
     describe("Edge Cases", () => {
-        it("should tag all messages from one translate() call with the same coastTxId", () => {
-            const newNode: AstNode = { id: "n1", type: "text", text: "A", childrenIds: [] } as any;
-            const newNode2: AstNode = { id: "n2", type: "text", text: "B", childrenIds: [] } as any;
+        it("tags all messages from one translate() call with the same coastTxId", () => {
+            const rootNode = ast.nodes.get(ast.rootId)!;
+            const makeLeaf = (id: string, text: string): AstNode =>
+                ({ id, type: "text", text, childrenIds: [], startIndex: 0, endIndex: text.length }) as any;
+
             const msgs = ratatoskr.translate([
-                { type: ActionType.TREE_INSERT, pos: 0, node: newNode } as TreeInsert,
-                { type: ActionType.TREE_INSERT, pos: 1, node: newNode2 } as TreeInsert,
+                { type: ActionType.TREE_INSERT, pos: 0, node: makeLeaf("n1", "A"), parent: rootNode } as any,
+                { type: ActionType.TREE_INSERT, pos: 0, node: makeLeaf("n2", "B"), parent: rootNode } as any,
             ]);
+
             const txIds = new Set(msgs.map((m) => m.coastTxId));
             expect(txIds.size).toBe(1);
         });
 
-        it("should log each translate() call to pastActions", () => {
-            const newNode: AstNode = { id: "log-node", type: "text", text: "x", childrenIds: [] } as any;
+        it("logs each translate() call to pastActions", () => {
+            const rootNode = ast.nodes.get(ast.rootId)!;
+            const newNode: AstNode = {
+                id: "log-node",
+                type: "text",
+                text: "x",
+                childrenIds: [],
+                startIndex: 0,
+                endIndex: 1,
+            } as any;
+
             expect(ratatoskr.pastActions).toHaveLength(0);
-            ratatoskr.translate([{ type: ActionType.TREE_INSERT, pos: 0, node: newNode } as TreeInsert]);
+            ratatoskr.translate([{ type: ActionType.TREE_INSERT, pos: 0, node: newNode, parent: rootNode } as any]);
             expect(ratatoskr.pastActions).toHaveLength(1);
             expect(ratatoskr.pastActions[0].editScript).toHaveLength(1);
         });
 
-        it("should set coastNodeKey to the node id on all returned messages", () => {
-            const newNode: AstNode = { id: "key-check-id", type: "text", text: "X", childrenIds: [] } as any;
-            const msgs = ratatoskr.translate([{ type: ActionType.TREE_INSERT, pos: 0, node: newNode } as TreeInsert]);
+        it("sets coastNodeKey to the node id on all returned messages", () => {
+            const rootNode = ast.nodes.get(ast.rootId)!;
+            const newNode: AstNode = {
+                id: "key-check-id",
+                type: "text",
+                text: "X",
+                childrenIds: [],
+                startIndex: 0,
+                endIndex: 1,
+            } as any;
+
+            const msgs = ratatoskr.translate([
+                { type: ActionType.TREE_INSERT, pos: 0, node: newNode, parent: rootNode } as any,
+            ]);
+
             msgs.forEach((m) => expect(m.coastNodeKey).toBe("key-check-id"));
+        });
+
+        it("returns an empty array when translate is called with an empty edit script", () => {
+            const msgs = ratatoskr.translate([]);
+            expect(msgs).toEqual([]);
+        });
+
+        it("returns [] without calling newAst when newAst is not set", () => {
+            const bare = new Ratatoskr(fugue);
+            const msgs = bare.translate([{ type: ActionType.DELETE, node: findNode("Hello") } as Delete]);
+            expect(msgs).toEqual([]);
+            expect(deleteSpy).not.toHaveBeenCalled();
         });
     });
 });

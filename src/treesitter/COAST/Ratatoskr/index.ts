@@ -14,7 +14,7 @@ import {
     TreeInsert,
     Update,
 } from "../../Actions/Model/Action.js";
-import { AstNode, BragiAST } from "../../types/index.js";
+import { AstNode, BragiAST, NodeId } from "../../types/index.js";
 import { Anchor, Registry } from "../Registry/index.js";
 
 /**
@@ -26,14 +26,12 @@ import { Anchor, Registry } from "../Registry/index.js";
  * proverbial roots of the tree.
  */
 export class Ratatoskr {
-    registry: Registry;
     fugue: FugueTree;
     pastActions: { timestamp: number; editScript: EditScript }[] = [];
     newAst?: BragiAST;
 
-    constructor(fugue: FugueTree, registry: Registry, newAst?: BragiAST) {
+    constructor(fugue: FugueTree, newAst?: BragiAST) {
         this.fugue = fugue;
-        this.registry = registry;
         this.newAst = newAst;
     }
 
@@ -94,30 +92,28 @@ export class Ratatoskr {
     private handleInsert(action: TreeInsert, txId: string): FugueMessage[] {
         // Get the text content of the node being inserted, and perform an insertion opertion on the FugueTree
         const text = this.serializeNode(action.node);
-        const msgs = this.fugue.insertMultiple(action.pos, text);
-        logger.debug({ text, state: this.fugue.observe() }, "Handling insert for node", action.node.id);
+        logger.debug("Handling insert for node", { text, state: this.fugue.observe(), id: action.node.id });
+        const cpos = this.resolveCharPos(action.parent.id, action.pos);
+        const msgs = this.fugue.insertMultiple(cpos, text);
 
         this.tag(msgs, txId, action.node.id, "ADD");
 
-        // Register the new node in the registry for reference in fugure operations.
-        this.registry.register(action.node.id, {
-            startId: msgs[0].id,
-            length: text.length,
-        });
+        const fnode = this.fugue.getById(msgs[0].id);
+        this.fugue.updateAstIdx(action.node.id, fnode);
 
-        this.registerSubtree(action.node, msgs, 0);
+        this.stampInsertedSubtree(action.node, msgs, 0);
 
         return msgs;
     }
 
-    private registerSubtree(node: AstNode, msgs: FugueMessage[], offset: number): number {
+    private stampInsertedSubtree(node: AstNode, msgs: FugueMessage[], offset: number): number {
         if (!node.childrenIds || node.childrenIds.length === 0) {
             const len = node.text?.length ?? 0;
-            if (len > 0 && !this.registry.has(node.id)) {
-                this.registry.register(node.id, {
-                    startId: msgs[offset].id,
-                    length: len,
-                });
+            if (len > 0) {
+                const fnode = this.fugue.getById(msgs[offset].id);
+                if (!fnode.astNodeId) {
+                    this.fugue.updateAstIdx(node.id, fnode);
+                }
             }
             return len;
         }
@@ -126,14 +122,14 @@ export class Ratatoskr {
         let currentOffset = offset;
         for (const childId of node.childrenIds) {
             const child = this.newAst!.nodes.get(childId)!;
-            currentOffset += this.registerSubtree(child, msgs, currentOffset);
+            currentOffset += this.stampInsertedSubtree(child, msgs, currentOffset);
         }
 
-        if (!this.registry.has(node.id) && currentOffset > startOffset) {
-            this.registry.register(node.id, {
-                startId: msgs[startOffset].id,
-                length: currentOffset - startOffset,
-            });
+        if (currentOffset > startOffset) {
+            const fnode = this.fugue.getById(msgs[startOffset].id);
+            if (!fnode.astNodeId) {
+                this.fugue.updateAstIdx(node.id, fnode);
+            }
         }
 
         return currentOffset - startOffset;
@@ -146,13 +142,16 @@ export class Ratatoskr {
      * @returns An array of FugueMessages resulting from the translation of the Move action
      */
     private handleMove(action: Move, txId: string): FugueMessage[] {
-        logger.debug("Handling move for node", action.node.id, { registry: this.registry });
+        logger.debug("Handling move for node", action.node.id);
         // Retrieve the current anchor for the node being moved, and the text content of the span being moved.
         // this assumes that the span being moved exists in the registry.
-        const anchor = this.registry.get(action.node.id);
-        if (!anchor) throw new Error("Move target not in registry");
+        const sn = this.fugue.findAstStart(action.node.id);
+        if (!sn) throw new Error(`Move target ${action.node.id} not stamped`);
 
-        const content = this.getSpanText(anchor);
+        const len = action.node.endIndex - action.node.startIndex;
+        const content = this.getSpanText(sn, len);
+        const srcTdx = this.fugue.getVisibleIndex(sn);
+        const dstIdx = this.resolveCharPos(action.parent.id, action.pos);
 
         // If there is no content to move, we can skip the operation
         if (content.length === 0) return [];
@@ -160,7 +159,7 @@ export class Ratatoskr {
         // To prevent loss of content during move, we perform the insert operation before the delete operation
         // we essentially treat the move as a copy of the existing content to the new location, followed by a deletion of the old content
 
-        const insMsgs = this.fugue.insertMultiple(action.pos, content);
+        const insMsgs = this.fugue.insertMultiple(dstIdx, content);
         this.tag(insMsgs, txId, action.node.id, "MOVE", "INSERT");
 
         // If there are no insert message it means the insert operation did not actually insert any content
@@ -171,8 +170,7 @@ export class Ratatoskr {
             );
 
         // Find the index of the first node being moved, and delete the span being moved from its original location
-        const srcTdx = this.fugue.getVisibleIndex(this.fugue.getById(anchor.startId));
-        const delMsgs = this.fugue.deleteMultiple(srcTdx, anchor.length);
+        const delMsgs = this.fugue.deleteMultiple(srcTdx, len);
         this.tag(delMsgs, txId, action.node.id, "MOVE", "DELETE");
 
         // Determine the expected number of insert and delete messages to be generated for this move operation, used
@@ -185,8 +183,8 @@ export class Ratatoskr {
             m.coastExpectedDeleteCount = expectedDelete;
         });
 
-        // Update Registry to new anchor
-        this.registry.update(action.node.id, { startId: insMsgs[0].id });
+        const newSN = this.fugue.getById(insMsgs[0].id);
+        this.fugue.updateAstIdx(action.node.id, newSN);
 
         return all;
     }
@@ -198,15 +196,16 @@ export class Ratatoskr {
      * @returns An array of FugueMessages resulting from the translation of the Delete action
      */
     private handleDelete(action: Delete, txId: string): FugueMessage[] {
-        logger.debug("Handling delete for node", action.node.id, { registry: this.registry });
-        const anchor = this.registry.get(action.node.id);
-        if (!anchor) throw new Error(`Delete target ${action.node.id} not in registry`);
+        logger.debug("Handling delete for node", { id: action.node.id });
+        const sn = this.fugue.findAstStart(action.node.id);
+        if (!sn) throw new Error(`Delete target ${action.node.id} not stamped`);
 
-        const idx = this.fugue.getVisibleIndex(this.fugue.getById(anchor.startId));
-        const msgs = this.fugue.deleteMultiple(idx, anchor.length);
+        const len = action.node.endIndex - action.node.startIndex;
+        const idx = this.fugue.getVisibleIndex(sn);
+        const msgs = this.fugue.deleteMultiple(idx, len);
 
         this.tag(msgs, txId, action.node.id, "DELETE");
-        this.registry.delete(action.node.id);
+        this.fugue.removeAstIdx(action.node.id);
 
         return msgs;
     }
@@ -218,30 +217,27 @@ export class Ratatoskr {
      * @returns  An array of FugueMessages resulting from the translation of the Update action
      */
     private handleUpdate(action: Update, txId: string): FugueMessage[] {
-        logger.debug({ registry: this.registry }, "Registry before update for node", action.node.id);
+        logger.debug("Handling update for node", { id: action.node.id, newValue: action.value });
 
         // An update is treated as a deletion of the old content and an insertion of the new content.
         // This bypasses the problems of move operation because we are not trying to preserve the deleted content, so we can
         // perform the delete, without worrying about the lost content, then the insert operation
-        const anchor = this.registry.get(action.node.id);
-        if (!anchor) {
-            throw new Error(`Update target ${action.node.id} not in registry`);
-        }
+        const sn = this.fugue.findAstStart(action.node.id);
+        if (!sn) throw new Error(`Update target ${action.node.id} not stamped`);
 
-        const content = this.getSpanText(anchor);
+        const len = action.node.endIndex - action.node.startIndex;
+        const content = this.getSpanText(sn, len);
+        const newVal = Array.isArray(action.value) ? action.value.join("") : action.value;
         const msgs: FugueMessage[] = [];
 
         // If the content is the same, we can skip the update
         if (content === action.value) return msgs;
 
-        const idx = this.fugue.getVisibleIndex(this.fugue.getById(anchor.startId));
-        const delMsgs = this.fugue.deleteMultiple(idx, anchor.length);
+        const idx = this.fugue.getVisibleIndex(sn);
+        const delMsgs = this.fugue.deleteMultiple(idx, len);
         this.tag(delMsgs, txId, action.node.id, "UPDATE", "DELETE");
 
-        const insMsgs = this.fugue.insertMultiple(
-            idx,
-            Array.isArray(action.value) ? action.value.join("") : action.value,
-        );
+        const insMsgs = this.fugue.insertMultiple(idx, newVal);
         this.tag(insMsgs, txId, action.node.id, "UPDATE", "INSERT");
 
         const expectedInsert = insMsgs.length;
@@ -252,14 +248,10 @@ export class Ratatoskr {
             m.coastExpectedDeleteCount = expectedDelete;
         });
 
-        this.registry.update(action.node.id, { startId: insMsgs[0].id, length: action.value.length });
+        const newSN = this.fugue.getById(insMsgs[0].id);
+        this.fugue.updateAstIdx(action.node.id, newSN);
 
-        if (action.newNode.id !== action.node.id) {
-            this.registry.register(action.newNode.id, {
-                startId: insMsgs[0].id,
-                length: typeof action.value === "string" ? action.value.length : action.value.join("").length,
-            });
-        }
+        if (action.newNode.id !== action.node.id) this.fugue.updateAstIdx(action.newNode.id, newSN);
 
         return all;
     }
@@ -314,24 +306,49 @@ export class Ratatoskr {
      * @param anchor - The Anchor representing the span of text to retrieve from the FugueTree
      * @returns A string representing the current text content of the span defined by the anchor in the FugueTree
      */
-    private getSpanText(anchor: Anchor): string {
+    private getSpanText(startFNode: FNode, length: number): string {
         let text = "";
-        let currentNode: FNode | null = this.fugue.getById(anchor.startId);
+        let currentNode: FNode | null = startFNode;
 
-        for (let i = 0; i < anchor.length; i++) {
+        for (let i = 0; i < length; i++) {
             if (!currentNode) break;
 
             if (!currentNode.isDeleted && currentNode.value !== null) {
                 text += currentNode.value;
             } else {
-                // If the current node is deleted or has no value, we need to skip it and move to the next non-deleted node in the FugueTree.
                 i--;
             }
 
-            // Move to the next node in the FugueTree as dictated by the nextNonDescendant function, which will skip over any deleted nodes and their descendants.
             currentNode = this.fugue.nextNonDescendant(currentNode);
         }
 
         return text;
+    }
+
+    private resolveCharPos(parentId: NodeId, childOrdinal: number): number {
+        const parentFNode = this.fugue.findAstStart(parentId);
+        if (!parentFNode) throw new Error(`Parent ${parentId} not stamped`);
+
+        const parentAstNode = this.newAst!.nodes.get(parentId);
+        if (!parentAstNode || childOrdinal === 0) {
+            return this.fugue.getVisibleIndex(parentFNode);
+        }
+
+        // Walk backwards to find the last sibling before this position that is stamped.
+        // This handles mixed cases where some prior siblings are mapped from the old AST
+        // and others were just inserted earlier in this translate pass.
+        for (let i = childOrdinal - 1; i >= 0; i--) {
+            const sibId = parentAstNode.childrenIds[i];
+            if (!sibId) continue;
+            const sibFNode = this.fugue.findAstStart(sibId);
+            if (sibFNode) {
+                const sibAst = this.newAst!.nodes.get(sibId)!;
+                const sibLength = sibAst.endIndex - sibAst.startIndex;
+                return this.fugue.getVisibleIndex(sibFNode) + sibLength;
+            }
+        }
+
+        // No stamped sibling found before this position — insert at parent start
+        return this.fugue.getVisibleIndex(parentFNode);
     }
 }

@@ -1,3 +1,5 @@
+import { NodeId } from "../../treesitter";
+
 // Adapted from https://github.com/mweidner037/fugue/blob/main/fugue-max-simple/src/index.ts
 export type NodeSide = "L" | "R";
 
@@ -31,6 +33,7 @@ export interface FNode {
     rightChildren: FNode[];
     size: number;
     rightOrigin?: FNode | null;
+    astNodeId?: NodeId;
 }
 
 /**

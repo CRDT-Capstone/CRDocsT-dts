@@ -210,7 +210,7 @@ type BuildActionsInput = Array<
     | { kind: "insert"; node: AstNode; parent: AstNode; pos: number }
     | { kind: "delete"; node: AstNode }
     | { kind: "move"; node: AstNode; parent: AstNode; pos: number }
-    | { kind: "update"; node: AstNode; value: string }
+    | { kind: "update"; node: AstNode; value: string; newNode: AstNode }
     | { kind: "treeInsert"; node: AstNode; parent: AstNode; pos: number }
     | { kind: "treeDelete"; node: AstNode }
 >;
@@ -225,7 +225,7 @@ export function buildActions(specs: BuildActionsInput) {
             case "move":
                 return new Move(s.node, s.parent, s.pos);
             case "update":
-                return new Update(s.node, s.value);
+                return new Update(s.node, s.value, s.newNode);
             case "treeInsert":
                 return new TreeInsert(s.node, s.parent, s.pos);
             case "treeDelete":

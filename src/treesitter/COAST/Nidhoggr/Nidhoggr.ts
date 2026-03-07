@@ -16,7 +16,6 @@ interface PendingTxn {
 
 interface AppliedTxn {
     txn: PendingTxn;
-    registryStateBefore: ReturnType<Registry["save"]>;
     appliedAt: number;
 }
 
@@ -26,7 +25,6 @@ interface AppliedTxn {
  */
 export class Nidhoggr {
     fugue: FugueTree;
-    registry: Registry;
     // Map of txnId to buffered messages for txns that haven't yet been fully received.
     private pendingTxns: Map<string, PendingTxn> = new Map();
     // History of the most recent operation observed on each node, used for conflict detection. Accessed by nodeKey.
@@ -38,9 +36,8 @@ export class Nidhoggr {
     // Optional conflict handler callback, invoked when a potential conflict is detected. If not provided, the user is only notified of conflicts
     private onConflict: ConflictHandler | null;
 
-    constructor(fugue: FugueTree, registry: Registry, options?: NidhoggrOptions) {
+    constructor(fugue: FugueTree, options?: NidhoggrOptions) {
         this.fugue = fugue;
-        this.registry = registry;
         this.txnTtlMs = options?.txnTtlMs ?? 10_000;
         this.onConflict = options?.onConflict ?? null;
     }
@@ -197,7 +194,6 @@ export class Nidhoggr {
 
         this.history.push({
             txn,
-            registryStateBefore: this.registry.save(),
             appliedAt: Date.now(),
         });
         this.history.sort((a, b) => logicalTimeOf(a.txn.msgs) - logicalTimeOf(b.txn.msgs));
@@ -209,7 +205,6 @@ export class Nidhoggr {
         // Before applying the txn, we perform conflict detection to see if this txn conflicts with
         // any prior operations we've seen on the same node.
         this.detectConflicts(txn);
-        logger.debug(`Pending txns -> ${[...this.pendingTxns.keys()].join(", ")}`);
 
         switch (txn.opType) {
             case "ADD":
@@ -257,15 +252,13 @@ export class Nidhoggr {
         if (txn.msgs.length > 0) {
             const nodeKey = txn.msgs[0].coastNodeKey!;
             if (applied.length > 0) {
-                if (!this.registry.get(nodeKey)) {
+                if (!this.fugue.findAstStart(nodeKey)) {
                     // Find the minimum counter among the applied ADD messages, which should correspond to the first message that added this node.
                     let firstApplied = this.findFirstAppliedMsg(applied);
 
                     if (firstApplied) {
-                        this.registry.register(nodeKey, {
-                            startId: firstApplied.id,
-                            length: txn.msgs.length,
-                        });
+                        const n = this.fugue.getById(firstApplied.id);
+                        this.fugue.updateAstIdx(nodeKey, n);
                     }
                 }
 
@@ -290,7 +283,7 @@ export class Nidhoggr {
         // We can have multiple DELETE txns for the same nodeKey
         if (applied.length > 0) {
             const nodeKey = txn.msgs[0].coastNodeKey!;
-            this.registry.delete(nodeKey);
+            this.fugue.removeAstIdx(nodeKey);
             this.recordHistory(txn);
         }
 
@@ -319,9 +312,8 @@ export class Nidhoggr {
 
             const firstInsert = this.findFirstAppliedMsg(appliedInserts);
             if (firstInsert) {
-                this.registry.update(nodeKey, {
-                    startId: firstInsert.id,
-                });
+                const n = this.fugue.getById(firstInsert.id);
+                this.fugue.updateAstIdx(nodeKey, n);
             }
 
             this.recordHistory(txn);
@@ -352,10 +344,8 @@ export class Nidhoggr {
             const firstInsert = this.findFirstAppliedMsg(appliedInserts);
 
             if (firstInsert) {
-                this.registry.update(nodeKey, {
-                    startId: firstInsert.id,
-                    length: insertMsgs.length,
-                });
+                const n = this.fugue.getById(firstInsert.id);
+                this.fugue.updateAstIdx(nodeKey, n);
             }
 
             this.recordHistory(txn);
@@ -384,7 +374,7 @@ export class Nidhoggr {
             nodeKey,
             prior,
             { txnId: txn.txnId, opType: txn.opType, msgs: txn.msgs },
-            this.registry.get(nodeKey) !== undefined,
+            this.fugue.findAstStart(nodeKey) !== undefined,
         );
 
         if (conflict) {
@@ -396,7 +386,7 @@ export class Nidhoggr {
      * Records the given txn in the node history for future conflict detection.
      * @param txn - The pending txn to record in the history.
      */
-    private recordHistory(txn: PendingTxn): void {
+    private recordHistory(txn: PendingTxn) {
         const nodeKey = txn.msgs[0]?.coastNodeKey;
         if (!nodeKey) return;
 
