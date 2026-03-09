@@ -16,6 +16,8 @@ export interface AcronymDefinitionNode {
     parentId: NodeId | null;
     type: "acronym_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     long: NodeId;
     name: NodeId;
@@ -29,6 +31,8 @@ export interface AcronymReferenceNode {
     parentId: NodeId | null;
     type: "acronym_reference";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     options?: NodeId;
@@ -40,6 +44,8 @@ export interface AsyEnvironmentNode {
     parentId: NodeId | null;
     type: "asy_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -51,6 +57,8 @@ export interface AsydefEnvironmentNode {
     parentId: NodeId | null;
     type: "asydef_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -62,6 +70,8 @@ export interface AuthorNode {
     parentId: NodeId | null;
     type: "author";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -70,6 +80,8 @@ export interface AuthorDeclarationNode {
     parentId: NodeId | null;
     type: "author_declaration";
     text: string;
+    startIndex: number;
+    endIndex: number;
     authors: NodeId;
     command: NodeId;
     options?: NodeId;
@@ -81,6 +93,8 @@ export interface BeginNode {
     parentId: NodeId | null;
     type: "begin";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     language?: NodeId;
     name: NodeId;
@@ -93,6 +107,8 @@ export interface BiblatexIncludeNode {
     parentId: NodeId | null;
     type: "biblatex_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     glob: NodeId;
     options?: NodeId;
     childrenIds: NodeId[];
@@ -103,6 +119,8 @@ export interface BibstyleIncludeNode {
     parentId: NodeId | null;
     type: "bibstyle_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     path: NodeId;
     childrenIds: NodeId[];
@@ -113,6 +131,8 @@ export interface BibtexIncludeNode {
     parentId: NodeId | null;
     type: "bibtex_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     paths: NodeId;
     childrenIds: NodeId[];
@@ -123,6 +143,8 @@ export interface BlockCommentNode {
     parentId: NodeId | null;
     type: "block_comment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     comment?: NodeId;
     end?: NodeId;
@@ -134,6 +156,8 @@ export interface BrackGroupNode {
     parentId: NodeId | null;
     type: "brack_group";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -142,6 +166,8 @@ export interface BrackGroupArgcNode {
     parentId: NodeId | null;
     type: "brack_group_argc";
     text: string;
+    startIndex: number;
+    endIndex: number;
     value: NodeId;
     childrenIds: NodeId[];
 }
@@ -151,6 +177,8 @@ export interface BrackGroupKeyValueNode {
     parentId: NodeId | null;
     type: "brack_group_key_value";
     text: string;
+    startIndex: number;
+    endIndex: number;
     pair?: NodeId[];
     childrenIds: NodeId[];
 }
@@ -159,7 +187,9 @@ export interface BrackGroupTextNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "brack_group_text";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -168,6 +198,8 @@ export interface BrackGroupWordNode {
     parentId: NodeId | null;
     type: "brack_group_word";
     text: string;
+    startIndex: number;
+    endIndex: number;
     word: NodeId;
     childrenIds: NodeId[];
 }
@@ -177,6 +209,8 @@ export interface CaptionNode {
     parentId: NodeId | null;
     type: "caption";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     long: NodeId;
     short?: NodeId;
@@ -188,6 +222,8 @@ export interface ChangesReplacedNode {
     parentId: NodeId | null;
     type: "changes_replaced";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     text_added: NodeId;
     text_deleted: NodeId;
@@ -198,7 +234,9 @@ export interface ChapterNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "chapter";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -209,6 +247,8 @@ export interface CitationNode {
     parentId: NodeId | null;
     type: "citation";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     keys: NodeId;
     postnote?: NodeId;
@@ -221,6 +261,8 @@ export interface ClassIncludeNode {
     parentId: NodeId | null;
     type: "class_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     path: NodeId;
@@ -232,6 +274,8 @@ export interface ColorDefinitionNode {
     parentId: NodeId | null;
     type: "color_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     model: NodeId;
     name: NodeId;
@@ -243,7 +287,9 @@ export interface ColorReferenceNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "color_reference";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     model?: NodeId;
     name?: NodeId;
@@ -256,6 +302,8 @@ export interface ColorSetDefinitionNode {
     parentId: NodeId | null;
     type: "color_set_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     head: NodeId;
     model: NodeId;
@@ -270,6 +318,8 @@ export interface CommentEnvironmentNode {
     parentId: NodeId | null;
     type: "comment_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     comment: NodeId;
     end: NodeId;
@@ -281,6 +331,8 @@ export interface CounterAdditionNode {
     parentId: NodeId | null;
     type: "counter_addition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     value: NodeId[];
@@ -292,6 +344,8 @@ export interface CounterDeclarationNode {
     parentId: NodeId | null;
     type: "counter_declaration";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     supercounter?: NodeId;
@@ -303,6 +357,8 @@ export interface CounterDefinitionNode {
     parentId: NodeId | null;
     type: "counter_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     value: NodeId[];
@@ -314,6 +370,8 @@ export interface CounterIncrementNode {
     parentId: NodeId | null;
     type: "counter_increment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     childrenIds: NodeId[];
@@ -324,6 +382,8 @@ export interface CounterTypesettingNode {
     parentId: NodeId | null;
     type: "counter_typesetting";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     childrenIds: NodeId[];
@@ -334,6 +394,8 @@ export interface CounterValueNode {
     parentId: NodeId | null;
     type: "counter_value";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     childrenIds: NodeId[];
@@ -344,6 +406,8 @@ export interface CounterWithinDeclarationNode {
     parentId: NodeId | null;
     type: "counter_within_declaration";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     supercounter: NodeId;
@@ -355,6 +419,8 @@ export interface CounterWithoutDeclarationNode {
     parentId: NodeId | null;
     type: "counter_without_declaration";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter: NodeId;
     supercounter: NodeId;
@@ -366,6 +432,8 @@ export interface CurlyGroupNode {
     parentId: NodeId | null;
     type: "curly_group";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -374,6 +442,8 @@ export interface CurlyGroupAuthorListNode {
     parentId: NodeId | null;
     type: "curly_group_author_list";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -382,6 +452,8 @@ export interface CurlyGroupCommandNameNode {
     parentId: NodeId | null;
     type: "curly_group_command_name";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     childrenIds: NodeId[];
 }
@@ -391,6 +463,8 @@ export interface CurlyGroupGlobPatternNode {
     parentId: NodeId | null;
     type: "curly_group_glob_pattern";
     text: string;
+    startIndex: number;
+    endIndex: number;
     pattern: NodeId;
     childrenIds: NodeId[];
 }
@@ -400,6 +474,8 @@ export interface CurlyGroupImplNode {
     parentId: NodeId | null;
     type: "curly_group_impl";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -408,6 +484,8 @@ export interface CurlyGroupKeyValueNode {
     parentId: NodeId | null;
     type: "curly_group_key_value";
     text: string;
+    startIndex: number;
+    endIndex: number;
     pair?: NodeId[];
     childrenIds: NodeId[];
 }
@@ -417,6 +495,8 @@ export interface CurlyGroupLabelNode {
     parentId: NodeId | null;
     type: "curly_group_label";
     text: string;
+    startIndex: number;
+    endIndex: number;
     label: NodeId;
     childrenIds: NodeId[];
 }
@@ -426,6 +506,8 @@ export interface CurlyGroupLabelListNode {
     parentId: NodeId | null;
     type: "curly_group_label_list";
     text: string;
+    startIndex: number;
+    endIndex: number;
     label?: NodeId[];
     childrenIds: NodeId[];
 }
@@ -435,6 +517,8 @@ export interface CurlyGroupPathNode {
     parentId: NodeId | null;
     type: "curly_group_path";
     text: string;
+    startIndex: number;
+    endIndex: number;
     path: NodeId;
     childrenIds: NodeId[];
 }
@@ -444,6 +528,8 @@ export interface CurlyGroupPathListNode {
     parentId: NodeId | null;
     type: "curly_group_path_list";
     text: string;
+    startIndex: number;
+    endIndex: number;
     path?: NodeId[];
     childrenIds: NodeId[];
 }
@@ -453,6 +539,8 @@ export interface CurlyGroupSpecNode {
     parentId: NodeId | null;
     type: "curly_group_spec";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -460,7 +548,9 @@ export interface CurlyGroupTextNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "curly_group_text";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -468,7 +558,9 @@ export interface CurlyGroupTextListNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "curly_group_text_list";
-    text: string | NodeId[];
+    text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -477,6 +569,8 @@ export interface CurlyGroupUriNode {
     parentId: NodeId | null;
     type: "curly_group_uri";
     text: string;
+    startIndex: number;
+    endIndex: number;
     uri: NodeId;
     childrenIds: NodeId[];
 }
@@ -486,6 +580,8 @@ export interface CurlyGroupValueNode {
     parentId: NodeId | null;
     type: "curly_group_value";
     text: string;
+    startIndex: number;
+    endIndex: number;
     value: NodeId;
     childrenIds: NodeId[];
 }
@@ -495,6 +591,8 @@ export interface CurlyGroupWordNode {
     parentId: NodeId | null;
     type: "curly_group_word";
     text: string;
+    startIndex: number;
+    endIndex: number;
     word: NodeId;
     childrenIds: NodeId[];
 }
@@ -504,6 +602,8 @@ export interface DisplayedEquationNode {
     parentId: NodeId | null;
     type: "displayed_equation";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -512,6 +612,8 @@ export interface EndNode {
     parentId: NodeId | null;
     type: "end";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     childrenIds: NodeId[];
@@ -522,6 +624,8 @@ export interface EnumItemNode {
     parentId: NodeId | null;
     type: "enum_item";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     label?: NodeId;
     childrenIds: NodeId[];
@@ -532,6 +636,8 @@ export interface EnvironmentDefinitionNode {
     parentId: NodeId | null;
     type: "environment_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     argc?: NodeId;
     begin?: NodeId;
     command: NodeId;
@@ -546,6 +652,8 @@ export interface GenericCommandNode {
     parentId: NodeId | null;
     type: "generic_command";
     text: string;
+    startIndex: number;
+    endIndex: number;
     arg?: NodeId[];
     command: NodeId;
     childrenIds: NodeId[];
@@ -556,6 +664,8 @@ export interface GenericEnvironmentNode {
     parentId: NodeId | null;
     type: "generic_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     end: NodeId;
     childrenIds: NodeId[];
@@ -566,6 +676,8 @@ export interface GlobPatternNode {
     parentId: NodeId | null;
     type: "glob_pattern";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -574,6 +686,8 @@ export interface GlossaryEntryDefinitionNode {
     parentId: NodeId | null;
     type: "glossary_entry_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     options: NodeId;
@@ -585,6 +699,8 @@ export interface GlossaryEntryReferenceNode {
     parentId: NodeId | null;
     type: "glossary_entry_reference";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     options?: NodeId;
@@ -596,6 +712,8 @@ export interface GraphicsIncludeNode {
     parentId: NodeId | null;
     type: "graphics_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     path: NodeId;
@@ -607,6 +725,8 @@ export interface HyperlinkNode {
     parentId: NodeId | null;
     type: "hyperlink";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     label?: NodeId;
     uri: NodeId;
@@ -618,6 +738,8 @@ export interface ImportIncludeNode {
     parentId: NodeId | null;
     type: "import_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     directory: NodeId;
     file: NodeId;
@@ -629,6 +751,8 @@ export interface InkscapeIncludeNode {
     parentId: NodeId | null;
     type: "inkscape_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     path: NodeId;
@@ -640,6 +764,8 @@ export interface InlineFormulaNode {
     parentId: NodeId | null;
     type: "inline_formula";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -648,6 +774,8 @@ export interface KeyValuePairNode {
     parentId: NodeId | null;
     type: "key_value_pair";
     text: string;
+    startIndex: number;
+    endIndex: number;
     key: NodeId;
     value?: NodeId;
     childrenIds: NodeId[];
@@ -658,6 +786,8 @@ export interface LabelDefinitionNode {
     parentId: NodeId | null;
     type: "label_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     childrenIds: NodeId[];
@@ -668,6 +798,8 @@ export interface LabelNumberNode {
     parentId: NodeId | null;
     type: "label_number";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     name: NodeId;
     number: NodeId;
@@ -679,6 +811,8 @@ export interface LabelReferenceNode {
     parentId: NodeId | null;
     type: "label_reference";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     names: NodeId;
     childrenIds: NodeId[];
@@ -689,6 +823,8 @@ export interface LabelReferenceRangeNode {
     parentId: NodeId | null;
     type: "label_reference_range";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     from: NodeId;
     to: NodeId;
@@ -700,6 +836,8 @@ export interface LatexIncludeNode {
     parentId: NodeId | null;
     type: "latex_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     path: NodeId;
     childrenIds: NodeId[];
@@ -710,6 +848,8 @@ export interface LetCommandDefinitionNode {
     parentId: NodeId | null;
     type: "let_command_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     declaration: NodeId;
     implementation: NodeId;
@@ -721,6 +861,8 @@ export interface ListingEnvironmentNode {
     parentId: NodeId | null;
     type: "listing_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -732,6 +874,8 @@ export interface LuacodeEnvironmentNode {
     parentId: NodeId | null;
     type: "luacode_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -743,6 +887,8 @@ export interface MathDelimiterNode {
     parentId: NodeId | null;
     type: "math_delimiter";
     text: string;
+    startIndex: number;
+    endIndex: number;
     left_command: NodeId;
     left_delimiter: NodeId;
     right_command: NodeId;
@@ -755,6 +901,8 @@ export interface MathEnvironmentNode {
     parentId: NodeId | null;
     type: "math_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     end: NodeId;
     childrenIds: NodeId[];
@@ -765,6 +913,8 @@ export interface MintedEnvironmentNode {
     parentId: NodeId | null;
     type: "minted_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -776,6 +926,8 @@ export interface NewCommandDefinitionNode {
     parentId: NodeId | null;
     type: "new_command_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     argc?: NodeId;
     command: NodeId;
     declaration: NodeId;
@@ -790,6 +942,8 @@ export interface OldCommandDefinitionNode {
     parentId: NodeId | null;
     type: "old_command_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     declaration: NodeId;
     childrenIds: NodeId[];
@@ -800,6 +954,8 @@ export interface OperatorNode {
     parentId: NodeId | null;
     type: "operator";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -808,6 +964,8 @@ export interface PackageIncludeNode {
     parentId: NodeId | null;
     type: "package_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     paths: NodeId;
@@ -819,6 +977,8 @@ export interface PairedDelimiterDefinitionNode {
     parentId: NodeId | null;
     type: "paired_delimiter_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     argc?: NodeId;
     body?: NodeId;
     command: NodeId;
@@ -832,7 +992,9 @@ export interface ParagraphNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "paragraph";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -842,7 +1004,9 @@ export interface PartNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "part";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -853,6 +1017,8 @@ export interface PycodeEnvironmentNode {
     parentId: NodeId | null;
     type: "pycode_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -864,6 +1030,8 @@ export interface SageblockEnvironmentNode {
     parentId: NodeId | null;
     type: "sageblock_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -875,6 +1043,8 @@ export interface SagesilentEnvironmentNode {
     parentId: NodeId | null;
     type: "sagesilent_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     code: NodeId;
     end: NodeId;
@@ -885,7 +1055,9 @@ export interface SectionNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "section";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -896,6 +1068,8 @@ export interface SourceFileNode {
     parentId: NodeId | null;
     type: "source_file";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -903,7 +1077,9 @@ export interface SubparagraphNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "subparagraph";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -914,6 +1090,8 @@ export interface SubscriptNode {
     parentId: NodeId | null;
     type: "subscript";
     text: string;
+    startIndex: number;
+    endIndex: number;
     subscript: NodeId;
     childrenIds: NodeId[];
 }
@@ -922,7 +1100,9 @@ export interface SubsectionNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "subsection";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -932,7 +1112,9 @@ export interface SubsubsectionNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "subsubsection";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     toc?: NodeId;
     childrenIds: NodeId[];
@@ -943,6 +1125,8 @@ export interface SuperscriptNode {
     parentId: NodeId | null;
     type: "superscript";
     text: string;
+    startIndex: number;
+    endIndex: number;
     superscript: NodeId;
     childrenIds: NodeId[];
 }
@@ -952,6 +1136,8 @@ export interface SvgIncludeNode {
     parentId: NodeId | null;
     type: "svg_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     path: NodeId;
@@ -963,6 +1149,8 @@ export interface TextNode {
     parentId: NodeId | null;
     type: "text";
     text: string;
+    startIndex: number;
+    endIndex: number;
     word: NodeId[];
     childrenIds: NodeId[];
 }
@@ -972,6 +1160,8 @@ export interface TextModeNode {
     parentId: NodeId | null;
     type: "text_mode";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     content: NodeId;
     childrenIds: NodeId[];
@@ -982,6 +1172,8 @@ export interface TheoremDefinitionNode {
     parentId: NodeId | null;
     type: "theorem_definition";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     counter?: NodeId;
     name: NodeId;
@@ -995,6 +1187,8 @@ export interface TikzLibraryImportNode {
     parentId: NodeId | null;
     type: "tikz_library_import";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     paths: NodeId;
     childrenIds: NodeId[];
@@ -1004,7 +1198,9 @@ export interface TitleDeclarationNode {
     id: NodeId;
     parentId: NodeId | null;
     type: "title_declaration";
-    text: string | NodeId;
+    text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     options?: NodeId;
     childrenIds: NodeId[];
@@ -1015,6 +1211,8 @@ export interface TodoNode {
     parentId: NodeId | null;
     type: "todo";
     text: string;
+    startIndex: number;
+    endIndex: number;
     arg: NodeId;
     command: NodeId;
     options?: NodeId;
@@ -1026,6 +1224,8 @@ export interface ValueNode {
     parentId: NodeId | null;
     type: "value";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1034,6 +1234,8 @@ export interface VerbatimEnvironmentNode {
     parentId: NodeId | null;
     type: "verbatim_environment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     begin: NodeId;
     end: NodeId;
     verbatim: NodeId;
@@ -1045,6 +1247,8 @@ export interface VerbatimIncludeNode {
     parentId: NodeId | null;
     type: "verbatim_include";
     text: string;
+    startIndex: number;
+    endIndex: number;
     command: NodeId;
     path: NodeId;
     childrenIds: NodeId[];
@@ -1055,6 +1259,8 @@ export interface ArgcNode {
     parentId: NodeId | null;
     type: "argc";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1063,6 +1269,8 @@ export interface CommandNameNode {
     parentId: NodeId | null;
     type: "command_name";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1071,6 +1279,8 @@ export interface CommentNode {
     parentId: NodeId | null;
     type: "comment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1079,6 +1289,8 @@ export interface DelimiterNode {
     parentId: NodeId | null;
     type: "delimiter";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1087,6 +1299,8 @@ export interface LabelNode {
     parentId: NodeId | null;
     type: "label";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1095,6 +1309,8 @@ export interface LetterNode {
     parentId: NodeId | null;
     type: "letter";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1103,6 +1319,8 @@ export interface LineCommentNode {
     parentId: NodeId | null;
     type: "line_comment";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1111,6 +1329,8 @@ export interface PathNode {
     parentId: NodeId | null;
     type: "path";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1119,6 +1339,8 @@ export interface PlaceholderNode {
     parentId: NodeId | null;
     type: "placeholder";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1127,6 +1349,8 @@ export interface SourceCodeNode {
     parentId: NodeId | null;
     type: "source_code";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1135,6 +1359,8 @@ export interface TodoCommandNameNode {
     parentId: NodeId | null;
     type: "todo_command_name";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1143,6 +1369,8 @@ export interface UriNode {
     parentId: NodeId | null;
     type: "uri";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1151,6 +1379,8 @@ export interface ValueLiteralNode {
     parentId: NodeId | null;
     type: "value_literal";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1159,6 +1389,8 @@ export interface WordNode {
     parentId: NodeId | null;
     type: "word";
     text: string;
+    startIndex: number;
+    endIndex: number;
     childrenIds: NodeId[];
 }
 
@@ -1284,2482 +1516,3068 @@ export type AstNode =
 
 function unmarshalerAcronymDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AcronymDefinitionNode> = {
         id,
         parentId,
         type: "acronym_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.long = unmarshalNode(node.childForFieldName("long")!, ctx, id);
-    n.name = unmarshalNode(node.childForFieldName("name")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
-    n.short = unmarshalNode(node.childForFieldName("short")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("long")!.id,
-            node.childForFieldName("name")!.id,
-            optionsNode ? optionsNode.id : undefined,
-            node.childForFieldName("short")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("long");
+        n.long = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("short");
+        n.short = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerAcronymReferenceNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AcronymReferenceNode> = {
         id,
         parentId,
         type: "acronym_reference",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.name = unmarshalNode(node.childForFieldName("name")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("name")!.id,
-            optionsNode ? optionsNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerAsyEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AsyEnvironmentNode> = {
         id,
         parentId,
         type: "asy_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.code = unmarshalNode(node.childForFieldName("code")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            node.childForFieldName("code")!.id,
-            node.childForFieldName("end")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("code");
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerAsydefEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AsydefEnvironmentNode> = {
         id,
         parentId,
         type: "asydef_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.code = unmarshalNode(node.childForFieldName("code")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            node.childForFieldName("code")!.id,
-            node.childForFieldName("end")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("code");
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerAuthorNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AuthorNode> = {
         id,
         parentId,
         type: "author",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerAuthorDeclarationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<AuthorDeclarationNode> = {
         id,
         parentId,
         type: "author_declaration",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.authors = unmarshalNode(node.childForFieldName("authors")!, ctx, id);
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("authors")!.id,
-            node.childForFieldName("command")!.id,
-            optionsNode ? optionsNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("authors");
+        n.authors = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerBeginNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BeginNode> = {
         id,
         parentId,
         type: "begin",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const languageNode = node.childForFieldName("language");
-    n.language = languageNode ? unmarshalNode(languageNode, ctx, id) : undefined;
-    n.name = unmarshalNode(node.childForFieldName("name")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            languageNode ? languageNode.id : undefined,
-            node.childForFieldName("name")!.id,
-            optionsNode ? optionsNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("language");
+        n.language = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerBiblatexIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BiblatexIncludeNode> = {
         id,
         parentId,
         type: "biblatex_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.glob = unmarshalNode(node.childForFieldName("glob")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("glob")!.id, optionsNode ? optionsNode.id : undefined].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("glob");
+        n.glob = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerBibstyleIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BibstyleIncludeNode> = {
         id,
         parentId,
         type: "bibstyle_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.path = unmarshalNode(node.childForFieldName("path")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("path")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("path");
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerBibtexIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BibtexIncludeNode> = {
         id,
         parentId,
         type: "bibtex_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.paths = unmarshalNode(node.childForFieldName("paths")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("paths")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("paths");
+        n.paths = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerBlockCommentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BlockCommentNode> = {
         id,
         parentId,
         type: "block_comment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    const commentNode = node.childForFieldName("comment");
-    n.comment = commentNode ? unmarshalNode(commentNode, ctx, id) : undefined;
-    const endNode = node.childForFieldName("end");
-    n.end = endNode ? unmarshalNode(endNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            commentNode ? commentNode.id : undefined,
-            endNode ? endNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("comment");
+        n.comment = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerBrackGroupNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BrackGroupNode> = {
         id,
         parentId,
         type: "brack_group",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerBrackGroupArgcNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BrackGroupArgcNode> = {
         id,
         parentId,
         type: "brack_group_argc",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.value = unmarshalNode(node.childForFieldName("value")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("value")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("value");
+        n.value = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerBrackGroupKeyValueNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BrackGroupKeyValueNode> = {
         id,
         parentId,
         type: "brack_group_key_value",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.pair = node.childrenForFieldName("pair").map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [...node.childrenForFieldName("pair").map((n) => n.id)].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    n.pair = node
+        .childrenForFieldName("pair")
+        .map((child) => n.childrenIds![node.namedChildren.indexOf(child)])
+        .filter((id) => id !== undefined);
+
     return id;
 }
 
 function unmarshalerBrackGroupTextNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BrackGroupTextNode> = {
         id,
         parentId,
         type: "brack_group_text",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.text = unmarshalNode(node.childForFieldName("text")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("text")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
     return id;
 }
 
 function unmarshalerBrackGroupWordNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<BrackGroupWordNode> = {
         id,
         parentId,
         type: "brack_group_word",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.word = unmarshalNode(node.childForFieldName("word")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("word")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("word");
+        n.word = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCaptionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CaptionNode> = {
         id,
         parentId,
         type: "caption",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.long = unmarshalNode(node.childForFieldName("long")!, ctx, id);
-    const shortNode = node.childForFieldName("short");
-    n.short = shortNode ? unmarshalNode(shortNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("long")!.id,
-            shortNode ? shortNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("long");
+        n.long = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("short");
+        n.short = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerChangesReplacedNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ChangesReplacedNode> = {
         id,
         parentId,
         type: "changes_replaced",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.text_added = unmarshalNode(node.childForFieldName("text_added")!, ctx, id);
-    n.text_deleted = unmarshalNode(node.childForFieldName("text_deleted")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("text_added")!.id,
-            node.childForFieldName("text_deleted")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("text_added");
+        n.text_added = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("text_deleted");
+        n.text_deleted = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerChapterNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ChapterNode> = {
         id,
         parentId,
         type: "chapter",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const textNode = node.childForFieldName("text");
-    n.text = textNode ? unmarshalNode(textNode, ctx, id) : undefined;
-    const tocNode = node.childForFieldName("toc");
-    n.toc = tocNode ? unmarshalNode(tocNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            textNode ? textNode.id : undefined,
-            tocNode ? tocNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("toc");
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCitationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CitationNode> = {
         id,
         parentId,
         type: "citation",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.keys = unmarshalNode(node.childForFieldName("keys")!, ctx, id);
-    const postnoteNode = node.childForFieldName("postnote");
-    n.postnote = postnoteNode ? unmarshalNode(postnoteNode, ctx, id) : undefined;
-    const prenoteNode = node.childForFieldName("prenote");
-    n.prenote = prenoteNode ? unmarshalNode(prenoteNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("keys")!.id,
-            postnoteNode ? postnoteNode.id : undefined,
-            prenoteNode ? prenoteNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("keys");
+        n.keys = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("postnote");
+        n.postnote = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("prenote");
+        n.prenote = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerClassIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ClassIncludeNode> = {
         id,
         parentId,
         type: "class_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
-    n.path = unmarshalNode(node.childForFieldName("path")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            optionsNode ? optionsNode.id : undefined,
-            node.childForFieldName("path")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("path");
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerColorDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ColorDefinitionNode> = {
         id,
         parentId,
         type: "color_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.model = unmarshalNode(node.childForFieldName("model")!, ctx, id);
-    n.name = unmarshalNode(node.childForFieldName("name")!, ctx, id);
-    n.spec = unmarshalNode(node.childForFieldName("spec")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("model")!.id,
-            node.childForFieldName("name")!.id,
-            node.childForFieldName("spec")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("model");
+        n.model = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("spec");
+        n.spec = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerColorReferenceNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ColorReferenceNode> = {
         id,
         parentId,
         type: "color_reference",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const modelNode = node.childForFieldName("model");
-    n.model = modelNode ? unmarshalNode(modelNode, ctx, id) : undefined;
-    const nameNode = node.childForFieldName("name");
-    n.name = nameNode ? unmarshalNode(nameNode, ctx, id) : undefined;
-    const specNode = node.childForFieldName("spec");
-    n.spec = specNode ? unmarshalNode(specNode, ctx, id) : undefined;
-    const textNode = node.childForFieldName("text");
-    n.text = textNode ? unmarshalNode(textNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            modelNode ? modelNode.id : undefined,
-            nameNode ? nameNode.id : undefined,
-            specNode ? specNode.id : undefined,
-            textNode ? textNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("model");
+        n.model = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("spec");
+        n.spec = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerColorSetDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ColorSetDefinitionNode> = {
         id,
         parentId,
         type: "color_set_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.head = unmarshalNode(node.childForFieldName("head")!, ctx, id);
-    n.model = unmarshalNode(node.childForFieldName("model")!, ctx, id);
-    n.spec = unmarshalNode(node.childForFieldName("spec")!, ctx, id);
-    n.tail = unmarshalNode(node.childForFieldName("tail")!, ctx, id);
-    const tyNode = node.childForFieldName("ty");
-    n.ty = tyNode ? unmarshalNode(tyNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("head")!.id,
-            node.childForFieldName("model")!.id,
-            node.childForFieldName("spec")!.id,
-            node.childForFieldName("tail")!.id,
-            tyNode ? tyNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("head");
+        n.head = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("model");
+        n.model = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("spec");
+        n.spec = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("tail");
+        n.tail = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("ty");
+        n.ty = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCommentEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CommentEnvironmentNode> = {
         id,
         parentId,
         type: "comment_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.comment = unmarshalNode(node.childForFieldName("comment")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            node.childForFieldName("comment")!.id,
-            node.childForFieldName("end")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("comment");
+        n.comment = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCounterAdditionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterAdditionNode> = {
         id,
         parentId,
         type: "counter_addition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.counter = unmarshalNode(node.childForFieldName("counter")!, ctx, id);
-    n.value = node.childrenForFieldName("value").map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("counter")!.id,
-            ...node.childrenForFieldName("value").map((n) => n.id),
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("counter");
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    n.value = node
+        .childrenForFieldName("value")
+        .map((child) => n.childrenIds![node.namedChildren.indexOf(child)])
+        .filter((id) => id !== undefined);
+
     return id;
 }
 
 function unmarshalerCounterDeclarationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterDeclarationNode> = {
         id,
         parentId,
         type: "counter_declaration",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.counter = unmarshalNode(node.childForFieldName("counter")!, ctx, id);
-    const supercounterNode = node.childForFieldName("supercounter");
-    n.supercounter = supercounterNode ? unmarshalNode(supercounterNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("counter")!.id,
-            supercounterNode ? supercounterNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("counter");
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("supercounter");
+        n.supercounter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCounterDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterDefinitionNode> = {
         id,
         parentId,
         type: "counter_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.counter = unmarshalNode(node.childForFieldName("counter")!, ctx, id);
-    n.value = node.childrenForFieldName("value").map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("counter")!.id,
-            ...node.childrenForFieldName("value").map((n) => n.id),
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("counter");
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    n.value = node
+        .childrenForFieldName("value")
+        .map((child) => n.childrenIds![node.namedChildren.indexOf(child)])
+        .filter((id) => id !== undefined);
+
     return id;
 }
 
 function unmarshalerCounterIncrementNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterIncrementNode> = {
         id,
         parentId,
         type: "counter_increment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.counter = unmarshalNode(node.childForFieldName("counter")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("counter")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("counter");
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCounterTypesettingNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterTypesettingNode> = {
         id,
         parentId,
         type: "counter_typesetting",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.counter = unmarshalNode(node.childForFieldName("counter")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("counter")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("counter");
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCounterValueNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterValueNode> = {
         id,
         parentId,
         type: "counter_value",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.counter = unmarshalNode(node.childForFieldName("counter")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("counter")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("counter");
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCounterWithinDeclarationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterWithinDeclarationNode> = {
         id,
         parentId,
         type: "counter_within_declaration",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.counter = unmarshalNode(node.childForFieldName("counter")!, ctx, id);
-    n.supercounter = unmarshalNode(node.childForFieldName("supercounter")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("counter")!.id,
-            node.childForFieldName("supercounter")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("counter");
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("supercounter");
+        n.supercounter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCounterWithoutDeclarationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CounterWithoutDeclarationNode> = {
         id,
         parentId,
         type: "counter_without_declaration",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.counter = unmarshalNode(node.childForFieldName("counter")!, ctx, id);
-    n.supercounter = unmarshalNode(node.childForFieldName("supercounter")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("counter")!.id,
-            node.childForFieldName("supercounter")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("counter");
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("supercounter");
+        n.supercounter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCurlyGroupNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupNode> = {
         id,
         parentId,
         type: "curly_group",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerCurlyGroupAuthorListNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupAuthorListNode> = {
         id,
         parentId,
         type: "curly_group_author_list",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerCurlyGroupCommandNameNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupCommandNameNode> = {
         id,
         parentId,
         type: "curly_group_command_name",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("command")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCurlyGroupGlobPatternNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupGlobPatternNode> = {
         id,
         parentId,
         type: "curly_group_glob_pattern",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.pattern = unmarshalNode(node.childForFieldName("pattern")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("pattern")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("pattern");
+        n.pattern = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCurlyGroupImplNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupImplNode> = {
         id,
         parentId,
         type: "curly_group_impl",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerCurlyGroupKeyValueNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupKeyValueNode> = {
         id,
         parentId,
         type: "curly_group_key_value",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.pair = node.childrenForFieldName("pair").map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [...node.childrenForFieldName("pair").map((n) => n.id)].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    n.pair = node
+        .childrenForFieldName("pair")
+        .map((child) => n.childrenIds![node.namedChildren.indexOf(child)])
+        .filter((id) => id !== undefined);
+
     return id;
 }
 
 function unmarshalerCurlyGroupLabelNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupLabelNode> = {
         id,
         parentId,
         type: "curly_group_label",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.label = unmarshalNode(node.childForFieldName("label")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("label")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("label");
+        n.label = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCurlyGroupLabelListNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupLabelListNode> = {
         id,
         parentId,
         type: "curly_group_label_list",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.label = node.childrenForFieldName("label").map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [...node.childrenForFieldName("label").map((n) => n.id)].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    n.label = node
+        .childrenForFieldName("label")
+        .map((child) => n.childrenIds![node.namedChildren.indexOf(child)])
+        .filter((id) => id !== undefined);
+
     return id;
 }
 
 function unmarshalerCurlyGroupPathNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupPathNode> = {
         id,
         parentId,
         type: "curly_group_path",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.path = unmarshalNode(node.childForFieldName("path")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("path")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("path");
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCurlyGroupPathListNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupPathListNode> = {
         id,
         parentId,
         type: "curly_group_path_list",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.path = node.childrenForFieldName("path").map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [...node.childrenForFieldName("path").map((n) => n.id)].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    n.path = node
+        .childrenForFieldName("path")
+        .map((child) => n.childrenIds![node.namedChildren.indexOf(child)])
+        .filter((id) => id !== undefined);
+
     return id;
 }
 
 function unmarshalerCurlyGroupSpecNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupSpecNode> = {
         id,
         parentId,
         type: "curly_group_spec",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerCurlyGroupTextNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupTextNode> = {
         id,
         parentId,
         type: "curly_group_text",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.text = unmarshalNode(node.childForFieldName("text")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("text")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
     return id;
 }
 
 function unmarshalerCurlyGroupTextListNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupTextListNode> = {
         id,
         parentId,
         type: "curly_group_text_list",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.text = node.childrenForFieldName("text").map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [...node.childrenForFieldName("text").map((n) => n.id)].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
     return id;
 }
 
 function unmarshalerCurlyGroupUriNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupUriNode> = {
         id,
         parentId,
         type: "curly_group_uri",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.uri = unmarshalNode(node.childForFieldName("uri")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("uri")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("uri");
+        n.uri = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCurlyGroupValueNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupValueNode> = {
         id,
         parentId,
         type: "curly_group_value",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.value = unmarshalNode(node.childForFieldName("value")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("value")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("value");
+        n.value = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerCurlyGroupWordNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CurlyGroupWordNode> = {
         id,
         parentId,
         type: "curly_group_word",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.word = unmarshalNode(node.childForFieldName("word")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("word")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("word");
+        n.word = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerDisplayedEquationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<DisplayedEquationNode> = {
         id,
         parentId,
         type: "displayed_equation",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerEndNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<EndNode> = {
         id,
         parentId,
         type: "end",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.name = unmarshalNode(node.childForFieldName("name")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("name")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerEnumItemNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<EnumItemNode> = {
         id,
         parentId,
         type: "enum_item",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const labelNode = node.childForFieldName("label");
-    n.label = labelNode ? unmarshalNode(labelNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, labelNode ? labelNode.id : undefined].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("label");
+        n.label = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerEnvironmentDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<EnvironmentDefinitionNode> = {
         id,
         parentId,
         type: "environment_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const argcNode = node.childForFieldName("argc");
-    n.argc = argcNode ? unmarshalNode(argcNode, ctx, id) : undefined;
-    const beginNode = node.childForFieldName("begin");
-    n.begin = beginNode ? unmarshalNode(beginNode, ctx, id) : undefined;
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const endNode = node.childForFieldName("end");
-    n.end = endNode ? unmarshalNode(endNode, ctx, id) : undefined;
-    n.name = node.childrenForFieldName("name").map((n) => unmarshalNode(n, ctx, id));
-    const specNode = node.childForFieldName("spec");
-    n.spec = specNode ? unmarshalNode(specNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            argcNode ? argcNode.id : undefined,
-            beginNode ? beginNode.id : undefined,
-            node.childForFieldName("command")!.id,
-            endNode ? endNode.id : undefined,
-            ...node.childrenForFieldName("name").map((n) => n.id),
-            specNode ? specNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("argc");
+        n.argc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    n.name = node
+        .childrenForFieldName("name")
+        .map((child) => n.childrenIds![node.namedChildren.indexOf(child)])
+        .filter((id) => id !== undefined);
+    {
+        const _fc = node.childForFieldName("spec");
+        n.spec = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerGenericCommandNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GenericCommandNode> = {
         id,
         parentId,
         type: "generic_command",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.arg = node.childrenForFieldName("arg").map((n) => unmarshalNode(n, ctx, id));
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [...node.childrenForFieldName("arg").map((n) => n.id), node.childForFieldName("command")!.id].filter(
-            (id) => id !== undefined,
-        ),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    n.arg = node
+        .childrenForFieldName("arg")
+        .map((child) => n.childrenIds![node.namedChildren.indexOf(child)])
+        .filter((id) => id !== undefined);
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerGenericEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GenericEnvironmentNode> = {
         id,
         parentId,
         type: "generic_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("begin")!.id, node.childForFieldName("end")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerGlobPatternNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GlobPatternNode> = {
         id,
         parentId,
         type: "glob_pattern",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerGlossaryEntryDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GlossaryEntryDefinitionNode> = {
         id,
         parentId,
         type: "glossary_entry_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.name = unmarshalNode(node.childForFieldName("name")!, ctx, id);
-    n.options = unmarshalNode(node.childForFieldName("options")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("name")!.id,
-            node.childForFieldName("options")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerGlossaryEntryReferenceNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GlossaryEntryReferenceNode> = {
         id,
         parentId,
         type: "glossary_entry_reference",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.name = unmarshalNode(node.childForFieldName("name")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("name")!.id,
-            optionsNode ? optionsNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerGraphicsIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<GraphicsIncludeNode> = {
         id,
         parentId,
         type: "graphics_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
-    n.path = unmarshalNode(node.childForFieldName("path")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            optionsNode ? optionsNode.id : undefined,
-            node.childForFieldName("path")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("path");
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerHyperlinkNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<HyperlinkNode> = {
         id,
         parentId,
         type: "hyperlink",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const labelNode = node.childForFieldName("label");
-    n.label = labelNode ? unmarshalNode(labelNode, ctx, id) : undefined;
-    n.uri = unmarshalNode(node.childForFieldName("uri")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            labelNode ? labelNode.id : undefined,
-            node.childForFieldName("uri")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("label");
+        n.label = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("uri");
+        n.uri = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerImportIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ImportIncludeNode> = {
         id,
         parentId,
         type: "import_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.directory = unmarshalNode(node.childForFieldName("directory")!, ctx, id);
-    n.file = unmarshalNode(node.childForFieldName("file")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("directory")!.id,
-            node.childForFieldName("file")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("directory");
+        n.directory = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("file");
+        n.file = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerInkscapeIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<InkscapeIncludeNode> = {
         id,
         parentId,
         type: "inkscape_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
-    n.path = unmarshalNode(node.childForFieldName("path")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            optionsNode ? optionsNode.id : undefined,
-            node.childForFieldName("path")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("path");
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerInlineFormulaNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<InlineFormulaNode> = {
         id,
         parentId,
         type: "inline_formula",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerKeyValuePairNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<KeyValuePairNode> = {
         id,
         parentId,
         type: "key_value_pair",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.key = unmarshalNode(node.childForFieldName("key")!, ctx, id);
-    const valueNode = node.childForFieldName("value");
-    n.value = valueNode ? unmarshalNode(valueNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("key")!.id, valueNode ? valueNode.id : undefined].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("key");
+        n.key = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("value");
+        n.value = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerLabelDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LabelDefinitionNode> = {
         id,
         parentId,
         type: "label_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.name = unmarshalNode(node.childForFieldName("name")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("name")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerLabelNumberNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LabelNumberNode> = {
         id,
         parentId,
         type: "label_number",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.name = unmarshalNode(node.childForFieldName("name")!, ctx, id);
-    n.number = unmarshalNode(node.childForFieldName("number")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("name")!.id,
-            node.childForFieldName("number")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("number");
+        n.number = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerLabelReferenceNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LabelReferenceNode> = {
         id,
         parentId,
         type: "label_reference",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.names = unmarshalNode(node.childForFieldName("names")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("names")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("names");
+        n.names = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerLabelReferenceRangeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LabelReferenceRangeNode> = {
         id,
         parentId,
         type: "label_reference_range",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.from = unmarshalNode(node.childForFieldName("from")!, ctx, id);
-    n.to = unmarshalNode(node.childForFieldName("to")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("from")!.id,
-            node.childForFieldName("to")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("from");
+        n.from = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("to");
+        n.to = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerLatexIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LatexIncludeNode> = {
         id,
         parentId,
         type: "latex_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.path = unmarshalNode(node.childForFieldName("path")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("path")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("path");
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerLetCommandDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LetCommandDefinitionNode> = {
         id,
         parentId,
         type: "let_command_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.declaration = unmarshalNode(node.childForFieldName("declaration")!, ctx, id);
-    n.implementation = unmarshalNode(node.childForFieldName("implementation")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("declaration")!.id,
-            node.childForFieldName("implementation")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("declaration");
+        n.declaration = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("implementation");
+        n.implementation = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerListingEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ListingEnvironmentNode> = {
         id,
         parentId,
         type: "listing_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.code = unmarshalNode(node.childForFieldName("code")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            node.childForFieldName("code")!.id,
-            node.childForFieldName("end")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("code");
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerLuacodeEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LuacodeEnvironmentNode> = {
         id,
         parentId,
         type: "luacode_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.code = unmarshalNode(node.childForFieldName("code")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            node.childForFieldName("code")!.id,
-            node.childForFieldName("end")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("code");
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerMathDelimiterNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<MathDelimiterNode> = {
         id,
         parentId,
         type: "math_delimiter",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.left_command = unmarshalNode(node.childForFieldName("left_command")!, ctx, id);
-    n.left_delimiter = unmarshalNode(node.childForFieldName("left_delimiter")!, ctx, id);
-    n.right_command = unmarshalNode(node.childForFieldName("right_command")!, ctx, id);
-    n.right_delimiter = unmarshalNode(node.childForFieldName("right_delimiter")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("left_command")!.id,
-            node.childForFieldName("left_delimiter")!.id,
-            node.childForFieldName("right_command")!.id,
-            node.childForFieldName("right_delimiter")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("left_command");
+        n.left_command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("left_delimiter");
+        n.left_delimiter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("right_command");
+        n.right_command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("right_delimiter");
+        n.right_delimiter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerMathEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<MathEnvironmentNode> = {
         id,
         parentId,
         type: "math_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("begin")!.id, node.childForFieldName("end")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerMintedEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<MintedEnvironmentNode> = {
         id,
         parentId,
         type: "minted_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.code = unmarshalNode(node.childForFieldName("code")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            node.childForFieldName("code")!.id,
-            node.childForFieldName("end")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("code");
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerNewCommandDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<NewCommandDefinitionNode> = {
         id,
         parentId,
         type: "new_command_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const argcNode = node.childForFieldName("argc");
-    n.argc = argcNode ? unmarshalNode(argcNode, ctx, id) : undefined;
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.declaration = unmarshalNode(node.childForFieldName("declaration")!, ctx, id);
-    const defaultNode = node.childForFieldName("default");
-    n.default = defaultNode ? unmarshalNode(defaultNode, ctx, id) : undefined;
-    n.implementation = unmarshalNode(node.childForFieldName("implementation")!, ctx, id);
-    const specNode = node.childForFieldName("spec");
-    n.spec = specNode ? unmarshalNode(specNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            argcNode ? argcNode.id : undefined,
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("declaration")!.id,
-            defaultNode ? defaultNode.id : undefined,
-            node.childForFieldName("implementation")!.id,
-            specNode ? specNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("argc");
+        n.argc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("declaration");
+        n.declaration = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("default");
+        n.default = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("implementation");
+        n.implementation = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("spec");
+        n.spec = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerOldCommandDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<OldCommandDefinitionNode> = {
         id,
         parentId,
         type: "old_command_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.declaration = unmarshalNode(node.childForFieldName("declaration")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("declaration")!.id].filter(
-            (id) => id !== undefined,
-        ),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("declaration");
+        n.declaration = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerOperatorNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<OperatorNode> = {
         id,
         parentId,
         type: "operator",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerPackageIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PackageIncludeNode> = {
         id,
         parentId,
         type: "package_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
-    n.paths = unmarshalNode(node.childForFieldName("paths")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            optionsNode ? optionsNode.id : undefined,
-            node.childForFieldName("paths")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("paths");
+        n.paths = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerPairedDelimiterDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PairedDelimiterDefinitionNode> = {
         id,
         parentId,
         type: "paired_delimiter_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    const argcNode = node.childForFieldName("argc");
-    n.argc = argcNode ? unmarshalNode(argcNode, ctx, id) : undefined;
-    const bodyNode = node.childForFieldName("body");
-    n.body = bodyNode ? unmarshalNode(bodyNode, ctx, id) : undefined;
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.declaration = unmarshalNode(node.childForFieldName("declaration")!, ctx, id);
-    n.left = unmarshalNode(node.childForFieldName("left")!, ctx, id);
-    n.right = unmarshalNode(node.childForFieldName("right")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            argcNode ? argcNode.id : undefined,
-            bodyNode ? bodyNode.id : undefined,
-            node.childForFieldName("command")!.id,
-            node.childForFieldName("declaration")!.id,
-            node.childForFieldName("left")!.id,
-            node.childForFieldName("right")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("argc");
+        n.argc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("body");
+        n.body = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("declaration");
+        n.declaration = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("left");
+        n.left = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("right");
+        n.right = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerParagraphNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ParagraphNode> = {
         id,
         parentId,
         type: "paragraph",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const textNode = node.childForFieldName("text");
-    n.text = textNode ? unmarshalNode(textNode, ctx, id) : undefined;
-    const tocNode = node.childForFieldName("toc");
-    n.toc = tocNode ? unmarshalNode(tocNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            textNode ? textNode.id : undefined,
-            tocNode ? tocNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("toc");
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerPartNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PartNode> = {
         id,
         parentId,
         type: "part",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const textNode = node.childForFieldName("text");
-    n.text = textNode ? unmarshalNode(textNode, ctx, id) : undefined;
-    const tocNode = node.childForFieldName("toc");
-    n.toc = tocNode ? unmarshalNode(tocNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            textNode ? textNode.id : undefined,
-            tocNode ? tocNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("toc");
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerPycodeEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PycodeEnvironmentNode> = {
         id,
         parentId,
         type: "pycode_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.code = unmarshalNode(node.childForFieldName("code")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            node.childForFieldName("code")!.id,
-            node.childForFieldName("end")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("code");
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerSageblockEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SageblockEnvironmentNode> = {
         id,
         parentId,
         type: "sageblock_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.code = unmarshalNode(node.childForFieldName("code")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            node.childForFieldName("code")!.id,
-            node.childForFieldName("end")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("code");
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerSagesilentEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SagesilentEnvironmentNode> = {
         id,
         parentId,
         type: "sagesilent_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.code = unmarshalNode(node.childForFieldName("code")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            node.childForFieldName("code")!.id,
-            node.childForFieldName("end")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("code");
+        n.code = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerSectionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SectionNode> = {
         id,
         parentId,
         type: "section",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const textNode = node.childForFieldName("text");
-    n.text = textNode ? unmarshalNode(textNode, ctx, id) : undefined;
-    const tocNode = node.childForFieldName("toc");
-    n.toc = tocNode ? unmarshalNode(tocNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            textNode ? textNode.id : undefined,
-            tocNode ? tocNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("toc");
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerSourceFileNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SourceFileNode> = {
         id,
         parentId,
         type: "source_file",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerSubparagraphNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SubparagraphNode> = {
         id,
         parentId,
         type: "subparagraph",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const textNode = node.childForFieldName("text");
-    n.text = textNode ? unmarshalNode(textNode, ctx, id) : undefined;
-    const tocNode = node.childForFieldName("toc");
-    n.toc = tocNode ? unmarshalNode(tocNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            textNode ? textNode.id : undefined,
-            tocNode ? tocNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("toc");
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerSubscriptNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SubscriptNode> = {
         id,
         parentId,
         type: "subscript",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.subscript = unmarshalNode(node.childForFieldName("subscript")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("subscript")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("subscript");
+        n.subscript = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerSubsectionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SubsectionNode> = {
         id,
         parentId,
         type: "subsection",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const textNode = node.childForFieldName("text");
-    n.text = textNode ? unmarshalNode(textNode, ctx, id) : undefined;
-    const tocNode = node.childForFieldName("toc");
-    n.toc = tocNode ? unmarshalNode(tocNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            textNode ? textNode.id : undefined,
-            tocNode ? tocNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("toc");
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerSubsubsectionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SubsubsectionNode> = {
         id,
         parentId,
         type: "subsubsection",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const textNode = node.childForFieldName("text");
-    n.text = textNode ? unmarshalNode(textNode, ctx, id) : undefined;
-    const tocNode = node.childForFieldName("toc");
-    n.toc = tocNode ? unmarshalNode(tocNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            textNode ? textNode.id : undefined,
-            tocNode ? tocNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("toc");
+        n.toc = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerSuperscriptNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SuperscriptNode> = {
         id,
         parentId,
         type: "superscript",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.superscript = unmarshalNode(node.childForFieldName("superscript")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set([node.childForFieldName("superscript")!.id].filter((id) => id !== undefined));
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("superscript");
+        n.superscript = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerSvgIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SvgIncludeNode> = {
         id,
         parentId,
         type: "svg_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
-    n.path = unmarshalNode(node.childForFieldName("path")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            optionsNode ? optionsNode.id : undefined,
-            node.childForFieldName("path")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("path");
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerTextNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TextNode> = {
         id,
         parentId,
         type: "text",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.word = node.childrenForFieldName("word").map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [...node.childrenForFieldName("word").map((n) => n.id)].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    n.word = node
+        .childrenForFieldName("word")
+        .map((child) => n.childrenIds![node.namedChildren.indexOf(child)])
+        .filter((id) => id !== undefined);
+
     return id;
 }
 
 function unmarshalerTextModeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TextModeNode> = {
         id,
         parentId,
         type: "text_mode",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.content = unmarshalNode(node.childForFieldName("content")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("content")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("content");
+        n.content = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerTheoremDefinitionNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TheoremDefinitionNode> = {
         id,
         parentId,
         type: "theorem_definition",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const counterNode = node.childForFieldName("counter");
-    n.counter = counterNode ? unmarshalNode(counterNode, ctx, id) : undefined;
-    n.name = unmarshalNode(node.childForFieldName("name")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
-    const titleNode = node.childForFieldName("title");
-    n.title = titleNode ? unmarshalNode(titleNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            counterNode ? counterNode.id : undefined,
-            node.childForFieldName("name")!.id,
-            optionsNode ? optionsNode.id : undefined,
-            titleNode ? titleNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("counter");
+        n.counter = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("name");
+        n.name = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("title");
+        n.title = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerTikzLibraryImportNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TikzLibraryImportNode> = {
         id,
         parentId,
         type: "tikz_library_import",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.paths = unmarshalNode(node.childForFieldName("paths")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("paths")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("paths");
+        n.paths = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerTitleDeclarationNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TitleDeclarationNode> = {
         id,
         parentId,
         type: "title_declaration",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
-    n.text = unmarshalNode(node.childForFieldName("text")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("command")!.id,
-            optionsNode ? optionsNode.id : undefined,
-            node.childForFieldName("text")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerTodoNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TodoNode> = {
         id,
         parentId,
         type: "todo",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.arg = unmarshalNode(node.childForFieldName("arg")!, ctx, id);
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    const optionsNode = node.childForFieldName("options");
-    n.options = optionsNode ? unmarshalNode(optionsNode, ctx, id) : undefined;
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("arg")!.id,
-            node.childForFieldName("command")!.id,
-            optionsNode ? optionsNode.id : undefined,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("arg");
+        n.arg = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("options");
+        n.options = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerValueNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ValueNode> = {
         id,
         parentId,
         type: "value",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerVerbatimEnvironmentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<VerbatimEnvironmentNode> = {
         id,
         parentId,
         type: "verbatim_environment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.begin = unmarshalNode(node.childForFieldName("begin")!, ctx, id);
-    n.end = unmarshalNode(node.childForFieldName("end")!, ctx, id);
-    n.verbatim = unmarshalNode(node.childForFieldName("verbatim")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [
-            node.childForFieldName("begin")!.id,
-            node.childForFieldName("end")!.id,
-            node.childForFieldName("verbatim")!.id,
-        ].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("begin");
+        n.begin = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("end");
+        n.end = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("verbatim");
+        n.verbatim = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerVerbatimIncludeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<VerbatimIncludeNode> = {
         id,
         parentId,
         type: "verbatim_include",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.command = unmarshalNode(node.childForFieldName("command")!, ctx, id);
-    n.path = unmarshalNode(node.childForFieldName("path")!, ctx, id);
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
 
-    const fieldNodes = new Set(
-        [node.childForFieldName("command")!.id, node.childForFieldName("path")!.id].filter((id) => id !== undefined),
-    );
-    n.childrenIds = node.namedChildren.filter((n) => !fieldNodes.has(n.id)).map((n) => unmarshalNode(n, ctx, id));
+    {
+        const _fc = node.childForFieldName("command");
+        n.command = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+    {
+        const _fc = node.childForFieldName("path");
+        n.path = _fc ? n.childrenIds![namedChildren.indexOf(_fc)] : undefined;
+    }
+
     return id;
 }
 
 function unmarshalerArgcNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ArgcNode> = {
         id,
         parentId,
         type: "argc",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerCommandNameNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CommandNameNode> = {
         id,
         parentId,
         type: "command_name",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerCommentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<CommentNode> = {
         id,
         parentId,
         type: "comment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerDelimiterNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<DelimiterNode> = {
         id,
         parentId,
         type: "delimiter",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerLabelNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LabelNode> = {
         id,
         parentId,
         type: "label",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerLetterNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LetterNode> = {
         id,
         parentId,
         type: "letter",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerLineCommentNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<LineCommentNode> = {
         id,
         parentId,
         type: "line_comment",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerPathNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PathNode> = {
         id,
         parentId,
         type: "path",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerPlaceholderNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<PlaceholderNode> = {
         id,
         parentId,
         type: "placeholder",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerSourceCodeNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<SourceCodeNode> = {
         id,
         parentId,
         type: "source_code",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerTodoCommandNameNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<TodoCommandNameNode> = {
         id,
         parentId,
         type: "todo_command_name",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerUriNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<UriNode> = {
         id,
         parentId,
         type: "uri",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerValueLiteralNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<ValueLiteralNode> = {
         id,
         parentId,
         type: "value_literal",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
 function unmarshalerWordNode(node: Node, ctx: ParserContext, parentId: NodeId | null): NodeId {
     const id = v4();
+    const namedChildren = node.namedChildren;
     const n: Partial<WordNode> = {
         id,
         parentId,
         type: "word",
-        text: node.text,
+        text: namedChildren.length === 0 ? node.text : "",
+        startIndex: node.startIndex,
+        endIndex: node.endIndex,
     };
     ctx.nodes.set(id, n as AstNode);
 
-    n.childrenIds = node.namedChildren.map((n) => unmarshalNode(n, ctx, id));
+    n.childrenIds = namedChildren.map((child) => unmarshalNode(child, ctx, id));
+
     return id;
 }
 
@@ -4002,11 +4820,12 @@ export const unmarshalNode = (node: Node, ctx: ParserContext, parentId: NodeId |
 
         default: {
             const id = v4();
+            const namedChildren = node.namedChildren;
             const n = {
                 id,
                 parentId,
                 type: node.type as any,
-                text: node.text,
+                text: namedChildren.length === 0 ? node.text : "",
                 childrenIds: [] as NodeId[],
             };
             ctx.nodes.set(id, n as AstNode);
@@ -4024,4 +4843,8 @@ export const parseCST = (root: Node | null): BragiAST => {
     const ctx: ParserContext = { nodes: new Map() };
     const rootId = unmarshalNode(root, ctx, null);
     return { rootId, nodes: ctx.nodes };
+};
+
+export const allChildIds = (ast: BragiAST, node: AstNode): string[] => {
+    return node.childrenIds;
 };
