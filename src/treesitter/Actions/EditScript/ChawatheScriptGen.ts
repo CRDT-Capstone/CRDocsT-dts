@@ -16,18 +16,18 @@ const FAKE_ROOT_ID = "__fake_root__";
  * followed by a bottom-up traversal of the source tree to generate deletions.
  */
 export class ChawatheScriptGen implements EditScriptGen {
-    origSrc!: BragiAST;
-    cpySrc!: BragiAST;
-    origDst!: BragiAST;
-    origMappings!: MappingStore;
-    cpyMappings!: MappingStore;
+    private origSrc!: BragiAST;
+    private cpySrc!: BragiAST;
+    private origDst!: BragiAST;
+    private origMappings!: MappingStore;
+    private cpyMappings!: MappingStore;
 
-    dstInOrder!: Set<NodeId>;
-    srcInOrder!: Set<NodeId>;
-    actions!: EditScript;
+    private dstInOrder!: Set<NodeId>;
+    private srcInOrder!: Set<NodeId>;
+    private actions!: EditScript;
 
-    origToCopy!: Map<NodeId, NodeId>;
-    copyToOrig!: Map<NodeId, NodeId>;
+    private origToCopy!: Map<NodeId, NodeId>;
+    private copyToOrig!: Map<NodeId, NodeId>;
 
     public computeActions(ms: MappingStore): EditScript {
         this.initWith(ms);
@@ -87,9 +87,9 @@ export class ChawatheScriptGen implements EditScriptGen {
         const srcFakeRoot: AstNode = {
             id: srcFakeRootId,
             type: FAKE_ROOT_ID as any,
-            text: "",
             startIndex: 0,
             endIndex: 0,
+            text: "",
             parentId: null,
             childrenIds: [origSrcRootId],
         };
@@ -100,9 +100,9 @@ export class ChawatheScriptGen implements EditScriptGen {
         const dstFakeRoot: AstNode = {
             id: dstFakeRootId,
             type: FAKE_ROOT_ID as any,
-            text: "",
             startIndex: 0,
             endIndex: 0,
+            text: "",
             parentId: null,
             childrenIds: [origDstRootId],
         };

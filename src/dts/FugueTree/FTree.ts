@@ -265,7 +265,7 @@ export class FTree {
      */
     getByIndex(node: FNode, index: number): FNode {
         if (index < 0 || index >= node.size) {
-            throw new Error(`Index out of bounds: ${index}`);
+            throw new Error(`Index out of bounds: ${index} for subtree of size ${node.size}`);
         }
 
         // Inorder traversal of the subtree, but using the size values to skip over deleted nodes and entire subtrees that are before the index.

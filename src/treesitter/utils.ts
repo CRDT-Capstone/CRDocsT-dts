@@ -1,7 +1,7 @@
-import { allChildIds, AstNode, BragiAST } from "./types/index.js";
+import { allChildIds, AstNode, BragiAST, NodeId } from "./types/index.js";
 
-export const preoderAstTraversalFunc = (ast: BragiAST, callback: (node: AstNode) => void) => {
-    const stack: AstNode[] = [ast.nodes.get(ast.rootId)!];
+export const preoderAstTraversalFunc = (ast: BragiAST, callback: (node: AstNode) => void, rootId?: NodeId) => {
+    const stack: AstNode[] = [rootId ? ast.nodes.get(rootId)! : ast.nodes.get(ast.rootId)!];
     while (stack.length > 0) {
         const node = stack.pop();
         if (!node) continue;
@@ -14,8 +14,8 @@ export const preoderAstTraversalFunc = (ast: BragiAST, callback: (node: AstNode)
     }
 };
 
-export const postorderAstTraversalFunc = (ast: BragiAST, callback: (node: AstNode) => void) => {
-    const stack: AstNode[] = [ast.nodes.get(ast.rootId)!];
+export const postorderAstTraversalFunc = (ast: BragiAST, callback: (node: AstNode) => void, rootId?: NodeId) => {
+    const stack: AstNode[] = [rootId ? ast.nodes.get(rootId)! : ast.nodes.get(ast.rootId)!];
     const visited = new Set<string>();
     while (stack.length > 0) {
         const node = stack[stack.length - 1];
@@ -37,8 +37,8 @@ export const postorderAstTraversalFunc = (ast: BragiAST, callback: (node: AstNod
     }
 };
 
-export const breadthFirstAstTraversalFunc = (ast: BragiAST, callback: (node: AstNode) => void) => {
-    const queue: AstNode[] = [ast.nodes.get(ast.rootId)!];
+export const breadthFirstAstTraversalFunc = (ast: BragiAST, callback: (node: AstNode) => void, rootId?: NodeId) => {
+    const queue: AstNode[] = [rootId ? ast.nodes.get(rootId)! : ast.nodes.get(ast.rootId)!];
     while (queue.length > 0) {
         const node = queue.shift();
         if (!node) continue;
@@ -51,26 +51,26 @@ export const breadthFirstAstTraversalFunc = (ast: BragiAST, callback: (node: Ast
     }
 };
 
-export const preoderAstTraversal = (ast: BragiAST): AstNode[] => {
+export const preoderAstTraversal = (ast: BragiAST, rootId?: NodeId): AstNode[] => {
     const result: AstNode[] = [];
-    preoderAstTraversalFunc(ast, (node) => result.push(node));
+    preoderAstTraversalFunc(ast, (node) => result.push(node), rootId);
     return result;
 };
 
-export const postorderAstTraversal = (ast: BragiAST): AstNode[] => {
+export const postorderAstTraversal = (ast: BragiAST, rootId?: NodeId): AstNode[] => {
     const result: AstNode[] = [];
-    postorderAstTraversalFunc(ast, (node) => result.push(node));
+    postorderAstTraversalFunc(ast, (node) => result.push(node), rootId);
     return result;
 };
 
-export const breadthFirstAstTraversal = (ast: BragiAST): AstNode[] => {
+export const breadthFirstAstTraversal = (ast: BragiAST, rootId?: NodeId): AstNode[] => {
     const result: AstNode[] = [];
-    breadthFirstAstTraversalFunc(ast, (node) => result.push(node));
+    breadthFirstAstTraversalFunc(ast, (node) => result.push(node), rootId);
     return result;
 };
 
-export const preorderAstTraversalIterator = function* (ast: BragiAST): IterableIterator<AstNode> {
-    const stack: AstNode[] = [ast.nodes.get(ast.rootId)!];
+export const preorderAstTraversalIterator = function* (ast: BragiAST, rootId?: NodeId): IterableIterator<AstNode> {
+    const stack: AstNode[] = [rootId ? ast.nodes.get(rootId)! : ast.nodes.get(ast.rootId)!];
     while (stack.length > 0) {
         const node = stack.pop();
         if (!node) continue;

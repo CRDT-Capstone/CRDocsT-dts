@@ -121,7 +121,7 @@ describe("Nidhoggr", () => {
         jest.clearAllMocks();
         fugue = makeMockFugue(LOCAL);
         // Default: nodes are not stamped unless a test overrides this
-        fugue.findAstStart.mockReturnValue(undefined);
+        fugue.findASTStart.mockReturnValue(undefined);
         // Default: getById returns a mock FNode
         fugue.getById.mockReturnValue(MOCK_FNODE);
     });
@@ -247,13 +247,13 @@ describe("Nidhoggr", () => {
                 const appliedId = makeId(REMOTE, 5);
                 const applied = [{ ...msg, coastOpType: "ADD", id: appliedId }] as any[];
                 fugue.effect.mockReturnValue(applied);
-                fugue.findAstStart.mockReturnValue(undefined);
+                fugue.findASTStart.mockReturnValue(undefined);
                 fugue.getById.mockReturnValue(MOCK_FNODE);
 
                 nidhoggr.consume(msg);
 
                 expect(fugue.getById).toHaveBeenCalledWith(appliedId);
-                expect(fugue.updateAstIdx).toHaveBeenCalledWith(NODE_KEY, MOCK_FNODE);
+                expect(fugue.updateASTIdx).toHaveBeenCalledWith(NODE_KEY, MOCK_FNODE);
             });
 
             it("does not re-stamp the node when it is already stamped in astIdx", () => {
@@ -261,11 +261,11 @@ describe("Nidhoggr", () => {
                 const msg = makeAddMessage("txn-add-dup");
                 fugue.effect.mockReturnValue([msg] as any[]);
                 // Simulate node already stamped
-                fugue.findAstStart.mockReturnValue(MOCK_FNODE);
+                fugue.findASTStart.mockReturnValue(MOCK_FNODE);
 
                 nidhoggr.consume(msg);
 
-                expect(fugue.updateAstIdx).not.toHaveBeenCalled();
+                expect(fugue.updateASTIdx).not.toHaveBeenCalled();
             });
 
             it("does not stamp when fugue.effect returns no applied messages for an ADD", () => {
@@ -275,7 +275,7 @@ describe("Nidhoggr", () => {
 
                 nidhoggr.consume(msg);
 
-                expect(fugue.updateAstIdx).not.toHaveBeenCalled();
+                expect(fugue.updateASTIdx).not.toHaveBeenCalled();
             });
 
             it("stamps using the FNode for the message with the lowest counter in a multi-message ADD", () => {
@@ -288,13 +288,13 @@ describe("Nidhoggr", () => {
                 const lowFNode = { ...MOCK_FNODE, id: idLow } as any;
 
                 fugue.effect.mockReturnValue([msgHigh, msgLow] as any[]);
-                fugue.findAstStart.mockReturnValue(undefined);
+                fugue.findASTStart.mockReturnValue(undefined);
                 // getById called with idLow (minimum counter) should return lowFNode
                 fugue.getById.mockImplementation((id: any) => (id.counter === 1 ? lowFNode : MOCK_FNODE));
 
                 nidhoggr.consume([msgHigh, msgLow]);
 
-                expect(fugue.updateAstIdx).toHaveBeenCalledWith(NODE_KEY, lowFNode);
+                expect(fugue.updateASTIdx).toHaveBeenCalledWith(NODE_KEY, lowFNode);
             });
         });
 
@@ -312,7 +312,7 @@ describe("Nidhoggr", () => {
                 const result = nidhoggr.consume(msg);
 
                 expect(result).toEqual(applied);
-                expect(fugue.removeAstIdx).toHaveBeenCalledWith(NODE_KEY);
+                expect(fugue.removeASTIdx).toHaveBeenCalledWith(NODE_KEY);
             });
 
             it("does not clear astIdx when a DELETE transaction produces no applied messages", () => {
@@ -322,7 +322,7 @@ describe("Nidhoggr", () => {
 
                 nidhoggr.consume(msg);
 
-                expect(fugue.removeAstIdx).not.toHaveBeenCalled();
+                expect(fugue.removeASTIdx).not.toHaveBeenCalled();
             });
 
             it("leaves the transaction queue empty after a complete DELETE", () => {
@@ -417,7 +417,7 @@ describe("Nidhoggr", () => {
 
                 nidhoggr.consume([insert, del]);
 
-                expect(fugue.updateAstIdx).toHaveBeenCalledWith(NODE_KEY, lowFNode);
+                expect(fugue.updateASTIdx).toHaveBeenCalledWith(NODE_KEY, lowFNode);
             });
 
             it("does not call updateAstIdx when a MOVE produces no applied INSERT messages", () => {
@@ -427,7 +427,7 @@ describe("Nidhoggr", () => {
 
                 nidhoggr.consume([insert, del]);
 
-                expect(fugue.updateAstIdx).not.toHaveBeenCalled();
+                expect(fugue.updateASTIdx).not.toHaveBeenCalled();
             });
 
             it("returns combined applied messages from INSERT and DELETE effects for a complete MOVE", () => {
@@ -514,7 +514,7 @@ describe("Nidhoggr", () => {
 
                 nidhoggr.consume([insert, del]);
 
-                expect(fugue.updateAstIdx).toHaveBeenCalledWith(NODE_KEY, newFNode);
+                expect(fugue.updateASTIdx).toHaveBeenCalledWith(NODE_KEY, newFNode);
             });
 
             it("does not call updateAstIdx when an UPDATE produces no applied inserts", () => {
@@ -524,7 +524,7 @@ describe("Nidhoggr", () => {
 
                 nidhoggr.consume([insert, del]);
 
-                expect(fugue.updateAstIdx).not.toHaveBeenCalled();
+                expect(fugue.updateASTIdx).not.toHaveBeenCalled();
             });
 
             it("returns applied deletes concatenated with applied inserts for an UPDATE", () => {
@@ -635,7 +635,7 @@ describe("Nidhoggr", () => {
                 const secondAdd = makeAddMessage("txn-add-second", REMOTE_B, NODE_KEY, 50);
                 const secondApplied = [{ ...secondAdd, coastOpType: "ADD", id: makeId(REMOTE_B, 50) }] as any[];
                 fugue.effect.mockReturnValueOnce(secondApplied);
-                fugue.findAstStart.mockReturnValue(undefined);
+                fugue.findASTStart.mockReturnValue(undefined);
 
                 nidhoggr.consume(secondAdd);
 
@@ -648,7 +648,7 @@ describe("Nidhoggr", () => {
                 const nidhoggr = new Nidhoggr(fugue, { onConflict: mockConflictHandler });
                 applyAddTransaction(nidhoggr, fugue, "txn-add-prior", REMOTE, NODE_KEY, 5);
                 // Simulate node absent from astIdx
-                fugue.findAstStart.mockReturnValue(undefined);
+                fugue.findASTStart.mockReturnValue(undefined);
                 jest.clearAllMocks();
 
                 const { insert, delete: del } = makeUpdateMessages("txn-upd-missing", REMOTE_B, NODE_KEY, 50);
@@ -664,7 +664,7 @@ describe("Nidhoggr", () => {
                 const nidhoggr = new Nidhoggr(fugue, { onConflict: mockConflictHandler });
                 applyAddTransaction(nidhoggr, fugue, "txn-add-then-del", REMOTE, NODE_KEY, 5);
                 // Node is stamped — exists in astIdx
-                fugue.findAstStart.mockReturnValue(MOCK_FNODE);
+                fugue.findASTStart.mockReturnValue(MOCK_FNODE);
                 jest.clearAllMocks();
 
                 applyDeleteTransaction(nidhoggr, fugue, "txn-del-after-add", REMOTE_B, NODE_KEY, 50);
@@ -1157,11 +1157,11 @@ describe("Nidhoggr", () => {
             const nidhoggr = new Nidhoggr(fugue);
             const msg = makeAddMessage("txn-existing-key");
             fugue.effect.mockReturnValue([msg] as any[]);
-            fugue.findAstStart.mockReturnValue(MOCK_FNODE);
+            fugue.findASTStart.mockReturnValue(MOCK_FNODE);
 
             nidhoggr.consume(msg);
 
-            expect(fugue.updateAstIdx).not.toHaveBeenCalled();
+            expect(fugue.updateASTIdx).not.toHaveBeenCalled();
         });
 
         it("does not invoke onConflict for a transaction whose first message has no coastNodeKey", () => {
@@ -1408,7 +1408,7 @@ describe("Nidhoggr", () => {
 
                 nidhoggr.consume([insert, del]);
 
-                expect(fugue.updateAstIdx).not.toHaveBeenCalled();
+                expect(fugue.updateASTIdx).not.toHaveBeenCalled();
             });
 
             it("returns only appliedDeletes when handleMove appliedInserts is empty", () => {
@@ -1442,7 +1442,7 @@ describe("Nidhoggr", () => {
 
                 nidhoggr.consume([insert, del]);
 
-                expect(fugue.updateAstIdx).not.toHaveBeenCalled();
+                expect(fugue.updateASTIdx).not.toHaveBeenCalled();
             });
         });
 
@@ -1456,7 +1456,7 @@ describe("Nidhoggr", () => {
                 const appliedDel = [del as any];
 
                 fugue.effect.mockReturnValueOnce(appliedAdd).mockReturnValueOnce(appliedDel);
-                fugue.findAstStart.mockReturnValue(undefined);
+                fugue.findASTStart.mockReturnValue(undefined);
 
                 const result = nidhoggr.consume([add, del]);
 
@@ -1473,7 +1473,7 @@ describe("Nidhoggr", () => {
                     .mockReturnValueOnce([insert] as any[])
                     .mockReturnValueOnce([del] as any[])
                     .mockReturnValueOnce([{ ...add, coastOpType: "ADD", id: makeId(REMOTE, 5) }] as any[]);
-                fugue.findAstStart.mockReturnValue(undefined);
+                fugue.findASTStart.mockReturnValue(undefined);
 
                 nidhoggr.consume([insert, del, add]);
 
@@ -1487,7 +1487,7 @@ describe("Nidhoggr", () => {
 
                 const appliedAdd = [{ ...add, coastOpType: "ADD", id: makeId(REMOTE, 5) }] as any[];
                 fugue.effect.mockReturnValueOnce(appliedAdd);
-                fugue.findAstStart.mockReturnValue(undefined);
+                fugue.findASTStart.mockReturnValue(undefined);
 
                 const result = nidhoggr.consume([add, moveIns]);
 
@@ -1503,7 +1503,7 @@ describe("Nidhoggr", () => {
                 const applied1 = [{ ...add1, coastOpType: "ADD", id: makeId(REMOTE, 5) }] as any[];
                 const applied2 = [{ ...add2, coastOpType: "ADD", id: makeId(REMOTE, 6) }] as any[];
                 fugue.effect.mockReturnValueOnce(applied1).mockReturnValueOnce(applied2);
-                fugue.findAstStart.mockReturnValue(undefined);
+                fugue.findASTStart.mockReturnValue(undefined);
 
                 nidhoggr.consume([add1, add2]);
                 jest.clearAllMocks();
@@ -1536,7 +1536,7 @@ describe("Nidhoggr", () => {
                 const nidhoggr = new Nidhoggr(fugue, { onConflict: mockConflictHandler });
                 applyMoveTransaction(nidhoggr, fugue, "txn-move-setup", REMOTE, NODE_KEY, 10);
                 // Node is stamped before the DELETE arrives
-                fugue.findAstStart.mockReturnValue(MOCK_FNODE);
+                fugue.findASTStart.mockReturnValue(MOCK_FNODE);
                 jest.clearAllMocks();
 
                 const delMsg = makeDeleteMessage("txn-del-precheck", REMOTE_B, NODE_KEY, 50);
@@ -1546,13 +1546,13 @@ describe("Nidhoggr", () => {
                 expect(mockConflictHandler).toHaveBeenCalledWith(
                     expect.objectContaining({ type: ConflictType.MOVE_OF_DELETED_NODE }),
                 );
-                expect(fugue.removeAstIdx).toHaveBeenCalledWith(NODE_KEY);
+                expect(fugue.removeASTIdx).toHaveBeenCalledWith(NODE_KEY);
             });
 
             it("passes nodeExists = false to classifyConflict when the node is absent from astIdx", () => {
                 const nidhoggr = new Nidhoggr(fugue, { onConflict: mockConflictHandler });
                 applyAddTransaction(nidhoggr, fugue, "txn-add-setup", REMOTE, NODE_KEY, 5);
-                fugue.findAstStart.mockReturnValue(undefined);
+                fugue.findASTStart.mockReturnValue(undefined);
                 jest.clearAllMocks();
 
                 const { insert, delete: del } = makeUpdateMessages("txn-upd-missing", REMOTE_B, NODE_KEY, 50);

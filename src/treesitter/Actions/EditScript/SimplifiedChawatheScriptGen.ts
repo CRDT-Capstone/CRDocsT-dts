@@ -1,121 +1,109 @@
-import type { BragiAST, NodeId } from "../../types/index.js";
+import type { AstNode, BragiAST, NodeId } from "../../types/index.js";
 import { MappingStore } from "../../types/GumTree.js";
 import { type Action, Delete, Insert, TreeDelete, TreeInsert, Update, Move } from "../Model/index.js";
 import { ChawatheScriptGen } from "./ChawatheScriptGen.js";
 import { type EditScript, type EditScriptGen, lastIndexOf } from "./EditScriptGen.js";
+import { logger } from "../../../utils/logging.js";
 
 export class SimplifiedChawatheScriptGen implements EditScriptGen {
     computeActions(ms: MappingStore): EditScript {
         const actions = new ChawatheScriptGen().computeActions(ms);
-        return this.simplify(actions, ms.newAst);
+        logger.debug("Unsimplified", { unsimplified: actions });
+        return this.simplify(actions, ms.newAst, ms.oldAst);
     }
 
-    private simplify(actions: EditScript, dst: BragiAST): EditScript {
-        const insertedNodes = new Map<NodeId, Insert>();
-        const deletedNodes = new Map<NodeId, Delete>();
+    private simplify(actions: EditScript, dst: BragiAST, src: BragiAST): EditScript {
+        // Build node → action maps, keyed by node id (equivalent to Java's Tree identity)
+        const addedTrees = new Map<NodeId, Insert>();
+        const deletedTrees = new Map<NodeId, Delete>();
 
-        for (const action of actions) {
-            if (action instanceof Insert) insertedNodes.set(action.node.id, action);
-            else if (action instanceof Delete) deletedNodes.set(action.node.id, action);
+        for (const a of actions) {
+            if (a instanceof Insert) addedTrees.set(a.node.id, a);
+            else if (a instanceof Delete) deletedTrees.set(a.node.id, a);
         }
 
-        const insertReplacements = new Map<Insert, TreeInsert | null>(); // null = remove
-
-        for (const [, action] of insertedNodes) {
+        // --- Process insertions ---
+        for (const [tId, action] of addedTrees) {
             const t = action.node;
-            const parentInserted =
-                insertedNodes.has(t.parentId!) && this.allDescendantsInserted(t.parentId!, insertedNodes, dst);
 
-            if (parentInserted) {
-                insertReplacements.set(action, null);
+            // Java: addedTrees.keySet().contains(t.getParent())
+            //       && addedTrees.keySet().containsAll(t.getParent().getDescendants())
+            // i.e. the parent is also being inserted AND all of the parent's descendants are inserted
+            const parentId = t.parentId;
+            if (
+                parentId !== null &&
+                addedTrees.has(parentId) &&
+                this.allDescendantsInserted(parentId, addedTrees, dst)
+            ) {
+                // Interior node of a fully-inserted subtree — remove
+                const idx = lastIndexOf(actions, action);
+                if (idx !== -1) actions.splice(idx, 1);
             } else {
-                const allDescendantsInserted =
-                    t.childrenIds.length > 0 && this.allDescendantsInserted(t.id, insertedNodes, dst);
-
-                if (allDescendantsInserted) {
-                    insertReplacements.set(action, new TreeInsert(action.node, action.parent, action.pos));
+                // Java: t.getChildren().size() > 0
+                //       && addedTrees.keySet().containsAll(t.getDescendants())
+                // i.e. t has children and ALL of t's descendants are inserted → promote to TreeInsert
+                if (t.childrenIds.length > 0 && this.allDescendantsInserted(tId, addedTrees, dst)) {
+                    const ti = new TreeInsert(action.node, action.parent, action.pos);
+                    // Java: actions.add(index, ti); actions.remove(index + 1)
+                    // i.e. replace in place at the original position
+                    const idx = lastIndexOf(actions, action);
+                    if (idx !== -1) actions.splice(idx, 1, ti);
                 }
             }
         }
 
-        const deleteReplacements = new Map<Delete, TreeDelete | null>();
-
-        for (const [, action] of deletedNodes) {
+        // --- Process deletions ---
+        for (const [tId, action] of deletedTrees) {
             const t = action.node;
-            const parentDeleted =
-                t.parentId !== null &&
-                deletedNodes.has(t.parentId) &&
-                this.allDescendantsDeleted(t.parentId!, deletedNodes);
 
-            if (parentDeleted) {
-                // Interior node of a fully-deleted subtree — remove.
-                deleteReplacements.set(action, null);
+            // Java: deletedTrees.keySet().contains(t.getParent())
+            //       && deletedTrees.keySet().containsAll(t.getParent().getDescendants())
+            const parentId = t.parentId;
+            if (parentId !== null && deletedTrees.has(parentId) && this.allDescendantsDeleted(parentId, deletedTrees)) {
+                // Interior node of a fully-deleted subtree — remove
+                const idx = lastIndexOf(actions, action);
+                if (idx !== -1) actions.splice(idx, 1);
             } else {
-                const allDescendantsDeleted =
-                    t.childrenIds.length > 0 && this.allDescendantsDeleted(t.id, deletedNodes);
-
-                if (allDescendantsDeleted) {
-                    // Subtree root — promote to TreeDelete.
-                    deleteReplacements.set(action, new TreeDelete(action.node));
+                // Java: t.getChildren().size() > 0
+                //       && deletedTrees.keySet().containsAll(t.getDescendants())
+                if (t.childrenIds.length > 0 && this.allDescendantsDeleted(tId, deletedTrees)) {
+                    const td = new TreeDelete(action.node);
+                    const idx = lastIndexOf(actions, action);
+                    if (idx !== -1) actions.splice(idx, 1, td);
                 }
             }
         }
 
-        const applyReplacements = <T extends Action>(replacements: Map<T, Action | null>) => {
-            // Sort by descending index so splices don't invalidate earlier positions.
-            const sorted = [...replacements.entries()].sort(
-                ([a], [b]) => lastIndexOf(actions, b) - lastIndexOf(actions, a),
-            );
-
-            for (const [original, replacement] of sorted) {
-                const idx = lastIndexOf(actions, original);
-                if (idx === -1) continue;
-                if (replacement === null) {
-                    actions.splice(idx, 1);
-                } else {
-                    actions.splice(idx, 1, replacement);
-                }
-            }
-        };
-
-        applyReplacements(insertReplacements);
-        applyReplacements(deleteReplacements);
-
-        const priority = (a: Action): number => {
-            if (a instanceof Update || a instanceof Move) return 0;
-            if (a instanceof Insert || a instanceof TreeInsert) return 1;
-            return 2; // Delete / TreeDelete
-        };
-
-        return actions.sort((a, b) => priority(a) - priority(b));
+        // Java version does not sort — it preserves the order ChawatheScriptGen produced.
+        // The Chawathe BFS guarantees Updates/Moves come before Inserts/Deletes naturally.
+        return actions;
     }
 
     /**
-     * Returns true if every descendant of nodeId, in the dst tree, is present
-     * in insertedNodes. Uses the dst BragiAST to walk descendants.
+     * Equivalent to Java's addedTrees.keySet().containsAll(t.getDescendants()).
+     * Returns true if every descendant of nodeId in dst is present in addedTrees.
      */
-    private allDescendantsInserted(nodeId: NodeId, insertedNodes: Map<NodeId, Insert>, dst: BragiAST): boolean {
+    private allDescendantsInserted(nodeId: NodeId, addedTrees: Map<NodeId, Insert>, dst: BragiAST): boolean {
         const node = dst.nodes.get(nodeId);
         if (!node) return false;
         for (const childId of node.childrenIds) {
-            if (!insertedNodes.has(childId)) return false;
-            if (!this.allDescendantsInserted(childId, insertedNodes, dst)) return false;
+            if (!addedTrees.has(childId)) return false;
+            if (!this.allDescendantsInserted(childId, addedTrees, dst)) return false;
         }
         return true;
     }
 
     /**
-     * Returns true if every descendant of nodeId is present in deletedNodes.
-     * Uses the deleted nodes themselves to walk descendants, because the
-     * src working copy has been mutated by ChawatheScriptGen — but every
-     * deleted node carries its original childrenIds from ogOldAst.
+     * Equivalent to Java's deletedTrees.keySet().containsAll(t.getDescendants()).
+     * Uses deleted node's own childrenIds to walk descendants since src working copy
+     * has been mutated by ChawatheScriptGen.
      */
-    private allDescendantsDeleted(nodeId: NodeId, deletedNodes: Map<NodeId, Delete>): boolean {
-        const action = deletedNodes.get(nodeId);
+    private allDescendantsDeleted(nodeId: NodeId, deletedTrees: Map<NodeId, Delete>): boolean {
+        const action = deletedTrees.get(nodeId);
         if (!action) return false;
         for (const childId of action.node.childrenIds) {
-            if (!deletedNodes.has(childId)) return false;
-            if (!this.allDescendantsDeleted(childId, deletedNodes)) return false;
+            if (!deletedTrees.has(childId)) return false;
+            if (!this.allDescendantsDeleted(childId, deletedTrees)) return false;
         }
         return true;
     }

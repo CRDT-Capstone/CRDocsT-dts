@@ -118,7 +118,7 @@ describe("Ratatoskr", () => {
             ]);
 
             // After insertion the new node should be findable via the real astIdx
-            expect(fugue.findAstStart("stamp-check-id")).toBeDefined();
+            expect(fugue.findASTStart("stamp-check-id")).toBeDefined();
         });
     });
 
@@ -135,7 +135,7 @@ describe("Ratatoskr", () => {
 
         it("calls deleteMultiple at the visible index of the stamped FNode", () => {
             const textNode = findNode("Hello");
-            const startFNode = fugue.findAstStart(textNode.id)!;
+            const startFNode = fugue.findASTStart(textNode.id)!;
             const expectedIdx = fugue.getVisibleIndex(startFNode);
 
             ratatoskr.translate([{ type: ActionType.DELETE, node: textNode } as Delete]);
@@ -145,7 +145,7 @@ describe("Ratatoskr", () => {
 
         it("clears the stamp from astIdx after deletion", () => {
             const textNode = findNode("Hello");
-            const clearSpy = jest.spyOn(fugue, "removeAstIdx");
+            const clearSpy = jest.spyOn(fugue, "removeASTIdx");
 
             ratatoskr.translate([{ type: ActionType.DELETE, node: textNode } as Delete]);
 
@@ -174,11 +174,11 @@ describe("Ratatoskr", () => {
         it("replaces old content with new content and re-stamps the FNode", () => {
             const textNode = findNode("Hello");
             const expectedLength = textNode.endIndex - textNode.startIndex;
-            const expectedIdx = fugue.getVisibleIndex(fugue.findAstStart(textNode.id)!);
+            const expectedIdx = fugue.getVisibleIndex(fugue.findASTStart(textNode.id)!);
 
             // Mock getSpanText so the "same value" guard doesn't skip the operation
             jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
-            const updateAstIdxSpy = jest.spyOn(fugue, "updateAstIdx");
+            const updateASTIdxSpy = jest.spyOn(fugue, "updateASTIdx");
 
             const msgs = ratatoskr.translate([
                 {
@@ -191,7 +191,7 @@ describe("Ratatoskr", () => {
 
             expect(deleteSpy).toHaveBeenCalledWith(expectedIdx, expectedLength);
             expect(insertSpy).toHaveBeenCalledWith(expectedIdx, "Goodbye, World!");
-            expect(updateAstIdxSpy).toHaveBeenCalledWith(textNode.id, expect.any(Object));
+            expect(updateASTIdxSpy).toHaveBeenCalledWith(textNode.id, expect.any(Object));
             expect(msgs.some((m) => m.coastOpPart === "DELETE")).toBe(true);
             expect(msgs.some((m) => m.coastOpPart === "INSERT")).toBe(true);
         });
@@ -221,7 +221,7 @@ describe("Ratatoskr", () => {
             const newNode = { ...textNode, id: "updated-node-id" };
 
             jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
-            const updateAstIdxSpy = jest.spyOn(fugue, "updateAstIdx");
+            const updateASTIdxSpy = jest.spyOn(fugue, "updateASTIdx");
 
             ratatoskr.translate([
                 {
@@ -232,7 +232,7 @@ describe("Ratatoskr", () => {
                 } as Update,
             ]);
 
-            expect(updateAstIdxSpy).toHaveBeenCalledWith("updated-node-id", expect.any(Object));
+            expect(updateASTIdxSpy).toHaveBeenCalledWith("updated-node-id", expect.any(Object));
         });
     });
 
@@ -288,7 +288,7 @@ describe("Ratatoskr", () => {
         it("re-stamps the node with the first inserted FNode after a move", () => {
             const textNode = findNode("Hello");
             const parent = findParent(textNode);
-            const updateAstIdxSpy = jest.spyOn(fugue, "updateAstIdx");
+            const updateASTIdxSpy = jest.spyOn(fugue, "updateASTIdx");
 
             jest.spyOn(ratatoskr as any, "getSpanText").mockReturnValue("Hello, World!");
 
@@ -301,7 +301,7 @@ describe("Ratatoskr", () => {
                 } as any,
             ]);
 
-            expect(updateAstIdxSpy).toHaveBeenCalledWith(textNode.id, expect.any(Object));
+            expect(updateASTIdxSpy).toHaveBeenCalledWith(textNode.id, expect.any(Object));
         });
 
         it("throws when moving a node that is not stamped in astIdx", () => {

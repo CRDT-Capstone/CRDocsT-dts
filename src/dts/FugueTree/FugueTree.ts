@@ -2,6 +2,7 @@ import { BragiAST, NodeId } from "../../treesitter.js";
 import { FugueMessage, makeFugueMessage, Operation } from "../../types/FugueTree/Message.js";
 import { MessageType } from "../../types/Message.js";
 import { chunkArray, randomString } from "../../utils/index.js";
+import { logger } from "../../utils/logging.js";
 import { FugueMessageSerialzier } from "../Serailizers/FugueTree/index.js";
 import { Serializer } from "../Serailizers/General.js";
 import { FNode, FTree, ID } from "./FTree.js";
@@ -430,7 +431,7 @@ export class FugueTree {
         }
     }
 
-    stampAstNode(nodeId: NodeId, startIdx: number): ID {
+    stampASTNode(nodeId: NodeId, startIdx: number): ID {
         const sn = this.tree.getByIndex(this.tree.root, startIdx);
 
         if (sn.astNodeId !== undefined && sn.astNodeId !== nodeId) {
@@ -449,13 +450,15 @@ export class FugueTree {
 
         this.astIdx.clear();
         for (const [nodeId, astNode] of ast.nodes) {
+            if (astNode.type === "source_file") continue;
+            logger.debug(`Stamping AST node ${nodeId} at index ${astNode.startIndex}`, { nodeId, astNode });
             if (astNode.startIndex < astNode.endIndex) {
-                this.stampAstNode(nodeId, astNode.startIndex);
+                this.stampASTNode(nodeId, astNode.startIndex);
             }
         }
     }
 
-    updateAstIdx(nodeId: NodeId, fnode: FNode) {
+    updateASTIdx(nodeId: NodeId, fnode: FNode) {
         const old = this.astIdx.get(nodeId);
         if (old) old.astNodeId = undefined;
 
@@ -463,13 +466,13 @@ export class FugueTree {
         this.astIdx.set(nodeId, fnode);
     }
 
-    removeAstIdx(nodeId: NodeId) {
+    removeASTIdx(nodeId: NodeId) {
         const fnode = this.astIdx.get(nodeId);
         if (fnode) fnode.astNodeId = undefined;
         this.astIdx.delete(nodeId);
     }
 
-    findAstStart(nodeId: NodeId): FNode | undefined {
+    findASTStart(nodeId: NodeId): FNode | undefined {
         return this.astIdx.get(nodeId);
     }
 }

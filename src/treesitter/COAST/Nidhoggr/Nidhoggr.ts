@@ -252,13 +252,13 @@ export class Nidhoggr {
         if (txn.msgs.length > 0) {
             const nodeKey = txn.msgs[0].coastNodeKey!;
             if (applied.length > 0) {
-                if (!this.fugue.findAstStart(nodeKey)) {
+                if (!this.fugue.findASTStart(nodeKey)) {
                     // Find the minimum counter among the applied ADD messages, which should correspond to the first message that added this node.
                     let firstApplied = this.findFirstAppliedMsg(applied);
 
                     if (firstApplied) {
                         const n = this.fugue.getById(firstApplied.id);
-                        this.fugue.updateAstIdx(nodeKey, n);
+                        this.fugue.updateASTIdx(nodeKey, n);
                     }
                 }
 
@@ -283,7 +283,7 @@ export class Nidhoggr {
         // We can have multiple DELETE txns for the same nodeKey
         if (applied.length > 0) {
             const nodeKey = txn.msgs[0].coastNodeKey!;
-            this.fugue.removeAstIdx(nodeKey);
+            this.fugue.removeASTIdx(nodeKey);
             this.recordHistory(txn);
         }
 
@@ -313,7 +313,7 @@ export class Nidhoggr {
             const firstInsert = this.findFirstAppliedMsg(appliedInserts);
             if (firstInsert) {
                 const n = this.fugue.getById(firstInsert.id);
-                this.fugue.updateAstIdx(nodeKey, n);
+                this.fugue.updateASTIdx(nodeKey, n);
             }
 
             this.recordHistory(txn);
@@ -345,7 +345,7 @@ export class Nidhoggr {
 
             if (firstInsert) {
                 const n = this.fugue.getById(firstInsert.id);
-                this.fugue.updateAstIdx(nodeKey, n);
+                this.fugue.updateASTIdx(nodeKey, n);
             }
 
             this.recordHistory(txn);
@@ -374,7 +374,7 @@ export class Nidhoggr {
             nodeKey,
             prior,
             { txnId: txn.txnId, opType: txn.opType, msgs: txn.msgs },
-            this.fugue.findAstStart(nodeKey) !== undefined,
+            this.fugue.findASTStart(nodeKey) !== undefined,
         );
 
         if (conflict) {

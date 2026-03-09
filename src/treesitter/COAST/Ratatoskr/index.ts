@@ -99,7 +99,7 @@ export class Ratatoskr {
         this.tag(msgs, txId, action.node.id, "ADD");
 
         const fnode = this.fugue.getById(msgs[0].id);
-        this.fugue.updateAstIdx(action.node.id, fnode);
+        this.fugue.updateASTIdx(action.node.id, fnode);
 
         this.stampInsertedSubtree(action.node, msgs, 0);
 
@@ -112,7 +112,7 @@ export class Ratatoskr {
             if (len > 0) {
                 const fnode = this.fugue.getById(msgs[offset].id);
                 if (!fnode.astNodeId) {
-                    this.fugue.updateAstIdx(node.id, fnode);
+                    this.fugue.updateASTIdx(node.id, fnode);
                 }
             }
             return len;
@@ -128,7 +128,7 @@ export class Ratatoskr {
         if (currentOffset > startOffset) {
             const fnode = this.fugue.getById(msgs[startOffset].id);
             if (!fnode.astNodeId) {
-                this.fugue.updateAstIdx(node.id, fnode);
+                this.fugue.updateASTIdx(node.id, fnode);
             }
         }
 
@@ -145,7 +145,7 @@ export class Ratatoskr {
         logger.debug("Handling move for node", action.node.id);
         // Retrieve the current anchor for the node being moved, and the text content of the span being moved.
         // this assumes that the span being moved exists in the registry.
-        const sn = this.fugue.findAstStart(action.node.id);
+        const sn = this.fugue.findASTStart(action.node.id);
         if (!sn) throw new Error(`Move target ${action.node.id} not stamped`);
 
         const len = action.node.endIndex - action.node.startIndex;
@@ -184,7 +184,7 @@ export class Ratatoskr {
         });
 
         const newSN = this.fugue.getById(insMsgs[0].id);
-        this.fugue.updateAstIdx(action.node.id, newSN);
+        this.fugue.updateASTIdx(action.node.id, newSN);
 
         return all;
     }
@@ -197,7 +197,7 @@ export class Ratatoskr {
      */
     private handleDelete(action: Delete, txId: string): FugueMessage[] {
         logger.debug("Handling delete for node", { id: action.node.id });
-        const sn = this.fugue.findAstStart(action.node.id);
+        const sn = this.fugue.findASTStart(action.node.id);
         if (!sn) throw new Error(`Delete target ${action.node.id} not stamped`);
 
         const len = action.node.endIndex - action.node.startIndex;
@@ -205,7 +205,7 @@ export class Ratatoskr {
         const msgs = this.fugue.deleteMultiple(idx, len);
 
         this.tag(msgs, txId, action.node.id, "DELETE");
-        this.fugue.removeAstIdx(action.node.id);
+        this.fugue.removeASTIdx(action.node.id);
 
         return msgs;
     }
@@ -222,7 +222,7 @@ export class Ratatoskr {
         // An update is treated as a deletion of the old content and an insertion of the new content.
         // This bypasses the problems of move operation because we are not trying to preserve the deleted content, so we can
         // perform the delete, without worrying about the lost content, then the insert operation
-        const sn = this.fugue.findAstStart(action.node.id);
+        const sn = this.fugue.findASTStart(action.node.id);
         if (!sn) throw new Error(`Update target ${action.node.id} not stamped`);
 
         const len = action.node.endIndex - action.node.startIndex;
@@ -249,9 +249,9 @@ export class Ratatoskr {
         });
 
         const newSN = this.fugue.getById(insMsgs[0].id);
-        this.fugue.updateAstIdx(action.node.id, newSN);
+        this.fugue.updateASTIdx(action.node.id, newSN);
 
-        if (action.newNode.id !== action.node.id) this.fugue.updateAstIdx(action.newNode.id, newSN);
+        if (action.newNode.id !== action.node.id) this.fugue.updateASTIdx(action.newNode.id, newSN);
 
         return all;
     }
@@ -326,7 +326,7 @@ export class Ratatoskr {
     }
 
     private resolveCharPos(parentId: NodeId, childOrdinal: number): number {
-        const parentFNode = this.fugue.findAstStart(parentId);
+        const parentFNode = this.fugue.findASTStart(parentId);
         if (!parentFNode) throw new Error(`Parent ${parentId} not stamped`);
 
         const parentAstNode = this.newAst!.nodes.get(parentId);
@@ -340,7 +340,7 @@ export class Ratatoskr {
         for (let i = childOrdinal - 1; i >= 0; i--) {
             const sibId = parentAstNode.childrenIds[i];
             if (!sibId) continue;
-            const sibFNode = this.fugue.findAstStart(sibId);
+            const sibFNode = this.fugue.findASTStart(sibId);
             if (sibFNode) {
                 const sibAst = this.newAst!.nodes.get(sibId)!;
                 const sibLength = sibAst.endIndex - sibAst.startIndex;
