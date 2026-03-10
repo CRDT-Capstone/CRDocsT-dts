@@ -12,6 +12,8 @@ export class APIError extends Error {
     }
 }
 
+type Options = RequestInit & { asBlob?: boolean; asArrayBuffer?: boolean; handleHeaders?: (headers: Headers) => void };
+
 class Fetch {
     private baseUrl: string;
     private defaultOptions: RequestInit;
@@ -30,11 +32,11 @@ class Fetch {
     /**
      * Centralized request handler to manage errors and JSON parsing
      */
-    private async request<T>(url: string, options: RequestInit): Promise<T> {
+    private async request<T>(url: string, options: Options): Promise<T> {
         const fullUrl = url.startsWith("http") ? url : `${this.baseUrl}${url}`;
 
         try {
-            const response = await window.fetch(fullUrl, {
+            const response = await fetch(fullUrl, {
                 ...this.defaultOptions,
                 ...options,
                 headers: {
@@ -72,6 +74,18 @@ class Fetch {
                 return {} as T;
             }
 
+            if (options.handleHeaders) {
+                options.handleHeaders(response.headers);
+            }
+
+            if (options.asArrayBuffer) {
+                return (await response.arrayBuffer()) as unknown as T;
+            }
+
+            if (options.asBlob) {
+                return (await response.blob()) as unknown as T;
+            }
+
             return (await response.json()) as T;
         } catch (error) {
             // Re-throw if it's already an APIError, otherwise wrap it
@@ -81,11 +95,11 @@ class Fetch {
         }
     }
 
-    async get<T>(url: string, options?: RequestInit): Promise<T> {
+    async get<T>(url: string, options?: Options): Promise<T> {
         return this.request<T>(url, { ...options, method: "GET" });
     }
 
-    async post<T, D = unknown>(url: string, data: D, options?: RequestInit): Promise<T> {
+    async post<T, D = unknown>(url: string, data: D, options?: Options): Promise<T> {
         return this.request<T>(url, {
             ...options,
             method: "POST",
@@ -93,7 +107,7 @@ class Fetch {
         });
     }
 
-    async put<T, D = unknown>(url: string, data: D, options?: RequestInit): Promise<T> {
+    async put<T, D = unknown>(url: string, data: D, options?: Options): Promise<T> {
         return this.request<T>(url, {
             ...options,
             method: "PUT",
@@ -101,7 +115,7 @@ class Fetch {
         });
     }
 
-    async delete<T>(url: string, options?: RequestInit): Promise<T> {
+    async delete<T>(url: string, options?: Options): Promise<T> {
         return this.request<T>(url, { ...options, method: "DELETE" });
     }
 }
