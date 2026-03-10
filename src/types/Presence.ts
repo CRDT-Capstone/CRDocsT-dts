@@ -2,7 +2,7 @@ import { BaseMessage, MessageType } from "./Message.js";
 
 export enum PresenceMessageType {
     CURSOR,
-    SELECTION,
+    UPDATE,
 }
 
 export interface BasePresenceMessage<T extends PresenceMessageType = PresenceMessageType>
@@ -14,7 +14,9 @@ export interface PresenceCursorMessage extends BasePresenceMessage<PresenceMessa
     pos: number;
 }
 
-export type PresenceMessage = PresenceCursorMessage;
+export interface PresenceUpdateMessage extends BasePresenceMessage<PresenceMessageType.UPDATE> {}
+
+export type PresenceMessage = PresenceCursorMessage | PresenceUpdateMessage;
 
 export const makePresenceMsg = <T extends PresenceMessage>(msg: Omit<T, "msgType">): BasePresenceMessage => {
     return {
