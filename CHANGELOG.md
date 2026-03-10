@@ -1,3 +1,10 @@
+# [0.33.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.32.0...v0.33.0) (2026-03-10)
+
+
+### Features
+
+* enhance fetch options and update presence message type ([7287961](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/7287961ac7141bdb2d86f9efd9ad9a2370a6bd66))
+
 # [0.32.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.31.0...v0.32.0) (2026-03-01)
 
 
