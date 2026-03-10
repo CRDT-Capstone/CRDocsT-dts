@@ -1,3 +1,10 @@
+# [0.34.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.33.0...v0.34.0) (2026-03-10)
+
+
+### Features
+
+* extend error message types ([ca10039](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/ca10039f35a1e9f89748e3161ae481b76738062b))
+
 # [0.33.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.32.0...v0.33.0) (2026-03-10)
 
 
