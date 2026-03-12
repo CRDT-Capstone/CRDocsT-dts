@@ -14,7 +14,7 @@ export const ContributorSchema = z.object({
 
 export const DocumentSchema = IdentifiedSchema.extend({
     name: z.string().min(1, "Name is required"),
-    serializedCRDTState: z.string(),
+    serializedCRDTState: z.instanceof(Buffer).optional(),
     ownerId: z.string().optional(),
     contributors: z.array(ContributorSchema).default([]),
     projectId: z.string().optional(),
