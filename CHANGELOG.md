@@ -1,3 +1,10 @@
+# [0.35.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.34.0...v0.35.0) (2026-03-12)
+
+
+### Features
+
+* changing the serialised state to buffer rather than string ([8059b7a](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/8059b7a58ad8d7837ff2d216728e38d56e3d88eb))
+
 # [0.34.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.33.0...v0.34.0) (2026-03-10)
 
 
