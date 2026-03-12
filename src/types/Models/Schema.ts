@@ -27,10 +27,21 @@ export const ProjectSchema = IdentifiedSchema.extend({
     contributors: z.array(ContributorSchema).default([]),
 });
 
+export const CommentSchema = IdentifiedSchema.extend({
+    text: z.string().min(1, "text is required for a comment"),
+    userId: z.string().optional(),
+    parentCommentId: z.string().optional(), //the comment that a comment is responding to
+    documentId: z.string(),
+    resolved: z.boolean().default(false),
+    from: z.number(),
+    to: z.number()
+});
+
 export type Identified = z.infer<typeof IdentifiedSchema>;
 export type Contributor = z.infer<typeof ContributorSchema>;
 export type Document = z.infer<typeof DocumentSchema>;
 export type Project = z.infer<typeof ProjectSchema>;
+export type CommentType = z.infer<typeof CommentSchema>;
 export type ProjectWithDocuments = {
     project: Project;
     documents: Document[];
