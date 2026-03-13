@@ -13,17 +13,20 @@ export class FugueTree {
     private tree: FTree;
     ws: WebSocket | null;
     documentID: string;
-    readonly replicaID = randomString(3);
+    readonly replicaID: string;
     userIdentity: string;
     pendingMsgs = new Map<string, FugueMessage>();
     // Tentative
     readonly batchSize = 800;
+    private lastIndex = -1;
+    private lastNode: FNode | undefined = undefined;
 
-    constructor(ws: WebSocket | null, documentID: string, userIdentity: string) {
+    constructor(ws: WebSocket | null, documentID: string, userIdentity: string, replicaID?: string) {
         this.ws = ws;
         this.documentID = documentID;
         this.userIdentity = userIdentity;
         this.tree = new FTree();
+        this.replicaID = replicaID ?? crypto.randomUUID();
     }
 
     /**
@@ -59,8 +62,6 @@ export class FugueTree {
      */
     private insertImpl(index: number, value: string): FugueMessage {
         const id = { sender: this.replicaID, counter: this.counter };
-        // PERF: optimize by caching the last accessed node and its index,
-        // so that if the next insert is nearby, we can start from there instead of the root
         this.counter++;
         const leftOrigin = index === 0 ? this.tree.root : this.tree.getByIndex(this.tree.root, index - 1);
 
@@ -363,11 +364,16 @@ export class FugueTree {
         return this.tree.getVisibleIndex(node);
     }
 
+    nextNonDescendant(node: FNode) {
+        return this.tree.nextNonDescendant(node);
+    }
+
     getState() {
         return this.tree;
     }
 
     clear() {
+        this.counter = 0;
         return this.tree.clear();
     }
 }

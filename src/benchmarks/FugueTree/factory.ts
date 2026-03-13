@@ -29,11 +29,15 @@ export class FugueTreeCRDT implements AbstractCrdt {
     private updateHandler: ((update: Uint8Array) => void) | null;
 
     constructor(rng: seedrandom.PRNG, updateHandler?: (update: Uint8Array) => void) {
-        const replicaID = Math.floor(rng() * 0xffffff)
+        const hi = Math.floor(rng() * 0xffffffff)
             .toString(16)
-            .padStart(6, "0");
+            .padStart(8, "0");
+        const lo = Math.floor(rng() * 0xffffffff)
+            .toString(16)
+            .padStart(8, "0");
+        const replicaID = hi + lo;
 
-        this.tree = new FugueTree(null, "bench", replicaID);
+        this.tree = new FugueTree(null, "bench", "bench", replicaID);
         this.updateHandler = updateHandler ?? null;
     }
 

@@ -7,15 +7,18 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prebuild": "npm run gen-types",
-    "prepublishOnly": "npm run build",
-    "ci": "npm install && npm run build",
-    "pretest": "npm run build",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "gen-types": "tsx ./src/type-gen.ts && biome format --write ./src/treesitter/types/AST.ts",
+    "wasm": "cp -r ./src/wasm ./dist",
+    "postbuild": "pnpm run wasm",
+    "prebuild": "pnpm run gen-types",
     "bench": "npm run exp && npm run table",
     "exp": "tsx --expose-gc ./src/benchmarks/FugueTree/run.ts",
-    "table": "echo 'FugueTree results: \n\n' && node ./src/benchmarks/bin/render-table.js ../results.json 6000 fugue-tree"
+    "table": "echo 'FugueTree results: \n\n' && node ./src/benchmarks/bin/render-table.js ./bench_results.json 6000 fugue-tree",
+    "prepublishOnly": "pnpm run test",
+    "test": "NODE_OPTIONS='--experimental-vm-modules --expose-gc' jest",
+    "test:ci": "NODE_OPTIONS=--experimental-vm-modules jest --ci --passWithNoTests",
+    "ci": "pnpm install --frozen-lockfile && pnpm run test:ci",
+    "pretest": "pnpm run build",
+    "gen-types": "tsx ./src/type-gen.ts && biome format --write ./src/treesitter/types/AST.ts"
   },
   "exports": {
     ".": {
@@ -67,6 +70,7 @@
   "packageManager": "pnpm@10.20.0",
   "devDependencies": {
     "@biomejs/biome": "2.4.4",
+    "@jest/globals": "^30.3.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@types/jest": "^30.0.0",

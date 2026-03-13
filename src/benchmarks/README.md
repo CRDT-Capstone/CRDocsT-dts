@@ -24,3 +24,11 @@ the time to parse the encoded document (`parseTime`), and the memory used to hol
 The logarithm of `N` was
 chosen because `√N` concurrent actions may result in up to `√N^2 - 1`
 conflicts (apply action 1: 0 conlict; apply action2: 1 conflict, apply action 2: 2 conflicts, ..).
+
+#### B4: Bragi's Functional and Non-Functional Requirements
+
+Benchmarks written to validate system requirements not covered by B1–B3. We simulate four scenarios:
+- Multi-replica propagation latency across 5 replicas, 
+- Document size growth over a long editing lifetime, 
+- A sustained throughput stress test at a fixed edit rate. 
+We measure convergence correctness, propagation latency (`medianPropagationLatency`, `p95PropagationLatency`), document size growth ratios (`growthRatio`), and throughput metrics (`achievedRate`,     `droppedUpdates`).
