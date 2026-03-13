@@ -8,16 +8,16 @@
   "scripts": {
     "build": "tsc",
     "wasm": "cp -r ./src/wasm ./dist",
-    "postbuild": "pnpm run wasm",
-    "prebuild": "pnpm run gen-types",
+    "postbuild": "npm run wasm",
+    "prebuild": "npm run gen-types",
     "bench": "npm run exp && npm run table",
     "exp": "tsx --expose-gc ./src/benchmarks/FugueTree/run.ts",
     "table": "echo 'FugueTree results: \n\n' && node ./src/benchmarks/bin/render-table.js ./bench_results.json 6000 fugue-tree",
-    "prepublishOnly": "pnpm run test",
+    "prepublishOnly": "npm run test",
     "test": "NODE_OPTIONS='--experimental-vm-modules --expose-gc' jest",
     "test:ci": "NODE_OPTIONS=--experimental-vm-modules jest --ci --passWithNoTests",
-    "ci": "pnpm install --frozen-lockfile && pnpm run test:ci",
-    "pretest": "pnpm run build",
+    "ci": "npm install --frozen-lockfile && npm run test:ci",
+    "pretest": "npm run build",
     "gen-types": "tsx ./src/type-gen.ts && biome format --write ./src/treesitter/types/AST.ts"
   },
   "exports": {
