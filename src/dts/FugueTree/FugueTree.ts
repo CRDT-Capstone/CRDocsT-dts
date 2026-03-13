@@ -258,7 +258,7 @@ export class FugueTree {
         const msgs = Array.isArray(msg) ? msg : [msg];
         for (const msg of msgs) {
             // Skip messages from this replica
-            if (msg.replicaId == this.replicaId()) continue;
+            if (msg.replicaId === this.replicaId()) continue;
 
             const succ = this.applyToTree(msg);
             if (succ) {

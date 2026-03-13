@@ -1,0 +1,31 @@
+{
+  "name": "crdt-benchmarks",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CRDT benchmarks, forked from Kevin Jahns's https://github.com/dmonad/crdt-benchmarks",
+  "type": "module",
+  "workspaces": [
+    "benchmarks/yjs",
+    "benchmarks/ywasm",
+    "benchmarks/automerge-wasm",
+    "benchmarks/fugue",
+    "benchmarks/fugue-simple",
+    "benchmarks/fugue-max-simple"
+  ],
+  "scripts": {
+    "start": "npm start -w benchmarks/yjs && npm start -w benchmarks/ywasm && npm start -w benchmarks/automerge-wasm && npm start -w benchmarks/fugue && npm start -w benchmarks/fugue-simple && npm start -w benchmarks/fugue-max-simple",
+    "table": "node bin/render-table.js benchmarks/results.json 6000 yjs ywasm automerge-wasm fugue fugue-simple fugue-max-simple",
+    "B4x100": "npm run B4x100 -w benchmarks/yjs && npm run B4x100 -w benchmarks/fugue"
+  },
+  "engines": {
+    "node": "^18.0.0"
+  },
+  "dependencies": {
+    "isomorphic.js": "^0.2.5",
+    "lib0": "^0.2.42",
+    "mathjs": "^11.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.9.6"
+  }
+}

@@ -1,0 +1,30 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      fugue:
+        specifier: 1.0.0
+        version: 1.0.0
+      seedrandom:
+        specifier: ^3.0.5
+        version: 3.0.5
+
+packages:
+
+  fugue@1.0.0:
+    resolution: {integrity: sha512-7Uc6GenjMFA4mkteiZtB1fHNfhytZcr/THJbR1q9uFISyxDzGLM4RdePaHXXFKrNJvSOc1gZxTu36OQcSnHB9g==}
+
+  seedrandom@3.0.5:
+    resolution: {integrity: sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==}
+
+snapshots:
+
+  fugue@1.0.0: {}
+
+  seedrandom@3.0.5: {}
