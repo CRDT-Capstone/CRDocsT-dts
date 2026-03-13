@@ -1,3 +1,10 @@
+## [0.35.1](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.35.0...v0.35.1) (2026-03-13)
+
+
+### Bug Fixes
+
+* update package.json scripts to use npm ([04e50f6](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/04e50f60f9caead8014783dd30b4159d367ff576))
+
 # [0.35.0](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.34.0...v0.35.0) (2026-03-12)
 
 
