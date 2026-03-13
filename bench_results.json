@@ -1,0 +1,1222 @@
+{
+  "6000": {
+    "[B1.1] Append N characters (time)": {
+      "fugue-tree": [
+        "807 ms",
+        "853 ms",
+        "781 ms",
+        "792 ms",
+        "796 ms",
+        "1221 ms",
+        "805 ms",
+        "770 ms",
+        "816 ms",
+        "794 ms"
+      ]
+    },
+    "[B1.1] Append N characters (avgUpdateSize)": {
+      "fugue-tree": [
+        "196 bytes",
+        "196 bytes",
+        "196 bytes",
+        "196 bytes",
+        "196 bytes",
+        "196 bytes",
+        "196 bytes",
+        "196 bytes",
+        "196 bytes",
+        "196 bytes"
+      ]
+    },
+    "[B1.1] Append N characters (encodeTime)": {
+      "fugue-tree": [
+        "3 ms",
+        "2 ms",
+        "2 ms",
+        "3 ms",
+        "2 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms"
+      ]
+    },
+    "[B1.1] Append N characters (docSize)": {
+      "fugue-tree": [
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes"
+      ]
+    },
+    "[B1.1] Append N characters (memUsed)": {
+      "fugue-tree": [
+        "2101920 bytes",
+        "2102656 bytes",
+        "2101184 bytes",
+        "2101056 bytes",
+        "2101312 bytes",
+        "2102968 bytes",
+        "2102304 bytes",
+        "2101536 bytes",
+        "2101072 bytes",
+        "2101640 bytes"
+      ]
+    },
+    "[B1.1] Append N characters (parseTime)": {
+      "fugue-tree": [
+        "27 ms",
+        "30 ms",
+        "28 ms",
+        "34 ms",
+        "29 ms",
+        "33 ms",
+        "29 ms",
+        "29 ms",
+        "30 ms",
+        "30 ms"
+      ]
+    },
+    "[B1.2] Insert string of length N (time)": {
+      "fugue-tree": [
+        "626 ms",
+        "604 ms",
+        "611 ms",
+        "604 ms",
+        "617 ms",
+        "621 ms",
+        "597 ms",
+        "597 ms",
+        "599 ms",
+        "589 ms"
+      ]
+    },
+    "[B1.2] Insert string of length N (avgUpdateSize)": {
+      "fugue-tree": [
+        "39656 bytes",
+        "39656 bytes",
+        "39656 bytes",
+        "39656 bytes",
+        "39656 bytes",
+        "39656 bytes",
+        "39656 bytes",
+        "39656 bytes",
+        "39656 bytes",
+        "39656 bytes"
+      ]
+    },
+    "[B1.2] Insert string of length N (encodeTime)": {
+      "fugue-tree": [
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms"
+      ]
+    },
+    "[B1.2] Insert string of length N (docSize)": {
+      "fugue-tree": [
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes"
+      ]
+    },
+    "[B1.2] Insert string of length N (memUsed)": {
+      "fugue-tree": [
+        "2101016 bytes",
+        "2102568 bytes",
+        "2100864 bytes",
+        "2102568 bytes",
+        "2101016 bytes",
+        "2109672 bytes",
+        "2100904 bytes",
+        "2102528 bytes",
+        "2101016 bytes",
+        "2102568 bytes"
+      ]
+    },
+    "[B1.2] Insert string of length N (parseTime)": {
+      "fugue-tree": [
+        "29 ms",
+        "27 ms",
+        "28 ms",
+        "28 ms",
+        "28 ms",
+        "27 ms",
+        "28 ms",
+        "28 ms",
+        "28 ms",
+        "26 ms"
+      ]
+    },
+    "[B1.3] Prepend N characters (time)": {
+      "fugue-tree": [
+        "926 ms",
+        "790 ms",
+        "907 ms",
+        "901 ms",
+        "808 ms",
+        "908 ms",
+        "887 ms",
+        "784 ms",
+        "903 ms",
+        "914 ms"
+      ]
+    },
+    "[B1.3] Prepend N characters (avgUpdateSize)": {
+      "fugue-tree": [
+        "183 bytes",
+        "183 bytes",
+        "183 bytes",
+        "183 bytes",
+        "183 bytes",
+        "183 bytes",
+        "183 bytes",
+        "183 bytes",
+        "183 bytes",
+        "183 bytes"
+      ]
+    },
+    "[B1.3] Prepend N characters (encodeTime)": {
+      "fugue-tree": [
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "2 ms",
+        "3 ms",
+        "3 ms",
+        "2 ms",
+        "2 ms",
+        "3 ms",
+        "3 ms"
+      ]
+    },
+    "[B1.3] Prepend N characters (docSize)": {
+      "fugue-tree": [
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes",
+        "651861 bytes"
+      ]
+    },
+    "[B1.3] Prepend N characters (memUsed)": {
+      "fugue-tree": [
+        "2102656 bytes",
+        "2101944 bytes",
+        "2100824 bytes",
+        "2100648 bytes",
+        "2100824 bytes",
+        "2100824 bytes",
+        "2102344 bytes",
+        "2100824 bytes",
+        "2100600 bytes",
+        "2102608 bytes"
+      ]
+    },
+    "[B1.3] Prepend N characters (parseTime)": {
+      "fugue-tree": [
+        "29 ms",
+        "29 ms",
+        "30 ms",
+        "30 ms",
+        "31 ms",
+        "31 ms",
+        "33 ms",
+        "32 ms",
+        "31 ms",
+        "31 ms"
+      ]
+    },
+    "[B1.4] Insert N characters at random positions (time)": {
+      "fugue-tree": [
+        "63 ms",
+        "64 ms",
+        "58 ms",
+        "56 ms",
+        "54 ms",
+        "59 ms",
+        "58 ms",
+        "60 ms",
+        "59 ms",
+        "59 ms"
+      ]
+    },
+    "[B1.4] Insert N characters at random positions (avgUpdateSize)": {
+      "fugue-tree": [
+        "207 bytes",
+        "207 bytes",
+        "207 bytes",
+        "207 bytes",
+        "207 bytes",
+        "207 bytes",
+        "207 bytes",
+        "207 bytes",
+        "207 bytes",
+        "207 bytes"
+      ]
+    },
+    "[B1.4] Insert N characters at random positions (encodeTime)": {
+      "fugue-tree": [
+        "4 ms",
+        "4 ms",
+        "4 ms",
+        "5 ms",
+        "3 ms",
+        "4 ms",
+        "5 ms",
+        "4 ms",
+        "4 ms",
+        "5 ms"
+      ]
+    },
+    "[B1.4] Insert N characters at random positions (docSize)": {
+      "fugue-tree": [
+        "809832 bytes",
+        "809832 bytes",
+        "809832 bytes",
+        "809832 bytes",
+        "809832 bytes",
+        "809832 bytes",
+        "809832 bytes",
+        "809832 bytes",
+        "809832 bytes",
+        "809832 bytes"
+      ]
+    },
+    "[B1.4] Insert N characters at random positions (memUsed)": {
+      "fugue-tree": [
+        "2220136 bytes",
+        "2213664 bytes",
+        "2217264 bytes",
+        "2233992 bytes",
+        "2212168 bytes",
+        "2219464 bytes",
+        "2222192 bytes",
+        "2213720 bytes",
+        "2220584 bytes",
+        "2222416 bytes"
+      ]
+    },
+    "[B1.4] Insert N characters at random positions (parseTime)": {
+      "fugue-tree": [
+        "35 ms",
+        "36 ms",
+        "33 ms",
+        "34 ms",
+        "33 ms",
+        "35 ms",
+        "35 ms",
+        "35 ms",
+        "35 ms",
+        "33 ms"
+      ]
+    },
+    "[B1.5] Insert N words at random positions (time)": {
+      "fugue-tree": [
+        "745 ms",
+        "749 ms",
+        "761 ms",
+        "819 ms",
+        "731 ms",
+        "718 ms",
+        "708 ms",
+        "841 ms",
+        "738 ms",
+        "711 ms"
+      ]
+    },
+    "[B1.5] Insert N words at random positions (avgUpdateSize)": {
+      "fugue-tree": [
+        "375 bytes",
+        "374 bytes",
+        "374 bytes",
+        "375 bytes",
+        "374 bytes",
+        "375 bytes",
+        "373 bytes",
+        "375 bytes",
+        "375 bytes",
+        "374 bytes"
+      ]
+    },
+    "[B1.5] Insert N words at random positions (encodeTime)": {
+      "fugue-tree": [
+        "20 ms",
+        "19 ms",
+        "19 ms",
+        "18 ms",
+        "18 ms",
+        "18 ms",
+        "18 ms",
+        "17 ms",
+        "17 ms",
+        "18 ms"
+      ]
+    },
+    "[B1.5] Insert N words at random positions (docSize)": {
+      "fugue-tree": [
+        "5709787 bytes",
+        "5709787 bytes",
+        "5709787 bytes",
+        "5709787 bytes",
+        "5709787 bytes",
+        "5709787 bytes",
+        "5709787 bytes",
+        "5709787 bytes",
+        "5709787 bytes",
+        "5709787 bytes"
+      ]
+    },
+    "[B1.5] Insert N words at random positions (memUsed)": {
+      "fugue-tree": [
+        "13960192 bytes",
+        "13952752 bytes",
+        "13955040 bytes",
+        "13961576 bytes",
+        "13954960 bytes",
+        "13961848 bytes",
+        "13954992 bytes",
+        "13959704 bytes",
+        "13955040 bytes",
+        "13961800 bytes"
+      ]
+    },
+    "[B1.5] Insert N words at random positions (parseTime)": {
+      "fugue-tree": [
+        "101 ms",
+        "104 ms",
+        "96 ms",
+        "96 ms",
+        "97 ms",
+        "91 ms",
+        "97 ms",
+        "93 ms",
+        "92 ms",
+        "94 ms"
+      ]
+    },
+    "[B1.6] Insert string, then delete it (time)": {
+      "fugue-tree": [
+        "1061 ms",
+        "1102 ms",
+        "1070 ms",
+        "1087 ms",
+        "1082 ms",
+        "1054 ms",
+        "1070 ms",
+        "1056 ms",
+        "1076 ms",
+        "1047 ms"
+      ]
+    },
+    "[B1.6] Insert string, then delete it (avgUpdateSize)": {
+      "fugue-tree": [
+        "56404 bytes",
+        "56404 bytes",
+        "56404 bytes",
+        "56404 bytes",
+        "56404 bytes",
+        "56404 bytes",
+        "56404 bytes",
+        "56404 bytes",
+        "56404 bytes",
+        "56404 bytes"
+      ]
+    },
+    "[B1.6] Insert string, then delete it (encodeTime)": {
+      "fugue-tree": [
+        "3 ms",
+        "2 ms",
+        "4 ms",
+        "2 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms",
+        "3 ms"
+      ]
+    },
+    "[B1.6] Insert string, then delete it (docSize)": {
+      "fugue-tree": [
+        "634965 bytes",
+        "634965 bytes",
+        "634965 bytes",
+        "634965 bytes",
+        "634965 bytes",
+        "634965 bytes",
+        "634965 bytes",
+        "634965 bytes",
+        "634965 bytes",
+        "634965 bytes"
+      ]
+    },
+    "[B1.6] Insert string, then delete it (memUsed)": {
+      "fugue-tree": [
+        "2113144 bytes",
+        "2105792 bytes",
+        "2113184 bytes",
+        "2106400 bytes",
+        "2113184 bytes",
+        "2106288 bytes",
+        "2113184 bytes",
+        "2105840 bytes",
+        "2113144 bytes",
+        "2106256 bytes"
+      ]
+    },
+    "[B1.6] Insert string, then delete it (parseTime)": {
+      "fugue-tree": [
+        "27 ms",
+        "26 ms",
+        "26 ms",
+        "30 ms",
+        "30 ms",
+        "26 ms",
+        "28 ms",
+        "29 ms",
+        "29 ms",
+        "29 ms"
+      ]
+    },
+    "[B1.7] Insert/Delete strings at random positions (time)": {
+      "fugue-tree": [
+        "584 ms",
+        "569 ms",
+        "611 ms",
+        "579 ms",
+        "572 ms",
+        "579 ms",
+        "587 ms",
+        "580 ms",
+        "609 ms",
+        "587 ms"
+      ]
+    },
+    "[B1.7] Insert/Delete strings at random positions (avgUpdateSize)": {
+      "fugue-tree": [
+        "422 bytes",
+        "423 bytes",
+        "422 bytes",
+        "423 bytes",
+        "422 bytes",
+        "422 bytes",
+        "422 bytes",
+        "422 bytes",
+        "421 bytes",
+        "422 bytes"
+      ]
+    },
+    "[B1.7] Insert/Delete strings at random positions (encodeTime)": {
+      "fugue-tree": [
+        "8 ms",
+        "8 ms",
+        "8 ms",
+        "11 ms",
+        "10 ms",
+        "9 ms",
+        "8 ms",
+        "9 ms",
+        "8 ms",
+        "9 ms"
+      ]
+    },
+    "[B1.7] Insert/Delete strings at random positions (docSize)": {
+      "fugue-tree": [
+        "2794495 bytes",
+        "2794495 bytes",
+        "2794495 bytes",
+        "2794495 bytes",
+        "2794495 bytes",
+        "2794495 bytes",
+        "2794495 bytes",
+        "2794495 bytes",
+        "2794495 bytes",
+        "2794495 bytes"
+      ]
+    },
+    "[B1.7] Insert/Delete strings at random positions (memUsed)": {
+      "fugue-tree": [
+        "6726016 bytes",
+        "6825416 bytes",
+        "6841480 bytes",
+        "6694040 bytes",
+        "6656224 bytes",
+        "6825416 bytes",
+        "6657576 bytes",
+        "6639088 bytes",
+        "6841560 bytes",
+        "6621080 bytes"
+      ]
+    },
+    "[B1.7] Insert/Delete strings at random positions (parseTime)": {
+      "fugue-tree": [
+        "61 ms",
+        "66 ms",
+        "60 ms",
+        "63 ms",
+        "59 ms",
+        "69 ms",
+        "63 ms",
+        "64 ms",
+        "61 ms",
+        "65 ms"
+      ]
+    },
+    "[B2.1] Concurrently insert string of length N at index 0 (time)": {
+      "fugue-tree": [
+        "1427 ms",
+        "1427 ms",
+        "1453 ms",
+        "1363 ms",
+        "1430 ms",
+        "1453 ms",
+        "1449 ms",
+        "1424 ms",
+        "1399 ms",
+        "1452 ms"
+      ]
+    },
+    "[B2.1] Concurrently insert string of length N at index 0 (updateSize)": {
+      "fugue-tree": [
+        "40517 bytes",
+        "40515 bytes",
+        "40516 bytes",
+        "40519 bytes",
+        "40517 bytes",
+        "40517 bytes",
+        "40519 bytes",
+        "40517 bytes",
+        "40517 bytes",
+        "40517 bytes"
+      ]
+    },
+    "[B2.1] Concurrently insert string of length N at index 0 (encodeTime)": {
+      "fugue-tree": [
+        "10 ms",
+        "7 ms",
+        "6 ms",
+        "7 ms",
+        "7 ms",
+        "6 ms",
+        "6 ms",
+        "7 ms",
+        "7 ms",
+        "10 ms"
+      ]
+    },
+    "[B2.1] Concurrently insert string of length N at index 0 (docSize)": {
+      "fugue-tree": [
+        "1998245 bytes",
+        "1998245 bytes",
+        "1998245 bytes",
+        "1998245 bytes",
+        "1998245 bytes",
+        "1998245 bytes",
+        "1998245 bytes",
+        "1998245 bytes",
+        "1998245 bytes",
+        "1998245 bytes"
+      ]
+    },
+    "[B2.1] Concurrently insert string of length N at index 0 (memUsed)": {
+      "fugue-tree": [
+        "4718560 bytes",
+        "4732928 bytes",
+        "4718520 bytes",
+        "4732392 bytes",
+        "4718576 bytes",
+        "4732688 bytes",
+        "4718440 bytes",
+        "4732816 bytes",
+        "4718560 bytes",
+        "4732928 bytes"
+      ]
+    },
+    "[B2.1] Concurrently insert string of length N at index 0 (parseTime)": {
+      "fugue-tree": [
+        "42 ms",
+        "47 ms",
+        "49 ms",
+        "43 ms",
+        "42 ms",
+        "47 ms",
+        "42 ms",
+        "42 ms",
+        "46 ms",
+        "43 ms"
+      ]
+    },
+    "[B2.2] Concurrently insert N characters at random positions (time)": {
+      "fugue-tree": [
+        "182 ms",
+        "205 ms",
+        "198 ms",
+        "187 ms",
+        "185 ms",
+        "214 ms",
+        "207 ms",
+        "184 ms",
+        "199 ms",
+        "207 ms"
+      ]
+    },
+    "[B2.2] Concurrently insert N characters at random positions (updateSize)": {
+      "fugue-tree": [
+        "1239350 bytes",
+        "1239350 bytes",
+        "1239350 bytes",
+        "1239350 bytes",
+        "1239350 bytes",
+        "1239350 bytes",
+        "1239350 bytes",
+        "1239350 bytes",
+        "1239350 bytes",
+        "1239350 bytes"
+      ]
+    },
+    "[B2.2] Concurrently insert N characters at random positions (encodeTime)": {
+      "fugue-tree": [
+        "7 ms",
+        "6 ms",
+        "6 ms",
+        "7 ms",
+        "7 ms",
+        "6 ms",
+        "6 ms",
+        "6 ms",
+        "7 ms",
+        "6 ms"
+      ]
+    },
+    "[B2.2] Concurrently insert N characters at random positions (docSize)": {
+      "fugue-tree": [
+        "1628189 bytes",
+        "1628189 bytes",
+        "1628189 bytes",
+        "1628189 bytes",
+        "1628189 bytes",
+        "1628189 bytes",
+        "1628189 bytes",
+        "1628189 bytes",
+        "1628189 bytes",
+        "1628189 bytes"
+      ]
+    },
+    "[B2.2] Concurrently insert N characters at random positions (memUsed)": {
+      "fugue-tree": [
+        "4486136 bytes",
+        "4472528 bytes",
+        "4484680 bytes",
+        "4474232 bytes",
+        "4484544 bytes",
+        "4472536 bytes",
+        "4490480 bytes",
+        "4472488 bytes",
+        "4484808 bytes",
+        "4474232 bytes"
+      ]
+    },
+    "[B2.2] Concurrently insert N characters at random positions (parseTime)": {
+      "fugue-tree": [
+        "45 ms",
+        "52 ms",
+        "45 ms",
+        "50 ms",
+        "49 ms",
+        "48 ms",
+        "47 ms",
+        "49 ms",
+        "52 ms",
+        "54 ms"
+      ]
+    },
+    "[B2.3] Concurrently insert N words at random positions (time)": {
+      "fugue-tree": [
+        "2651 ms",
+        "2430 ms",
+        "2685 ms",
+        "2507 ms",
+        "2695 ms",
+        "2487 ms",
+        "2519 ms",
+        "2530 ms",
+        "2439 ms",
+        "2608 ms"
+      ]
+    },
+    "[B2.3] Concurrently insert N words at random positions (updateSize)": {
+      "fugue-tree": [
+        "2326241 bytes",
+        "2325531 bytes",
+        "2326875 bytes",
+        "2329225 bytes",
+        "2326327 bytes",
+        "2325129 bytes",
+        "2328737 bytes",
+        "2326946 bytes",
+        "2320497 bytes",
+        "2324572 bytes"
+      ]
+    },
+    "[B2.3] Concurrently insert N words at random positions (encodeTime)": {
+      "fugue-tree": [
+        "39 ms",
+        "39 ms",
+        "41 ms",
+        "37 ms",
+        "37 ms",
+        "39 ms",
+        "36 ms",
+        "36 ms",
+        "37 ms",
+        "36 ms"
+      ]
+    },
+    "[B2.3] Concurrently insert N words at random positions (docSize)": {
+      "fugue-tree": [
+        "11305751 bytes",
+        "11305751 bytes",
+        "11305751 bytes",
+        "11305751 bytes",
+        "11305751 bytes",
+        "11305751 bytes",
+        "11305751 bytes",
+        "11305751 bytes",
+        "11305751 bytes",
+        "11305751 bytes"
+      ]
+    },
+    "[B2.3] Concurrently insert N words at random positions (memUsed)": {
+      "fugue-tree": [
+        "27667984 bytes",
+        "27668256 bytes",
+        "27666200 bytes",
+        "27668304 bytes",
+        "27667944 bytes",
+        "27668256 bytes",
+        "27667984 bytes",
+        "27668304 bytes",
+        "27666240 bytes",
+        "27667984 bytes"
+      ]
+    },
+    "[B2.3] Concurrently insert N words at random positions (parseTime)": {
+      "fugue-tree": [
+        "165 ms",
+        "165 ms",
+        "178 ms",
+        "161 ms",
+        "167 ms",
+        "166 ms",
+        "170 ms",
+        "162 ms",
+        "168 ms",
+        "161 ms"
+      ]
+    },
+    "[B2.4] Concurrently insert & delete (time)": {
+      "fugue-tree": [
+        "4232 ms",
+        "4233 ms",
+        "4177 ms",
+        "4265 ms",
+        "4716 ms",
+        "4711 ms",
+        "4643 ms",
+        "4635 ms",
+        "4536 ms",
+        "4462 ms"
+      ]
+    },
+    "[B2.4] Concurrently insert & delete (updateSize)": {
+      "fugue-tree": [
+        "4837468 bytes",
+        "4833438 bytes",
+        "4834735 bytes",
+        "4832836 bytes",
+        "4831192 bytes",
+        "4831114 bytes",
+        "4833598 bytes",
+        "4839815 bytes",
+        "4835658 bytes",
+        "4835805 bytes"
+      ]
+    },
+    "[B2.4] Concurrently insert & delete (encodeTime)": {
+      "fugue-tree": [
+        "57 ms",
+        "57 ms",
+        "54 ms",
+        "54 ms",
+        "55 ms",
+        "58 ms",
+        "56 ms",
+        "55 ms",
+        "56 ms",
+        "55 ms"
+      ]
+    },
+    "[B2.4] Concurrently insert & delete (docSize)": {
+      "fugue-tree": [
+        "17019307 bytes",
+        "17019307 bytes",
+        "17019307 bytes",
+        "17019307 bytes",
+        "17019307 bytes",
+        "17019307 bytes",
+        "17019307 bytes",
+        "17019307 bytes",
+        "17019307 bytes",
+        "17019307 bytes"
+      ]
+    },
+    "[B2.4] Concurrently insert & delete (memUsed)": {
+      "fugue-tree": [
+        "41638536 bytes",
+        "41638576 bytes",
+        "41636792 bytes",
+        "41638536 bytes",
+        "41638576 bytes",
+        "41638536 bytes",
+        "41636792 bytes",
+        "41638576 bytes",
+        "41638536 bytes",
+        "41638576 bytes"
+      ]
+    },
+    "[B2.4] Concurrently insert & delete (parseTime)": {
+      "fugue-tree": [
+        "234 ms",
+        "234 ms",
+        "232 ms",
+        "232 ms",
+        "246 ms",
+        "245 ms",
+        "238 ms",
+        "244 ms",
+        "240 ms",
+        "258 ms"
+      ]
+    },
+    "[B4.1] Multi-replica propagation latency (time)": {
+      "fugue-tree": [
+        "31 ms",
+        "30 ms",
+        "33 ms",
+        "30 ms",
+        "32 ms",
+        "29 ms",
+        "30 ms",
+        "31 ms",
+        "29 ms",
+        "31 ms"
+      ]
+    },
+    "[B4.1] Multi-replica propagation latency (medianPropagationLatency)": {
+      "fugue-tree": [
+        "0.03 ms",
+        "0.028 ms",
+        "0.032 ms",
+        "0.028 ms",
+        "0.027 ms",
+        "0.027 ms",
+        "0.028 ms",
+        "0.03 ms",
+        "0.028 ms",
+        "0.027 ms"
+      ]
+    },
+    "[B4.1] Multi-replica propagation latency (p95PropagationLatency)": {
+      "fugue-tree": [
+        "0.044 ms",
+        "0.044 ms",
+        "0.049 ms",
+        "0.041 ms",
+        "0.046 ms",
+        "0.042 ms",
+        "0.042 ms",
+        "0.043 ms",
+        "0.042 ms",
+        "0.042 ms"
+      ]
+    },
+    "[B4.1] Multi-replica propagation latency (replicaCount)": {
+      "fugue-tree": [
+        "5 replicas",
+        "5 replicas",
+        "5 replicas",
+        "5 replicas",
+        "5 replicas",
+        "5 replicas",
+        "5 replicas",
+        "5 replicas",
+        "5 replicas",
+        "5 replicas"
+      ]
+    },
+    "[B4.1] Multi-replica propagation latency (totalEdits)": {
+      "fugue-tree": [
+        "500 edits",
+        "500 edits",
+        "500 edits",
+        "500 edits",
+        "500 edits",
+        "500 edits",
+        "500 edits",
+        "500 edits",
+        "500 edits",
+        "500 edits"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (time)": {
+      "fugue-tree": [
+        "47 ms",
+        "51 ms",
+        "45 ms",
+        "52 ms",
+        "45 ms",
+        "51 ms",
+        "44 ms",
+        "53 ms",
+        "46 ms",
+        "43 ms"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (docSize@25%)": {
+      "fugue-tree": [
+        "601892 bytes",
+        "585605 bytes",
+        "588290 bytes",
+        "559448 bytes",
+        "576376 bytes",
+        "573653 bytes",
+        "583111 bytes",
+        "612489 bytes",
+        "583242 bytes",
+        "589425 bytes"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (docSize@50%)": {
+      "fugue-tree": [
+        "1199135 bytes",
+        "1162327 bytes",
+        "1177906 bytes",
+        "1188740 bytes",
+        "1183971 bytes",
+        "1139666 bytes",
+        "1146254 bytes",
+        "1222903 bytes",
+        "1161163 bytes",
+        "1198301 bytes"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (docSize@75%)": {
+      "fugue-tree": [
+        "1792243 bytes",
+        "1738401 bytes",
+        "1776874 bytes",
+        "1776207 bytes",
+        "1731482 bytes",
+        "1743489 bytes",
+        "1725105 bytes",
+        "1780895 bytes",
+        "1750423 bytes",
+        "1766072 bytes"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (docSize@100%)": {
+      "fugue-tree": [
+        "2414141 bytes",
+        "2325636 bytes",
+        "2372714 bytes",
+        "2368730 bytes",
+        "2300892 bytes",
+        "2336670 bytes",
+        "2291289 bytes",
+        "2382338 bytes",
+        "2347608 bytes",
+        "2356509 bytes"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (growthRatio@50%)": {
+      "fugue-tree": [
+        "1.99 x",
+        "1.98 x",
+        "2 x",
+        "2.12 x",
+        "2.05 x",
+        "1.99 x",
+        "1.97 x",
+        "2 x",
+        "1.99 x",
+        "2.03 x"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (growthRatio@75%)": {
+      "fugue-tree": [
+        "1.49 x",
+        "1.5 x",
+        "1.51 x",
+        "1.49 x",
+        "1.46 x",
+        "1.53 x",
+        "1.5 x",
+        "1.46 x",
+        "1.51 x",
+        "1.47 x"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (growthRatio@100%)": {
+      "fugue-tree": [
+        "1.35 x",
+        "1.34 x",
+        "1.34 x",
+        "1.33 x",
+        "1.33 x",
+        "1.34 x",
+        "1.33 x",
+        "1.34 x",
+        "1.34 x",
+        "1.33 x"
+      ]
+    },
+    "[B4.3] Sustained throughput stress test (time)": {
+      "fugue-tree": [
+        "6000 ms",
+        "6000 ms",
+        "6000 ms",
+        "6000 ms",
+        "6000 ms",
+        "6000 ms",
+        "6000 ms",
+        "6000 ms",
+        "6000 ms",
+        "6000 ms"
+      ]
+    },
+    "[B4.3] Sustained throughput stress test (editCount)": {
+      "fugue-tree": [
+        "60 edits",
+        "60 edits",
+        "61 edits",
+        "60 edits",
+        "60 edits",
+        "61 edits",
+        "61 edits",
+        "60 edits",
+        "61 edits",
+        "60 edits"
+      ]
+    },
+    "[B4.3] Sustained throughput stress test (achievedRate)": {
+      "fugue-tree": [
+        "10 edits/sec",
+        "10 edits/sec",
+        "10.17 edits/sec",
+        "10 edits/sec",
+        "10 edits/sec",
+        "10.17 edits/sec",
+        "10.17 edits/sec",
+        "10 edits/sec",
+        "10.17 edits/sec",
+        "10 edits/sec"
+      ]
+    },
+    "[B4.3] Sustained throughput stress test (droppedUpdates)": {
+      "fugue-tree": [
+        "0 dropped",
+        "0 dropped",
+        "0 dropped",
+        "0 dropped",
+        "0 dropped",
+        "0 dropped",
+        "0 dropped",
+        "0 dropped",
+        "0 dropped",
+        "0 dropped"
+      ]
+    },
+    "[B4.3] Sustained throughput stress test (dropRate)": {
+      "fugue-tree": [
+        "0 %",
+        "0 %",
+        "0 %",
+        "0 %",
+        "0 %",
+        "0 %",
+        "0 %",
+        "0 %",
+        "0 %",
+        "0 %"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (growthRatio@50 %)": {
+      "fugue-tree": [
+        "1.99 x",
+        "1.98 x",
+        "2 x",
+        "2.12 x",
+        "2.05 x",
+        "1.99 x",
+        "1.97 x",
+        "2 x",
+        "1.99 x",
+        "2.03 x"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (growthRatio@75 %)": {
+      "fugue-tree": [
+        "1.49 x",
+        "1.5 x",
+        "1.51 x",
+        "1.49 x",
+        "1.46 x",
+        "1.53 x",
+        "1.5 x",
+        "1.46 x",
+        "1.51 x",
+        "1.47 x"
+      ]
+    },
+    "[B4.2] Tombstone growth over document lifetime (growthRatio@100 %)": {
+      "fugue-tree": [
+        "1.35 x",
+        "1.34 x",
+        "1.34 x",
+        "1.33 x",
+        "1.33 x",
+        "1.34 x",
+        "1.33 x",
+        "1.34 x",
+        "1.34 x",
+        "1.33 x"
+      ]
+    }
+  }
+}

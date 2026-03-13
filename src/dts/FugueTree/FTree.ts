@@ -133,7 +133,6 @@ export class FTree {
     }
 
     /**
-     * TODO: Maybe change the children types to linked list to make insertions more efficient, since we expect many insertions at the end of the siblings.
      * Inserts a node into the correct position among its parent node's children arrays based on the
      * node's rightOrigin and sender ID, and the existing order of its rightOrigin among its siblings.
      * @param node - The node to insert into its siblings
@@ -150,9 +149,10 @@ export class FTree {
             let i = 0;
             for (; i < right.length; i++) {
                 const sib = right[i];
-                const isLessThanSib = this.isLess(node.rightOrigin!, sib.rightOrigin!);
+                const isLessThanSib = this.isLess(sib.rightOrigin ?? null, node.rightOrigin ?? null);
                 const isEqualRightOrigin = node.rightOrigin === sib.rightOrigin;
-                const isGreaterSender = node.id.sender > sib.id.sender;
+                const senderCmp = node.id.sender.localeCompare(sib.id.sender);
+                const isGreaterSender = senderCmp > 0 || (senderCmp === 0 && node.id.counter > sib.id.counter);
                 if (!(isLessThanSib || (isEqualRightOrigin && isGreaterSender))) break;
             }
             right.splice(i, 0, node);
