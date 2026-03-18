@@ -1,3 +1,10 @@
+## [0.35.2](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.35.1...v0.35.2) (2026-03-18)
+
+
+### Bug Fixes
+
+* update serializedCRDTState type in DocumentSchema ([5827758](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/58277589571a0137442a22acfb8937db73788c28))
+
 ## [0.35.1](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.35.0...v0.35.1) (2026-03-13)
 
 
