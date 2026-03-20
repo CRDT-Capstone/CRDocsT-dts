@@ -1,5 +1,4 @@
-import { describe, test, expect, beforeEach } from "@jest/globals";
-import { FugueTree } from "../../dts/index.js";
+import { describe, test, expect } from "@jest/globals";
 import { Operation, MessageType } from "../../types/index.js";
 import {
     makeFugueTree,
