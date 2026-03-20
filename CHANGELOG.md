@@ -1,3 +1,10 @@
+## [0.35.3](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.35.2...v0.35.3) (2026-03-20)
+
+
+### Bug Fixes
+
+* remove deprecated CausalTree and Fugue components ([849c667](https://github.com/CRDT-Capstone/CRDocsT-dts/commit/849c667d4949eb0eec04252d33ba7ed8477fb9b3))
+
 ## [0.35.2](https://github.com/CRDT-Capstone/CRDocsT-dts/compare/v0.35.1...v0.35.2) (2026-03-18)
 
 
