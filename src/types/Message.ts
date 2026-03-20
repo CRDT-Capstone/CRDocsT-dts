@@ -7,4 +7,6 @@ export interface BaseMessage<T extends MessageType = MessageType> {
     msgType: T;
     documentID: string;
     userIdentity: string;
+    projectID?: string;
 }
+

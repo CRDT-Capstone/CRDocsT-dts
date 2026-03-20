@@ -7,12 +7,13 @@ import Pako from "pako";
 import { logger } from "../../utils/logging.js";
 
 export type Message = BaseFugueMessage[] | BasePresenceMessage[];
+type OutgoingMessage = BaseMessage | BasePresenceMessage; //probably could have a better name here 
 
 export const COMP = true;
 const COMPRESSION_CUTOFF = 1024; // Only compress messages larger than 1KB
 logger.log(`Using compression -> ${COMP}`);
 
-function serialize(msgs: BaseMessage | BaseMessage[]): Uint8Array {
+function serialize(msgs: OutgoingMessage | OutgoingMessage[]): Uint8Array {
     const msgArr = Array.isArray(msgs) ? msgs : [msgs];
     const type = msgArr[0].msgType;
 
